@@ -25,7 +25,6 @@ int solve(int pos){
 
     if(ret == -1){
         ret = 0;
-
         bool have[1000];
         memset(have,false,sizeof have);
 
