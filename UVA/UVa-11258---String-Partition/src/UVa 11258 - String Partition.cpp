@@ -13,7 +13,7 @@ long long f(int i) {
 	if (memo[i] != -1)
 		return memo[i];
 	if (i == n)
-		return memo[i] = 0;
+		return memo[i] = 0;;
 	if (s[i] == '0')
 		return memo[i] = f(i + 1);
 
