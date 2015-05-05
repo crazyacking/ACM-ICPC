@@ -20,7 +20,7 @@ long long f(int i) {
 	int k = 1, j;
 	long long ans = 0, pref;
 	while (true) {
-		pref = 0;
+		pref = 0;;
 		for (j = i; (j < i + k); j++) {
 			pref = pref * 10 + (s[j] - '0');
 		}
