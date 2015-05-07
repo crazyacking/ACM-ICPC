@@ -8,7 +8,7 @@ int freq[105], *x;
 bool covered(int k) {
 	for (int i = 1; i <= k; i++) {
 		if (freq[i] <= 0)
-			return false;;;
+			return false;
 	}
 	return true;
 }
