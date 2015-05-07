@@ -21,7 +21,7 @@ int main() {
 
 	while (tc--) {
 		count++;
-		scanf("%d %d %d", &n, &m, &k);
+		scanf("%d %d %d", &n, &m, &k);;
 
 		x[0] = 1;
 		x[1] = 2;
