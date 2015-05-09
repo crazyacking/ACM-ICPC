@@ -23,7 +23,7 @@ int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(0);
-//    freopen("C:\\Users\\ASUS\\Desktop\\cin.cpp","r",stdin);;;
+//    freopen("C:\\Users\\ASUS\\Desktop\\cin.cpp","r",stdin);;;;
 //    freopen("C:\\Users\\ASUS\\Desktop\\cout.cpp","w",stdout);;;
     long long a,b;
     while(cin>>a>>b)
