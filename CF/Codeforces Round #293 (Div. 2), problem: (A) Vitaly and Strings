@@ -1,0 +1,50 @@
+#include<cstdio>
+#include<iostream>
+#include<fstream>
+#include<vector>
+#include<stack>
+#include<queue>
+#include<deque>
+#include<cstdlib>
+#include<cmath>
+#include<algorithm>
+#include<set>
+#include<cstring>
+#include<ctime>
+#include<map>
+#define foru(i,a,b) for(int i=a,_b=b;i<=_b;i++)
+#define ford(i,a,b) for(int i=a,_b=b;i>=_b;i--)
+#define read freopen("","r",stdin)
+#define write freopen("","w",stdout)
+#define sz size()
+#define fi first
+#define se second
+#define sqr(a) (a)*(a)
+#define setp(x) cout.precision(x)
+#define mp(x,y) make_pair(x,y)
+using namespace std;
+typedef long long ll;
+typedef long double ld;
+typedef pair<int,int> ii;
+const float eps=1e-8;
+const ll lloo=1e18;
+const int oo=1e9;
+
+int main(){
+    string a,b;
+    cin >> a >> b;
+    int lc=0;
+    ford(i,a.sz-1,0) if (a[i]<'z') {
+        a[i]++;
+        lc=1;
+        break;
+    } else {
+        a[i]='a';
+    }
+    if (!lc) {
+            cout << "No such string";
+            return 0;
+    }
+    if (a<b) cout << a;
+    else cout << "No such string";
+}
