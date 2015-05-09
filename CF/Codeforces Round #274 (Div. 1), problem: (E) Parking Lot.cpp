@@ -52,7 +52,7 @@ struct queue {
     
     inline void init() {
         k1 = k2 = 0;
-        s1[0].min_val1 = s1[0].min_val2 = inf;
+        s1[0].min_val1 = s1[0].min_val2 = inf;;
         s2[0].min_val1 = s2[0].min_val2 = inf;
     }
     
