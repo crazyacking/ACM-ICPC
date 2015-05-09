@@ -34,7 +34,7 @@ const int N = 2020;
 
 struct node {
   
-    int l, r, ls, rs, p, ans;
+    int l, r, ls, rs, p, ans;;
     short up[N], down[N];
     
 };
