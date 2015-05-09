@@ -1,0 +1,74 @@
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <complex>
+#include <math.h>
+#include <set>
+#include <vector>
+#include <map>
+#include <queue>
+#include <stdio.h>
+#include <stack>
+#include <algorithm>
+#include <list>
+#include <ctime>
+#include <memory.h>
+#include <ctime> 
+ 
+#define y0 sdkfaslhagaklsldk
+#define y1 aasdfasdfasdf
+#define yn askfhwqriuperikldjk
+#define j1 assdgsdgasghsf
+#define tm sdfjahlfasfh
+#define lr asgasgash
+ 
+#define eps 1e-9
+//#define M_PI 3.141592653589793
+#define bs 1000000007
+#define bsize 256
+#define right adsgasgadsg
+#define free adsgasdg
+#define MAG 10000
+
+using namespace std;
+
+long n,m,k,ar[1<<20],ps[1<<20];
+long long ans;
+long id;
+
+int main(){
+//freopen("evacuation.in","r",stdin);
+//freopen("evacuation.out","w",stdout);
+//freopen("C:/input.txt","r",stdin);
+//freopen("C:/output.txt","w",stdout);
+ios_base::sync_with_stdio(0);
+//cin.tie(0);
+
+cin>>n>>m>>k;
+for (int i=1;i<=n;i++)
+{
+ cin>>ar[i];
+ ps[ar[i]]=i;
+}
+
+for (int i=1;i<=m;i++)
+{
+ cin>>id;
+ ans+=(ps[id]-1)/k+1;
+ long a=ps[id];
+ long b=ps[id]-1;
+ if (b==0)continue;
+ swap(ar[a],ar[b]);
+ ps[ar[a]]=a;
+ ps[ar[b]]=b;
+/* for (int j=1;j<=n;j++)
+  cout<<ar[j]<<" ";
+ cout<<endl;
+ for (int j=1;j<=n;j++)
+  cout<<ps[j]<<" ";
+  cout<<endl;*/
+}
+cout<<ans<<endl;
+
+cin.get();cin.get();
+return 0;}
