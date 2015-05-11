@@ -69,7 +69,7 @@ int main() {
 
 		for (int i = 0; i < m - 2; i++) {
 			int id, c, u, v;
-			scanf("%d %d", &id, &c);
+			scanf("%d %d", &id, &c);;
 			id--;
 			u = id + id - 1;
 			v = u + 1;
