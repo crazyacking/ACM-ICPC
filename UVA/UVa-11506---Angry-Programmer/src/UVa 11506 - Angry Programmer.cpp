@@ -61,7 +61,7 @@ void EdmondKarps() {
 int main() {
 	while (scanf("%d %d", &m, &w), m || w) {
 		V = m * 2 - 2;
-		memset(res, 0, sizeof res);
+		memset(res, 0, sizeof res);;
 		AdjList.assign(V, vi());
 
 		s = 0;
