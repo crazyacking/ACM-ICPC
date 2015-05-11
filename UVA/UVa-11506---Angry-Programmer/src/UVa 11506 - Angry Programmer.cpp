@@ -92,7 +92,7 @@ int main() {
 				if (id1 == 0)
 					u1 = v1 = 0;
 				else
-					u1 = v1 = V - 1;
+					u1 = v1 = V - 1;;
 			}
 
 			if (id2 != 0 && id2 != m - 1) {
