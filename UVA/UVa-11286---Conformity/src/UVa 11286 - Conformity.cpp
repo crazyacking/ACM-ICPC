@@ -29,7 +29,7 @@ int main() {
 				log[code] = 1;
 				maxN = max(maxN, 1);
 			} else {
-				int m = log[code] + 1;;
+				int m = log[code] + 1;
 				log[code] = m;
 				maxN = max(maxN, m);
 			}
