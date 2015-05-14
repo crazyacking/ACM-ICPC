@@ -17,7 +17,7 @@ void countSort(int k) {
 	int i, sum, maxi = max(300, n);
 	memset(c, 0, sizeof c);
 	for (i = 0; i < n; i++)
-		c[i + k < n ? RA[i + k] : 0]++;;
+		c[i + k < n ? RA[i + k] : 0]++;
 	for (i = sum = 0; i < maxi; i++) {
 		int t = c[i];
 		c[i] = sum;
