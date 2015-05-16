@@ -19,7 +19,7 @@ int main() {
 		for (int i = 0; i < n; i++) {
 			scanf("%d", &aft[i]);
 		}
-		sort(aft, aft + n, greater<int>());;
+		sort(aft, aft + n, greater<int>());
 
 		for (int i = 0; i < n; i++) {
 			hrs = morn[i] + aft[i];
