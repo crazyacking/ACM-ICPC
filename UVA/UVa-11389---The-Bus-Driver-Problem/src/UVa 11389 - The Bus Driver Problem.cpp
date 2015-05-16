@@ -6,7 +6,7 @@ using namespace std;
 
 int main() {
 	int n, d, r;
-	int hrs, morn[100], aft[100];
+	int hrs, morn[100], aft[100];;
 	int pay;
 
 	while (scanf("%d %d %d", &n, &d, &r), n || d || r) {
