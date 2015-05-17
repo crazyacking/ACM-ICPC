@@ -26,7 +26,7 @@ int solve(int pos){
     if(ret == -1){
         ret = 0;
         bool have[1000];
-        memset(have,false,sizeof have);;
+        memset(have,false,sizeof have);
 
         for(int i = L[pos].size() - 1;i >= 0;--i)
             have[ solve(L[pos][i]) ] = true;
