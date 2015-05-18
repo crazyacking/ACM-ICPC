@@ -1,0 +1,174 @@
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+#include <cstring>
+#include <string>
+#include <map>
+#include <queue>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <cmath>
+typedef long long ll;
+using namespace std;
+const ll maxm = 1e7;
+const int maxn = 100 + 10;
+const int T = 10;
+bool used[maxn];
+vector<int> G[maxn];
+int match[maxn], n;
+ll k[maxn];
+
+ll fast_mul(ll a, ll b, ll mod)
+{
+    ll res = 0;
+    while(b)
+    {
+        if(b & 1)
+        {
+            res = res + a;
+            if(res >= mod)
+            {
+                res -= mod;
+            }
+        }
+//        a = (a << 1) % mod;
+        a <<= 1;
+        if(a >= mod)
+        {
+            a -= mod;
+        }
+        b >>= 1;
+    }
+    return res;
+}
+
+ll fast_pow(ll a, ll n, ll mod)
+{
+    ll res = 1;
+    while(n)
+    {
+        if(n & 1)
+        {
+            res = fast_mul(res, a, mod);
+        }
+        a = fast_mul(a, a, mod);
+        n >>= 1;
+    }
+    return res;
+}
+
+bool check(ll a, ll n, ll x, ll t)
+{
+    ll res = fast_pow(a, x, n);
+    for(ll i = 0; i < t; ++i)
+    {
+        ll temp = fast_mul(res, res, n);
+        if(temp == 1 && res != 1 && res != n - 1)
+        {
+            return true;
+        }
+        res = temp;
+    }
+    return res != 1;
+}
+
+bool Miller_Rabin(ll n)
+{
+    if(n == 2)
+    {
+        return true;
+    }
+    if(n < 2 || !(n & 1))
+    {
+        return false;
+    }
+    ll x = n - 1;
+    ll t = 0;
+    while(!(x & 1))
+    {
+        x >>= 1;
+        ++t;
+    }
+    srand(time(0));
+    for(int i = 0; i < T; ++i)
+    {
+        if(check(rand() % (n - 1) + 1, n, x, t))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+void add_edge(int a, int b)
+{
+    G[a].push_back(b);
+    G[b].push_back(a);
+}
+bool dfs_graph(int x)
+{
+    used[x] = true;
+    for( int i=0; i<G[x].size(); i++ )
+    {
+        int u = G[x][i];
+        if( !match[u] || !used[match[u]] && dfs_graph(match[u]) )
+        {
+            match[u] = x;
+            match[x] = u;
+            return true;
+        }
+    }
+    return false;
+}
+ll gcd(ll a, ll b)
+{
+    return b==0 ? a : gcd(b, a%b);
+}
+int hungary()
+{
+    int sum = 0;
+    memset(match, 0, sizeof(match));
+    for( int i=1; i<=n; i++ )
+    {
+        if( !match[i] )
+        {
+            memset(used, 0, sizeof(used));
+            if( dfs_graph(i) )
+                sum++;
+        }
+    }
+    return sum;
+}
+int main()
+{
+    while( ~scanf("%d", &n) )
+    {
+        for( int i=1; i<=n; i++ )
+            scanf("%lld", &k[i]);
+        for( int i=1; i<=n; i++ ) G[i].clear();
+//        for( int i=1; i<=n; i++ )
+//        {
+//            for( int j=1; j<=n; j++ )
+//            {
+//                if( !mp[k[i]+k[k]] )
+//                {
+//                    for( int i=)
+//                }
+//            }
+//        }
+        for( int i=1; i<=n; i++ )
+            for( int j=i+1; j<=n; j++ )
+            {
+                if( (!(k[i]%2)&&(k[j]%2)) || (!(k[j]%2)&&(k[i]%2)) )
+                {
+                    if( gcd(k[i], k[j])==1 && Miller_Rabin(k[i] + k[j]))
+                        add_edge(i, j);
+                }
+            }
+        int sum = hungary();
+        printf("%d\n", sum);
+    }
+
+    return 0;
+}
