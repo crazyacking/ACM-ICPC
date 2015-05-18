@@ -1,0 +1,68 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <string>
+#include <queue>
+#include <stack>
+#include <stdlib.h>
+#include <algorithm>
+#include <cmath>
+#include <map>
+#include <set>
+#include <vector>
+#define INF 0x3f3f3f3f
+using namespace std;
+typedef pair<int,int> P;
+typedef long long LL;
+const double eps=1e-9;
+double x[1100];
+double y[1100];
+double sx,sy;
+double suandis(double x1,double y1,double x2,double y2)
+{
+    return sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+}
+void qiu(double xa,double ya,double xb,double yb,double r)
+{
+    sx=xa-r*(xa-xb);
+    sy=ya-r*(ya-yb);
+}
+int main()
+{
+    //freopen("in.txt","r",stdin);
+    int t;
+    int n;
+    double dis;
+    while(cin>>n>>dis)
+    {
+        for(int i=0;i<=n;i++)
+        {
+            cin>>x[i]>>y[i];
+        }
+        double st=dis;
+        int ok=0;
+        double x1,y1,x2,y2;
+        for(int i=0;i<n;i++)
+        {
+            if(x[i]==x[i+1]&&y[i]==y[i+1])continue;
+            x1=x[i],y1=y[i],x2=x[i+1],y2=y[i+1];
+            double lu=suandis(x1,y1,x2,y2);
+            if(lu<st){st-=lu;continue;}
+            while(1)
+            {
+                ok=1;
+                qiu(x1,y1,x2,y2,(double)st/lu);
+                printf("%.2f,%.2f\n",sx,sy);
+                if(lu-st>=dis){
+                    x1=sx,y1=sy;lu-=st;st=dis;
+                }
+                else {
+                    st=dis-(lu-st);
+                    break;
+                }
+            }
+        }
+        if(!ok)puts("No Such Points.");
+    }
+    return 0;
+}
