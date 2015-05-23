@@ -17,7 +17,7 @@
 #define LL long long
 using namespace std;
 
-long long memo[9][221][221];;
+long long memo[9][221][221];
 
 long long solve(int n, int m, int last){
     if(n==0){
