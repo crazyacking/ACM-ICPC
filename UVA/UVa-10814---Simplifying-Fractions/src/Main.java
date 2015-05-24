@@ -12,7 +12,7 @@ public class Main {
 				new OutputStreamWriter(System.out)));
 		Scanner sc = new Scanner(new BufferedReader(new InputStreamReader(
 				System.in)));
-		BigInteger num, denum, gcd;
+		BigInteger num, denum, gcd
 		int TC;
 		TC = sc.nextInt();
 
