@@ -30,7 +30,7 @@ int main(){
     if(N>K){
         for(int i = 0;i<K;++i){
             scanf("%s\n",s);
-            Q.push_back(s);
+            Q.push_back(s);;
         }
         cont=K;
 
