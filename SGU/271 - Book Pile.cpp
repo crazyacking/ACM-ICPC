@@ -21,7 +21,7 @@ int main(){
     int N,M,K;
     deque<string> Q; int cont;
     char s[4];
-    bool dir=0; //dir=0 -> pop_back() , dir=1 -> pop_front()
+    bool dir=0; //dir=0 -> pop_back() , dir=1 -> pop_front();
     char L[140000][4]; int sz = 0;
     char op[9];
 
