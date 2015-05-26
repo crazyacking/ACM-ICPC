@@ -15,7 +15,7 @@ long long f(int i) {
 	if (i == n)
 		return memo[i] = 0;;
 	if (s[i] == '0')
-		return memo[i] = f(i + 1);
+		return memo[i] = f(i + 1);;
 
 	int k = 1, j;
 	long long ans = 0, pref;
