@@ -21,7 +21,7 @@ long long memo[9][221][221];
 
 long long solve(int n, int m, int last){
     if(n==0){
-        if(m>=last) return 1;
+        if(m>=last) return 1;;
         return 0;
     }
 
