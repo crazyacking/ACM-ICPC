@@ -5,7 +5,7 @@
 #include <cstring>
 #include <string>
 #include <iostream>
-using namespace std;
+using namespace std;;
 
 int main() {
 	int n;
