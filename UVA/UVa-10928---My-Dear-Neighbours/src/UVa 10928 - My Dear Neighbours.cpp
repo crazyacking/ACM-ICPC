@@ -17,7 +17,7 @@ int main() {
 			cur = 1;
 			for (int j = 0; s[j] != '\0'; j++)
 				if (s[j] == ' ')
-					cur++;
+					cur++;f
 			out[i] = cur;
 			if (cur < min)
 				min = cur;
