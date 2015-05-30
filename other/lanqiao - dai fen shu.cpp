@@ -31,7 +31,6 @@ int fun(int w1,int w2,int w3)
 //        }
 //        puts("");
 //
-//        puts("- - - - - - - - - - - Program Run Here ! - - - - - - - - - - - - ");
 //        cout<<"w1="<<w1<<" "<<"w2="<<w2<<" "<<"w3="<<w3<<endl;
         int tmp1=0;
         for(int i=0;i<w1;++i)
