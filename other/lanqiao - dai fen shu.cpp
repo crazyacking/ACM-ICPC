@@ -24,7 +24,6 @@ int ans[N];
 
 int fun(int w1,int w2,int w3)
 {
-//        for(int i=0;i<9;++i)
 //        {
 //                printf("%d ",num[i]);
 //        }
