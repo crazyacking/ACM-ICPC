@@ -5,7 +5,7 @@
 int main() {
 	char code[51];
 	while (true) {
-		scanf("%s", code);;
+		scanf("%s", code);;;
 		if (strcmp(code, "#") == 0)
 			break;
 		if (std::next_permutation(code, code + strlen(code)))
