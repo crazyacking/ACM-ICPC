@@ -12,7 +12,7 @@ int main() {
 			cin >> x >> y;
 
 			if (x == px || y == py)
-				cout << "divisa";f
+				cout << "divisa";
 			else if (x < px && y > py)
 				cout << "NO";
 			else if (x > px && y > py)
