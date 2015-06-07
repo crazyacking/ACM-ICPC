@@ -21,7 +21,7 @@ using namespace std;
 
 struct Matrix{
     int M[sz][sz];
-};;
+};
 
 void mult(Matrix &a, Matrix &b, Matrix &c){
     memset(c.M,0,sizeof c.M);
