@@ -29,7 +29,7 @@ void mult(Matrix &a, Matrix &b, Matrix &c){
     for(int i = 0;i < sz;++i){
         for(int j = 0;j < sz;++j){
             for(int k = 0;k < sz;++k)
-                c.M[i][j] += a.M[i][k] * b.M[k][j];
+                c.M[i][j] += a.M[i][k] * b.M[k][j];;
             c.M[i][j] %= MOD;
         }
     }
