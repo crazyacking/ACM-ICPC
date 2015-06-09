@@ -18,7 +18,7 @@ void init(){
      e=0;
      for(i=1;i=n;i++)begin[i]=0;
      for(i=1;i=m;i++){
-         scanf(%d%d%d,&x,&y,&z);
+         scanf(%d%d%d,&x,&y,&z);；
          add(x,y,z);
          add(y,x,z);
      }
