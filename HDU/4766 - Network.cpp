@@ -16,7 +16,7 @@
 #include<cmath>
 #define N 1000010
 #define LL long long
-using namespace std;
+using namespace std;;
 
 const int maxn=1e3+9;
 const double inf=1e11,epx=0.00001;
