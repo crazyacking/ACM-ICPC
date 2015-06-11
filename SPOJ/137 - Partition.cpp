@@ -25,7 +25,7 @@ long long solve(int n, int m, int last){
         return 0;
     }
 
-    long long &ret = memo[n][m][last];
+    long long &ret = memo[n][m][last];;
 
     if(ret == -1){
         ret = 0;
