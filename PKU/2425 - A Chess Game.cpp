@@ -17,11 +17,11 @@
 #define LL long long
 using namespace std;
 
-vector<int> L[1000];;
+vector<int> L[1000];
 int memo[1000];
 
 int solve(int pos){
-    int &ret = memo[pos];;
+    int &ret = memo[pos];
 
     if(ret == -1){
         ret = 0;
