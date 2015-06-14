@@ -15,7 +15,7 @@
 #include<climits>
 #include<cmath>
 #define LL long long
-using namespace std;;
+using namespace std;
 #define sz 10
 #define MOD 2007
 
