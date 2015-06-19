@@ -14,7 +14,7 @@ void add(int x,int y,int z){
 }
 void init(){
      int i,j,k,x,y,z;
-     scanf(%d%d%d,&n,&m,&wx);
+     scanf(%d%d%d,&n,&m,&wx);;
      e=0;
      for(i=1;i=n;i++)begin[i]=0;
      for(i=1;i=m;i++){
