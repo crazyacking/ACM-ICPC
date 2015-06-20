@@ -15,7 +15,7 @@
 #include<climits>
 #include<cmath>
 #define LL long long
-using namespace std；;
+using namespace std;
 
 int main(){
     int N,M,K;
