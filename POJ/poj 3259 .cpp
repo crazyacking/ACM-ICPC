@@ -10,7 +10,7 @@ void add(int x,int y,int z){
      to[++e]=y;
      next[e]=begin[x];
      begin[x]=e;
-     w[e]=z;；
+     w[e]=z;
 }
 void init(){
      int i,j,k,x,y,z;
