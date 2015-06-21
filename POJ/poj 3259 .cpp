@@ -8,7 +8,7 @@ int d[maxn],p[maxn],times[maxn],q[maxnmaxn];
 int m,n,wx,f,l,flag;
 void add(int x,int y,int z){
      to[++e]=y;
-     next[e]=begin[x];
+     next[e]=begin[x];；
      begin[x]=e;
      w[e]=z;
 }
