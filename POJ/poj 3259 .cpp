@@ -58,11 +58,8 @@ int main(){
                 }
             if(flag)break;
         }
-        if(flag)
-            printf(YESn);
-        else
-            printf(NOn);
-
+        if(flag) printf(YES\n);
+        else printf(NO\n);
     }
     return 0;
 }
