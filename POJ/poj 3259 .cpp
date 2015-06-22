@@ -1,6 +1,6 @@
 #includestdio.h
 #includestdlib.h
-#includemath.h
+#include<cmath>
 #includestring.h
 const int maxn=510,inf=1000000000;
 int e,to[maxn12],next[maxn12],begin[maxn],w[maxn12];
