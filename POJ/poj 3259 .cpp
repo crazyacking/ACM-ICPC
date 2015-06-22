@@ -1,7 +1,7 @@
-#includestdio.h
-#includestdlib.h
+#include<cstdio>
+#include<cstdlib>
 #include<cmath>
-#includestring.h
+#include<cstring>
 const int maxn=510,inf=1000000000;
 int e,to[maxn12],next[maxn12],begin[maxn],w[maxn12];
 int d[maxn],p[maxn],times[maxn],q[maxnmaxn];
