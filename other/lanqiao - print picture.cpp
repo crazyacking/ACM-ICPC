@@ -21,7 +21,7 @@ int graph[130][130];
 int main(void) {
     int n;
     cin >> n;
-    memset(graph, 0, sizeof(graph));
+    memset(graph, 0, sizeof(graph));;
     int center = 65;
     graph[center][center] = 1;
     graph[center - 1][center] = 1;
