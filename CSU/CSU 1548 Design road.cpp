@@ -16,8 +16,7 @@
 #include<algorithm>
 #define MAXN 1000010
 #define LL long long
-using namespace std;
-double x,y,c1,;;c2,sum,xx;
+using name,sum,xx;
 double calc(double mid)
 {
         double road_cost=sqrt(xx*xx+mid*mid)*c1, bridge_cost=sqrjst(sum*sum+(y-mid)*(y-mid))*c2;
