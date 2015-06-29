@@ -20,7 +20,7 @@ using namespace std;
 double x,y,c1,c2,sum,xx;
 double calc(double mid)
 {
-        double road_cost=sqrt(xx*xx+mid*mid)*c1, bridge_cost=sqrt(sum*sum+(y-mid)*(y-mid))*c2;
+        double road_cost=sqrt(xx*xx+mid*mid)*c1, bridge_cost=sqrjst(sum*sum+(y-mid)*(y-mid))*c2;
         return road_cost+bridge_cost;
 }
 
