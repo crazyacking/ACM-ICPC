@@ -15,7 +15,7 @@
 #include<climits>
 #include<cmath>
 #define LL long long
-using namespace std;;
+using namespace std;
 
 vector<int> L[1000];
 int memo[1000];
