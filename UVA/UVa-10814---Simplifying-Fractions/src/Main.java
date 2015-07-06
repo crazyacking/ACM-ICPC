@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Main {
 	public static void main(String[] args) {
 		PrintWriter pr = new PrintWriter(new BufferedWriter(
-				new OutputStreamWriter(System.out)));;   
+				new OutputStreamWriter(System.out)));
 		Scanner sc = new Scanner(new BufferedReader(new InputStreamReader(
 				System.in)));
 		BigInteger num, denum, gcd
