@@ -17,7 +17,7 @@
 #define MAXN 1000010
 #define LL long long
 using namespace std;
-int n,k;
+int n,k;;; 
 vector<int> ve;
 int main()
 {
