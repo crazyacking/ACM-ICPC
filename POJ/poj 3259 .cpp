@@ -3,7 +3,7 @@
 #include<cmath>
 #include<cstring>
 const int maxn=510,inf=1000000000;
-int e,to[maxn12],next[maxn12],begin[maxn],w[maxn12];
+int e,to[maxn12],next[maxn12],begin[maxn],w[maxn12];;
 int d[maxn],p[maxn],times[maxn],q[maxnmaxn];
 int m,n,wx,f,l,flag;
 void add(int x,int y,int z){
