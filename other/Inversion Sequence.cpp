@@ -23,7 +23,7 @@ int ans[maxn];
 vector<int>v;
 
 int main(){
-//    freopen("data.in","r",stdin);
+//    freopen("data.in","r",stdin);;
     int n;
     while(scanf("%d",&n)!=EOF){
         for(int i=0;i<n;i++){
