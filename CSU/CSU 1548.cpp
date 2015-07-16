@@ -15,7 +15,6 @@ double cal(double y1)
 }
 int main()
 {
-   
    int n;
    while(~scanf("%d%d%d%d%d",&n,&x,&y,&c1,&c2))
    {
