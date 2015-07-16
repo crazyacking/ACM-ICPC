@@ -1,0 +1,92 @@
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-07-15-18.53
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define  LL long long
+#define  ULL unsigned long long
+using namespace std;
+
+const int MAXN(10+int(1e5));
+int arrive_step[MAXN<<1];
+int arrive_num[MAXN<<1];
+int a[MAXN],n;
+
+void init()
+{
+      for(int i=0; i<MAXN<<1; ++i) { arrive_step[i]=0,arrive_num[i]=0; }
+}
+
+inline void count_arrive(int &x)
+{
+      int t=x,step=0;
+      arrive_num[t]++;
+      while(t<=int(1e5))
+      {
+            t<<=1;
+            step++;
+            arrive_step[t]+=step;
+            arrive_num[t]++;
+      }
+      t=x,step=0;
+      while(t>1)
+      {
+            if(t!=1 && (t&1))
+            {
+                  int sta=t>>1;
+                  int sstep=step+1;
+                  while(sta<=int(1e5))
+                  {
+                        sta<<=1;
+                        sstep++;
+                        arrive_step[sta]+=sstep;
+                        arrive_num[sta]++;
+                  }
+            }
+            t>>=1;
+            step++;
+            arrive_step[t]+=step;
+            arrive_num[t]++;
+      }
+}
+
+int main()
+{
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      while(~scanf("%d",&n))
+      {
+            init();
+            for(int i=0; i<n; ++i)
+            {
+                  scanf("%d",&a[i]);
+                  count_arrive(a[i]);
+            }
+            int ans=INT_MAX;
+            for(int i=1; i<(MAXN<<1); ++i)
+            {
+                  if(arrive_num[i]==n)
+                        ans=ans<arrive_step[i]?ans:arrive_step[i];
+            }
+            printf("%d\n",ans);
+      }
+      return 0;
+}
+/*
+
+*/
