@@ -1,0 +1,136 @@
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-07-15-21.40
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define  LL long long
+#define  ULL unsigned long long
+using namespace std;
+
+#define MX  100007
+#define lft (idx<<1)
+#define rgt (lft|1)
+#define mid ((l+r)>>1)
+#define rep(i,x,y) for(int i=x;i<=y;++i)
+
+int Tree[27][4*MX];
+int Lazy[27][4*MX];
+char s[MX];
+
+void Build(int idx,int l,int r)
+{
+      if(l == r)
+      {
+            int id = s[l]-'a'+1;
+            Tree[id][idx] = 1;
+            return;
+      }
+      Build(lft,l,mid);
+      Build(rgt,mid+1,r);
+      rep(i,1,26) Tree[i][idx] = Tree[i][lft] + Tree[i][rgt]; //回溯pushup
+}
+
+void Pushup(int id,int idx,int l,int r,int v)
+{
+      Lazy[id][idx] = v;
+      Tree[id][idx] = (r-l+1)*(v%2);
+}
+
+void Update(int id,int idx,int l,int r,int s,int e,int v)
+{
+      if(l==s && r==e)
+      {
+            Pushup(id,idx,l,r,v);
+            return;
+      }
+      if(Lazy[id][idx])
+      {
+            Pushup(id,lft,l,mid,Lazy[id][idx]);
+            Pushup(id,rgt,mid+1,r,Lazy[id][idx]);
+            Lazy[id][idx] = 0;
+      }
+      if(e <= mid) { Update(id,lft,l,mid,s,e,v); }
+      else if(s > mid) { Update(id,rgt,mid+1,r,s,e,v); }
+      else { Update(id,lft,l,mid,s,mid,v), Update(id,rgt,mid+1,r,mid+1,e,v); }
+      Tree[id][idx] = Tree[id][lft] + Tree[id][rgt];
+}
+
+int Query(int id,int idx,int l,int r,int s,int e) //查询s~e这段上有多少个字母i
+{
+      if(l == s && r == e) { return Tree[id][idx]; }
+      if(Lazy[id][idx])
+      {
+            Pushup(id,lft,l,mid,Lazy[id][idx]);
+            Pushup(id,rgt,mid+1,r,Lazy[id][idx]);
+            Lazy[id][idx] = 0;
+      }
+      if(e <= mid) { return Query(id,lft,l,mid,s,e); }
+      else if(s > mid) { return Query(id,rgt,mid+1,r,s,e); }
+      else { return Query(id,lft,l,mid,s,mid) + Query(id,rgt,mid+1,r,mid+1,e); }
+}
+
+int main()
+{
+      int n,m;
+      scanf("%d %d",&n,&m);
+      scanf("%s",s+1);
+      Build(1,1,n);
+      while(m--)
+      {
+            int s,e,k;
+            scanf("%d %d %d",&s,&e,&k);
+            int cnt[27] = {0};
+            rep(i,1,26)
+            {
+                  cnt[i] = Query(i,1,1,n,s,e);
+                  Update(i,1,1,n,s,e,2);
+            }
+            if(k)/**< non-decreasing */
+            {
+                  int l = s;
+                  rep(i,1,26)
+                  {
+                        int st = l;
+                        int ed = st+cnt[i]-1;
+                        if(st <= ed) { Update(i,1,1,n,st,ed,1); } //将字符串的st到ed置为i
+                        l = ed+1;
+                  }
+            }
+            else/**< non-increasing */
+            {
+                  int l = s;
+                  for(int i=26; i>=1; --i)
+                  {
+                        int st = l;
+                        int ed = st+cnt[i]-1;
+                        if(st <= ed) { Update(i,1,1,n,st,ed,1); }
+                        l = ed+1;
+                  }
+            }
+      }
+      rep(i,1,n)
+      {
+            rep(j,1,26)
+            {
+                  int qq = Query(j,1,1,n,i,i);
+                  if(qq)     {putchar('a'+j-1); break;}
+            }
+      }
+      puts("");
+      return 0;
+}
