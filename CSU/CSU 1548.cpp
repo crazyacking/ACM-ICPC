@@ -13,7 +13,6 @@ double cal(double y1)
    return sqrt((x-wid)*(x-wid)+y1*y1)*c1
           +sqrt(wid*wid + (y-y1)*(y-y1))*c2;
 }
-
 int main()
 {
    
