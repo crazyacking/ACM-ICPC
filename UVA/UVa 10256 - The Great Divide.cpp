@@ -9,9 +9,7 @@ using namespace std;
 
 struct point {
 	double x, y; // we use double for most examples in this source code
-	point() {
-	}
-	;
+	point() {};
 	point(double _x, double _y) {
 		x = _x, y = _y;
 	}
