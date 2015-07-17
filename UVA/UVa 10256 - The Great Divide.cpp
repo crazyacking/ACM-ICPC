@@ -36,7 +36,7 @@ vec toVector(point p1, point p2) { // convert 2 points to vector
 
 double dist(point p1, point p2) { // get Euclidean distance of two points
 	return hypot(p1.x - p2.x, p1.y - p2.y);
-} // as shown earlier
+}
 
 double dot(vec a, vec b) {
 	return (a.x * b.x + a.y * b.y);
