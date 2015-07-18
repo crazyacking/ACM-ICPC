@@ -1,0 +1,60 @@
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-07-18-20.57
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define  LL long long
+#define  ULL unsigned long long
+using namespace std;
+
+int  a[100000010];
+
+int main()
+{
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      int t;
+      scanf("%d",&t);
+      while(t--)
+      {
+            int n;
+            scanf("%d",&n);
+            while(n--)
+            {
+                  memset(a,0,sizeof a);
+                  int r,s,e;
+                  scanf("%d %d %d",&r,&a,&b);
+                  for(int i=a+1,i<=b;++i)
+                  {
+                        int t;
+                        if(i<0)
+                              t=360+i;
+                        else t=i;
+                        a[t]=max(a[t],r);
+                  }
+            }
+            double res=0;
+            
+            
+      }
+            
+      return 0;
+}
+/*
+
+*/
