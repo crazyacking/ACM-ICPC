@@ -1,92 +1,135 @@
-/*
-* this code is made by crazyacking
-* Verdict: Accepted
-* Submission Date: 2015-07-18-22.10
-* Time: 0MS
-* Memory: 137KB
-*/
-#include <queue>
-#include <cstdio>
-#include <set>
-#include <string>
-#include <stack>
-#include <cmath>
-#include <climits>
-#include <map>
-#include <cstdlib>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cstring>
-#define  LL long long
-#define  ULL unsigned long long
+#include<iostream>
+#include<cstdio>
+#include<map>
+#include<cstring>
+#include<cmath>
+#include<vector>
+#include<algorithm>
+#include<set>
+#include<string>
+#include<queue>
+#define inf 1<<28
+#define M 6000005
+#define N 1000005
+#define Min(a,b) ((a)<(b)?(a):(b))
+#define Max(a,b) ((a)>(b)?(a):(b))
+#define pb(a) push_back(a)
+#define mem(a,b) memset(a,b,sizeof(a))
+//#define LL long long
+//#define MOD 1000000007
 using namespace std;
-
-const int M=5100010;
-char ss[M],str[M];
-
-struct Node
-{
-      int cnt;
-      Node *next[26];
+class Trie{
+public:
+	Trie *next[26],*fail;
+	int word;
+	Trie(){word=0;mem(next,NULL);fail=NULL;}
 };
-Node *root;
-
-inline void Build_Str(char *s)
-{
-      int len=strlen(s);
-      int cnt=-1;
-      for(int i=0;i<len;++i)
-      {
-            if(s[i]!='[')
-                  str[++cnt]=s[i];
-            else
-            {
-                  ++i;
-                  int temp=0,base=1;
-                  for(;s[i]>='0' && s[i]<='9';++i)
-                  {
-                        temp=(s[i]-'0')+temp*base;
-                        base*=10;
-                  }
-                  char ch=s[i];
-                  ++i;
-                  for(int j=1;j<=temp;++j)
-                        str[++cnt]=ch;
+Trie *que[M];
+int tot;
+Trie *NewNode(){
+	Trie *tmp=new Trie;
+	mem(tmp->next,NULL);
+	tmp->word=0;
+	return tmp;
+}
+void Insert(Trie *root,char *s,int len){
+	Trie *t=root;
+	for(int i=0;i<len;i++){
+		if(t->next[s[i]-'A']==NULL)
+			t->next[s[i]-'A']=new Trie();
+		t=t->next[s[i]-'A'];
+	}
+	t->word++;
+}
+void Bulid_fail(Trie *root){
+	int head=0,tail=0;
+	que[tail++]=root;
+	root->fail=NULL;
+	while(head<tail){
+		Trie *temp=que[head++],*p;
+		for(int i=0;i<26;i++){
+			 if(temp->next[i]==NULL)
+				 continue;
+              if(temp==root)
+				  temp->next[i]->fail=root;
+			  else{
+                  p=temp->fail;
+				  while(p!=NULL){
+					  if(p->next[i]!=NULL){
+						  temp->next[i]->fail=p->next[i];
+						  break;
+					  }
+					  p=p->fail;
+				  }
+				  if(p==NULL)
+					  temp->next[i]->fail=root;
+			  }
+			  que[tail++]=temp->next[i];
+		}
+	}
+}
+int AC(Trie *root,char *s,int len){
+       Trie *p=root;
+       int cnt=0;
+       for(int i=0;i<len;i++){
+              while(p->next[s[i]-'A']==NULL&&p!=root)
+                     p=p->fail;
+              p=p->next[s[i]-'A'];
+              p=(p==NULL)?root:p;
+              Trie *temp=p;
+              while(temp!=root){
+                     if(temp->word>0){
+                           cnt+=temp->word;
+						   temp->word=0;
+					 }
+					 else  break;
+                     temp=temp->fail;
+              }
+       }
+	   return cnt;
+}
+char str1[M],str2[M],str3[M];
+void change(){
+    int len1=strlen(str1),num,i,j;
+    int len2=0;
+    for(i=0;i<len1;i++){
+        if(str1[i]>='A'&&str1[i]<='Z'){
+            str2[len2++]=str1[i];
+            continue;
+        }
+        if(str1[i]=='['){
+            i++;
+            num=0;
+            for(;str1[i]>='0'&&str1[i]<='9';i++)
+                num=num*10+str1[i]-'0';
+            int ll=len2;
+            for(j=ll;j<ll+num;j++){
+                str2[j]=str1[i];
+                len2++;
             }
-      }
-      puts(str);
+            i+=1;
+        }
+    }
+    str2[len2]='\0';str3[len2]='\0';
+    for(i=0;i<len2;i++)
+        str3[i]=str2[len2-i-1];
 }
-
-inline void Insert(char *s)
-{
-      Node tmp=NULL;
-      while(s[i])
+int main(){
+	int t,n;
+	scanf("%d",&t);
+	while(t--){
+		tot=0;
+		Trie *root=new Trie();
+		scanf("%d",&n);
+		for(int i=0;i<n;i++){
+			char str[1005];
+			scanf("%s",str);
+			Insert(root,str,strlen(str));
+		}
+		Bulid_fail(root);
+		scanf("%s",str1);
+		change();
+		printf("%d\n",AC(root,str2,strlen(str2))+AC(root,str3,strlen(str3)));
+	}
+	return 0;
 }
-
-int main()
-{
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      int Cas;
-      scanf("%d",&Cas);
-      while(Cas--)
-      {
-            int n;
-            scanf("%d",&n);
-            root=NULL;
-            for(int i=0;i<n;++i)
-            {
-                  scanf("%s",str);
-                  Insert(str);
-            }
-            Build_ac_automation();
-            scanf("%s",ss);
-            Build_Str(ss);
-            printf("%d\n",Query(str));
-      }
-      return 0;
-}
-/*
-
-*/

@@ -14,18 +14,15 @@
 	<algorithm>
 	<cstring>
 
-1437230669 source:d:\code_fantasy\acm-icpc\hdu\hdu 3695 computer virus on planet pandora\main.cpp
-	<queue>
-	<cstdio>
-	<set>
-	<string>
-	<stack>
-	<cmath>
-	<climits>
-	<map>
-	<cstdlib>
+1437271793 source:d:\code_fantasy\acm-icpc\hdu\hdu 3695 computer virus on planet pandora\main.cpp
 	<iostream>
+	<cstdio>
+	<map>
+	<cstring>
+	<cmath>
 	<vector>
 	<algorithm>
-	<cstring>
+	<set>
+	<string>
+	<queue>
 
