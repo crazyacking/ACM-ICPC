@@ -1,0 +1,31 @@
+# depslib dependency file v1.0
+1437229432 source:d:\code_fantasy\acm-icpc\other\hdu 3695 computer virus on planet pandora\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+
+1437230669 source:d:\code_fantasy\acm-icpc\hdu\hdu 3695 computer virus on planet pandora\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+

@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1437235743 source:d:\code_fantasy\acm-icpc\other\计蒜之道 初赛 第四场 a\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+
