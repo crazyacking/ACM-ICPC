@@ -1,0 +1,154 @@
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-07-19-13.02
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define  LL long long
+#define  ULL unsigned long long
+#define NN 333333
+using namespace std;
+vector<int>v[NN];
+const int type = 26;
+int fail[NN],ans,child[NN][type],val[NN],tal,in[NN],out[NN],mx[NN<<2],cnt,pos[NN],str[NN];
+
+inline int newNode()
+{
+      ++cnt;
+      for( int i = 0; i < type; ++i ) child[cnt][i] = -1;
+      return cnt;
+}
+
+void insert( char *str, int root, int id )
+{
+      int p = root;
+      int len = strlen( str );
+      for( int i = 0; i < len; ++i )
+      {
+            int k = str[i] - 'a';
+            if( child[p][k] == -1 ) child[p][k] = newNode();
+            p = child[p][k];
+      }
+}
+
+void build_fail( int root )
+{
+      queue<int>q;
+      int p = root;
+      q.push( p );
+      while( !q.empty() )
+      {
+            p = q.front();
+            q.pop();
+            if( p ) v[fail[p]].push_back( p );
+            for( int k = 0; k < type; ++k )
+            {
+                  int tmp = child[p][k];
+                  if( tmp != -1 )
+                  {
+                        if( p != root ) fail[tmp] = child[fail[p]][k];
+                        else fail[tmp] = root;
+                        q.push( tmp );
+                  }
+                  else
+                  {
+                        if( p != root ) child[p][k] = child[fail[p]][k];
+                        else child[p][k] = root;
+                  }
+            }
+      }
+}
+
+void dfs( int s )
+{
+      in[s] = ++tal;
+      int len = v[s].size();
+      for( int i = 0; i < len; ++i )
+            dfs( v[s][i] );
+      out[s] = tal;
+      v[s].clear();
+}
+
+int query( int l, int r, int k, int L )
+{
+      if( l == L && r == L ) return mx[k];
+      int mid = ( l + r ) >> 1;
+      mx[k << 1] = max( mx[k << 1], mx[k] );
+      mx[k << 1 | 1] = max( mx[k << 1 | 1], mx[k] );
+      if( L <= mid ) return query( l, mid, k << 1, L );
+      else return query( mid + 1, r, k << 1 | 1, L );
+}
+
+void update( int l, int r, int k, int L, int R, int x )
+{
+      if( mx[k] >= x ) return;
+      if( l == L && r == R )
+      {
+            mx[k] = x;
+            return;
+      }
+      int mid = ( l + r ) >> 1;
+      if( R <= mid ) update( l, mid, k << 1, L, R, x );
+      else if( L > mid ) update( mid + 1, r, k << 1 | 1, L, R, x );
+      else
+      {
+            update( l, mid, k << 1, L, mid, x );
+            update( mid + 1, r, k << 1 | 1, mid + 1, R, x );
+      }
+}
+
+int main()
+{
+      int n, m, tt = 0;
+      scanf( "%d", &m );
+      while( m-- )
+      {
+            scanf( "%d", &n );
+            cnt = -1;
+            int root = newNode();
+            pos[0] = 0;
+            for( int i = 1; i <= n; ++i )
+            {
+                  scanf( "%s%d", str + pos[i - 1], &val[i] );
+                  insert( str + pos[i - 1], root, i );
+                  pos[i] = pos[i - 1] + strlen( str + pos[i - 1] );
+            }
+            build_fail( root );
+            tal = 0;
+            dfs( 0 );
+            memset( mx, 0, sizeof( mx ) );
+            ans = 0;
+            for( int i = 1; i <= n; ++i )
+            {
+                  int p = 0;
+                  int preTmp = 0;
+                  for( int j = pos[i - 1]; j < pos[i]; ++j )
+                  {
+                        int v = val[i] * ( j == pos[i] - 1 );
+                        p = child[p][str[j] - 'a'];
+                        int tmp = query( 1, tal, 1, in[p] );
+                        tmp = max( preTmp, tmp ) + v;
+                        ans = max( ans, tmp );
+                        update( 1, tal, 1, in[p], out[p], tmp );
+                        preTmp = tmp;
+                  }
+            }
+            printf( "Case #%d: ", ++tt );
+            cout << ans << endl;
+      }
+      return 0;
+}

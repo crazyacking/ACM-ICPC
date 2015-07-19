@@ -1,175 +1,90 @@
-/*
-* this code is made by crazyacking
-* Verdict: Accepted
-* Submission Date: 2015-07-19-10.29
-* Time: 0MS
-* Memory: 137KB
-*/
-#include <queue>
-#include <cstdio>
-#include <set>
-#include <string>
-#include <stack>
-#include <cmath>
-#include <climits>
-#include <map>
-#include <cstdlib>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cstring>
-#define  LL long long
-#define  ULL unsigned long long
+#include<iostream>
+#include<cassert>
+#include<cstring>
+#include<cstdio>
 using namespace std;
-
-const int M = 6000005;
-class node
+const int N = 300005;
+const int M = 20005;
+char ch[N + M];
+int dp[M], trie[N][26], fail[N], word[N], pos[M], sz, Q[N], flag[N];
+inline void chkmax( int &a, const int b ) {if( a < b )a = b;}
+void ins( int s )
 {
-public:
-      bool flag;
-      node *fail, *next[26];
-      node()
+      for( int p = 0; ch[s]; s++ )
       {
-            flag = false;
-            fail = NULL;
-            memset( next, NULL, sizeof next );
-      }
-};
-node *root;
-queue<node*> q;
-char s[M], str[M];
-
-void Insert( char *str ) // build Trie-Tree
-{
-      node *p = root;
-      int i = 0, index;
-      while( str[i] )
-      {
-            index = str[i] - 'A';
-            if( p->next[index] == NULL )
-                  p->next[index] = new node();
-            p = p->next[index];
-            ++i;
-      }
-      p->flag = true;
-}
-
-void build_ac_automation( node *root ) // build fail ptr
-{
-      root->fail = NULL;
-      while( !q.empty() ) q.pop();
-      q.push( root );
-      while( !q.empty() )
-      {
-            node *temp = q.front(); q.pop();
-            node *p = NULL;
-            for( int i = 0; i < 26; ++i )
+            int x = ch[s] - 'a';
+            if( trie[p][x] == 0 )
             {
-                  if( temp->next[i] != NULL )
+                  ++sz;
+                  memset( trie[sz], 0, sizeof( trie[sz] ) );
+                  word[sz] = 0;
+                  trie[p][x] = sz;
+            }
+            p = trie[p][x];
+      }
+}
+void ac()
+{
+      int head = 0, tail = 0;
+      for( int i = 0; i < 26; i++ ) if( trie[0][i] )
+            {
+                  fail[trie[0][i]] = 0;
+                  Q[tail ++] = trie[0][i];
+            }
+      while( head < tail )
+      {
+            int u = Q[head++], v;
+            for( int i = 0; i < 26; i++ )
+                  if( v = trie[u][i] )
                   {
-                        if( temp == root ) temp->next[i]->fail = root;
-                        else
-                        {
-                              p = temp->fail;
-                              while( p != NULL )
-                              {
-                                    if( p->next[i] != NULL )
-                                    {
-                                          temp->next[i]->fail = p->next[i];
-                                          break;
-                                    }
-                                    p = p->fail;
-                              }
-                              if( p == NULL ) temp->next[i]->fail = root;
-                        }
-                        q.push( temp->next[i] );
+                        fail[v] = trie[fail[u]][i];
+                        Q[tail++] = v;
                   }
-            }
+                  else trie[u][i] = trie[fail[u]][i];
       }
 }
-
-
-int query( node *root )  // mathing and count
+void cal( int now )
 {
-      node *p = root;
-      int i = 0, ans = 0, index;
-      while( str[i] )
+      int p = 0, v = 0;
+      for( int s = pos[now]; s < pos[now + 1]; s++ )
       {
-            index = str[i] - 'A';
-            while( p->next[index] == NULL && p != root )
-                  p = p->fail;
-            p = p->next[index];
-            if( p == NULL )
-                  p = root;
-            node *temp = p;
-            while( temp != root && temp->flag )
+            int x = ch[s] - 'a', t = ( p = trie[p][x] );
+            while( t )
             {
-                  ans++;
-                  temp->flag = false;
-                  temp = temp->fail;
-            }
-            i++;
-      }
-      return ans;
-}
-
-
-inline void build_str( char *s )
-{
-      int len = strlen( s ), cnt = -1;
-      for( int i = 0; i < len; ++i )
-      {
-            if( s[i] >= 'A' && s[i] <= 'Z' )
-            {
-                  str[++cnt] = s[i];
-                  continue;
-            }
-            if( s[i] == '[' )
-            {
-                  ++i;
-                  int num = 0;
-                  for( ; s[i] >= '0' && s[i] <= '9'; ++i )
-                  {
-                        num = num * 10 + ( s[i] - '0' );
-                  }
-                  char ch = s[i];
-                  ++i;
-                  for( int j = 1; j <= num; ++j )
-                        str[++cnt] = ch;
+                  if( word[t] ) chkmax( v, dp[flag[word[t]]] );
+                  t = fail[t];
             }
       }
-      str[++cnt] = '\0';
+      dp[now] += v;
+      word[p] = p;
+      flag[p] = now;
 }
-
-
 int main()
 {
-//      freopen("C:\\Users\\crazyacking\\Desktop\\cin.txt","r",stdin);
-//      freopen("C:\\Users\\crazyacking\\Desktop\\cout.txt","w",stdout);
-      ios_base::sync_with_stdio( false );
-      cin.tie( 0 );
-      int Cas;
-      scanf( "%d", &Cas );
-      while( Cas-- )
+      int test = 0;
+      cin >> test;
+      for( int _ = 1; _ <= test; _++ )
       {
-            root = new node();
             int n;
+            sz = 0;
             scanf( "%d", &n );
-            while( n-- )
+            pos[0] = 0;
+            memset( trie[0], 0, sizeof( trie[0] ) );
+            for( int i = 0; i < n; i++ )
             {
-                  scanf( "%s", s );
-                  Insert( s );
+                  scanf( "%s%d", ch + pos[i], &dp[i] );
+                  pos[i + 1] = pos[i] + strlen( ch + pos[i] );
+                  ins( pos[i] );
             }
-            build_ac_automation( root );
-            scanf( "%s", s );
-            build_str( s );
-            int ans = query( root );
-            strrev( str );
-            ans += query( root );
-            printf( "%d\n", ans );
+            ac();
+            int ans = 0;
+            for( int i = 0; i < n; i++ )
+            {
+                  if( dp[i] > 0 )
+                        cal( i );
+                  chkmax( ans, dp[i] );
+            }
+            printf( "Case #%d: %d\n", _, ans );
       }
       return 0;
 }
-/*
-
-*/
