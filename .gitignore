@@ -45,7 +45,6 @@ Temporary Items
 bin/
 obj/
 .bak
-.cpp.bak
 .cbp
 .depend
 .layout
