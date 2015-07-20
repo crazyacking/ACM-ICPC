@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1437397738 source:d:\code_fantasy\acm-icpc\other\testdemo\main.cpp
+1437393764 source:d:\code_fantasy\acm-icpc\hdu\bnu training 2015.07.20 a. a simple tree problem\main.cpp
 	<queue>
 	<cstdio>
 	<set>

@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1437401283 source:d:\code_fantasy\acm-icpc\poj\poj 2774 long long message\main.cpp
+	<algorithm>
+	<cstdio>
+	<cstring>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<queue>
+	<stack>
+	<map>
+	<string>
+	<climits>
+	<cmath>
+

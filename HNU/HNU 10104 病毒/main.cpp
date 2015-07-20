@@ -1,97 +1,96 @@
-/*
-* this code is made by crazyacking
-* Verdict: Accepted
-* Submission Date: 2015-07-20-16.29
-* Time: 0MS
-* Memory: 137KB
-*/
-#include <queue>
 #include <cstdio>
-#include <set>
-#include <string>
-#include <stack>
-#include <cmath>
-#include <climits>
-#include <map>
-#include <cstdlib>
 #include <iostream>
-#include <vector>
-#include <algorithm>
 #include <cstring>
-#define  LL long long
-#define  ULL unsigned long long
+#include <algorithm>
+#include <queue>
+#define N 105
+#define maxn 30005
 using namespace std;
-const int MAXN=30030;
+typedef long long ll;
+const int mod = 100000;
 
-char s[MAXN];
-class node
-{
-      bool flag;
-      int status;
-      node * next[2];
-      node()
-      {
-            flag=false;
-            status=0;
-            memset(next,NULL,sizeof next);
-      }
-};
-node *root;
+const int max_next = 2;
 
-void ins(char *s)
+int next[maxn][max_next], fail[maxn], num[maxn], siz;
+
+int newnode()
 {
-      node *tmp=root;
-      int i=0,idx;
-      while(s[i])
+      for( int i = 0; i < max_next; i++ )
+            next[siz][i] = 0;
+      fail[siz] = num[siz] = 0;
+      return siz++;
+}
+void init()
+{
+      siz = 0;
+      newnode();
+}
+void Insert( char *s, int len )
+{
+      int p = 0;
+      for( int i = 0; i < len; i++ )
       {
-            idx=s[i]-'0';
-            if(!tmp->next[idx])
-                  tmp->next[idx]=new node;
-            i++;
-            tmp=tmp->next[idx];
+            int &x = next[p][s[i] - '0'];
+            p = x ? x : x = newnode();
       }
-      flag=true;
+      num[p]++;
+
 }
 
-void build_ac_auto_machine(node *root)
+void acbuild()
 {
-      node *tmp=root;
-      node *p=NULL;
-      queue<node*> q;
-      q.push(root);
-      while(!q.empty())
+      queue<int>Q;
+      Q.push( 0 );
+      while( !Q.empty() )
       {
-            node *now=q.front();q.pop();
-            for(int i=0;i<2;++i)
+            int temp = Q.front(); Q.pop();
+            for( int i = 0; i < max_next; i++ )
             {
-                  if(!now->next[i])
-                  {
-                        p=now->fail;
-                        while(!p&&p->next[i]==NULL)
-                              p=p->fail;
-                        now->next[i]->fail=p->next[i];
-                        q.push(now->next[i]);
-                  }
-                  else now->next[i]->fail=root;
+                  int v = next[temp][i];
+                  if( v == 0 ) next[temp][i] = next[fail[temp]][i];
+                  else Q.push( v );
+                  if( temp != 0 )fail[v] = next[fail[temp]][i];
+                  if( num[next[fail[temp]][i]] )num[next[temp][i]]++;
             }
       }
 }
+int vis[maxn];
+bool dfs( int now )
+{
+      vis[now] = 1;
+      for( int j = 0; j < max_next; j++ )
+      {
+            if( num[next[now][j]] )continue;
+            if( vis[next[now][j]] == 1 )return true;
+            if( vis[next[now][j]] == 0 && dfs( next[now][j] ) )return true;
+      }
+      vis[now] = -1;
+      return false;
+}
 
+char word[30005];
 int main()
 {
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      int n;
-      scanf("%d",&n);
-      root=NULL;
-      while(n--)
+      int n, L;
+      while( scanf( "%d", &n ) != EOF )
       {
-            scanf("%s",s);
-            ins(s);
+            init();
+            while( n-- )
+            {
+                  scanf( "%s", word );
+                  Insert( word, strlen( word ) );
+            }
+            acbuild();
+            memset( vis, 0, sizeof vis );
+            bool ans = false;
+            for( int i = 0; i < siz; i++ )
+                  if( !vis[i] && dfs( i ) )
+                  {
+                        ans = true;
+                        break;
+                  }
+            if( ans )puts( "TAK\n" );
+            else puts( "NIE\n" );
       }
-      
       return 0;
 }
-/*
-
-*/

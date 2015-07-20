@@ -1,90 +1,103 @@
-#include<iostream>
-#include<cassert>
-#include<cstring>
-#include<cstdio>
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-05-09-21.22
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define  LL long long
+#define  ULL unsigned long long
 using namespace std;
-const int N = 300005;
-const int M = 20005;
-char ch[N + M];
-int dp[M], trie[N][26], fail[N], word[N], pos[M], sz, Q[N], flag[N];
-inline void chkmax( int &a, const int b ) {if( a < b )a = b;}
-void ins( int s )
+const int MAXN = 100010;
+//以下为倍增算法求后缀数组
+int wa[MAXN], wb[MAXN], wv[MAXN], Ws[MAXN];
+int cmp( int *r, int a, int b, int l )
+{return r[a] == r[b] && r[a + l] == r[b + l];}
+/**< 传入参数：str,sa,len+1,ASCII_MAX+1 */
+void da( const char *r, int *sa, int n, int m )
 {
-      for( int p = 0; ch[s]; s++ )
+      int i, j, p, *x = wa, *y = wb, *t;
+      for( i = 0; i < m; i++ ) Ws[i] = 0;
+      for( i = 0; i < n; i++ ) Ws[x[i] = r[i]]++;
+      for( i = 1; i < m; i++ ) Ws[i] += Ws[i - 1];
+      for( i = n - 1; i >= 0; i-- ) sa[--Ws[x[i]]] = i;
+      for( j = 1, p = 1; p < n; j *= 2, m = p )
       {
-            int x = ch[s] - 'a';
-            if( trie[p][x] == 0 )
-            {
-                  ++sz;
-                  memset( trie[sz], 0, sizeof( trie[sz] ) );
-                  word[sz] = 0;
-                  trie[p][x] = sz;
-            }
-            p = trie[p][x];
+            for( p = 0, i = n - j; i < n; i++ ) y[p++] = i;
+            for( i = 0; i < n; i++ ) if( sa[i] >= j ) y[p++] = sa[i] - j;
+            for( i = 0; i < n; i++ ) wv[i] = x[y[i]];
+            for( i = 0; i < m; i++ ) Ws[i] = 0;
+            for( i = 0; i < n; i++ ) Ws[wv[i]]++;
+            for( i = 1; i < m; i++ ) Ws[i] += Ws[i - 1];
+            for( i = n - 1; i >= 0; i-- ) sa[--Ws[wv[i]]] = y[i];
+            for( t = x, x = y, y = t, p = 1, x[sa[0]] = 0, i = 1; i < n; i++ )
+                  x[sa[i]] = cmp( y, sa[i - 1], sa[i], j ) ? p - 1 : p++;
       }
+      return;
 }
-void ac()
+int sa[MAXN], Rank[MAXN], height[MAXN];
+//求height数组
+/**< str,sa,len */
+void calheight( const char *r, int *sa, int n )
 {
-      int head = 0, tail = 0;
-      for( int i = 0; i < 26; i++ ) if( trie[0][i] )
-            {
-                  fail[trie[0][i]] = 0;
-                  Q[tail ++] = trie[0][i];
-            }
-      while( head < tail )
-      {
-            int u = Q[head++], v;
-            for( int i = 0; i < 26; i++ )
-                  if( v = trie[u][i] )
-                  {
-                        fail[v] = trie[fail[u]][i];
-                        Q[tail++] = v;
-                  }
-                  else trie[u][i] = trie[fail[u]][i];
-      }
+      int i, j, k = 0;
+      for( i = 1; i <= n; i++ ) Rank[sa[i]] = i;
+      for( i = 0; i < n; height[Rank[i++]] = k )
+            for( k ? k-- : 0, j = sa[Rank[i] - 1]; r[i + k] == r[j + k]; k++ );
+      return;
 }
-void cal( int now )
-{
-      int p = 0, v = 0;
-      for( int s = pos[now]; s < pos[now + 1]; s++ )
-      {
-            int x = ch[s] - 'a', t = ( p = trie[p][x] );
-            while( t )
-            {
-                  if( word[t] ) chkmax( v, dp[flag[word[t]]] );
-                  t = fail[t];
-            }
-      }
-      dp[now] += v;
-      word[p] = p;
-      flag[p] = now;
-}
+
+char str[MAXN];
 int main()
 {
-      int test = 0;
-      cin >> test;
-      for( int _ = 1; _ <= test; _++ )
+      while( scanf( "%s", str ) != EOF )
       {
-            int n;
-            sz = 0;
-            scanf( "%d", &n );
-            pos[0] = 0;
-            memset( trie[0], 0, sizeof( trie[0] ) );
-            for( int i = 0; i < n; i++ )
+            int len = strlen( str );
+            da( str, sa, len + 1, 130 );
+            calheight( str, sa, len );
+            puts( "<-------------All Suffix------------->" );
+            puts( "" );
+            for( int i = 0; i < len; ++i )
             {
-                  scanf( "%s%d", ch + pos[i], &dp[i] );
-                  pos[i + 1] = pos[i] + strlen( ch + pos[i] );
-                  ins( pos[i] );
+                  printf( "%d:\t", i + 1 );
+                  for( int j = i; j < len; ++j )
+                        printf( "%c", str[j] );
+                  puts( "" );
             }
-            ac();
-            int ans = 0;
-            for( int i = 0; i < n; i++ )
+            puts( "" );
+            puts( "<------------After sort-------------->" );
+            puts( "" );
+            for( int i = 1; i <= len; ++i )
             {
-                  if( dp[i] > 0 )
-                        cal( i );
-                  chkmax( ans, dp[i] );
+                  printf( "sa[%2d ] = %2d\t", i, sa[i] + 1 );
+                  for( int j = sa[i]; j < len; ++j )
+                        printf( "%c", str[j] );
+                  puts( "" );
             }
-            printf( "Case #%d: %d\n", _, ans );
+            puts( "" );
+            puts( "<--------------Height---------------->" );
+            puts( "" );
+            puts( "height[ 1 ]=null" );
+            for( int i = 2; i <= len; ++i )
+                  printf( "height[%2d ]=%2d \n", i, height[i] );
+            puts( "" );
+            puts( "<---------------Rank----------------->" );
+            for( int i = 0; i < len; ++i )
+                  printf( "Rank[%2d ] = %2d\n", i + 1, Rank[i] );
+            puts( "<------------------------------------>" );
       }
       return 0;
 }

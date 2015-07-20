@@ -34,6 +34,7 @@ void Insert( char *s, int len )
             p = x ? x : x = newnode();
       }
       num[p]++;
+
 }
 
 void acbuild()
@@ -42,12 +43,11 @@ void acbuild()
       Q.push( 0 );
       while( !Q.empty() )
       {
-            int temp = Q.front();
-            Q.pop();
+            int temp = Q.front(); Q.pop();
             for( int i = 0; i < max_next; i++ )
             {
                   int v = next[temp][i];
-                  if( v == 0 )next[temp][i] = next[fail[temp]][i];
+                  if( v == 0 ) next[temp][i] = next[fail[temp]][i];
                   else Q.push( v );
                   if( temp != 0 )fail[v] = next[fail[temp]][i];
                   if( num[next[fail[temp]][i]] )num[next[temp][i]]++;
@@ -89,7 +89,6 @@ int main()
                         ans = true;
                         break;
                   }
-            acdebug();
             if( ans )puts( "TAK\n" );
             else puts( "NIE\n" );
       }

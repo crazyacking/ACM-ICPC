@@ -1,97 +1,146 @@
-#include <cstdio>
-#include <iostream>
-#include <cstring>
-#include <algorithm>
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-07-20-19.43
+* Time: 0MS
+* Memory: 137KB
+*/
 #include <queue>
-#define N 105
-#define maxn 30005
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define  LL long long
+#define  ULL unsigned long long
 using namespace std;
-typedef long long ll;
-const int mod = 100000;
-
-const int max_next = 2;
-
-int next[maxn][max_next], fail[maxn], num[maxn], siz;
-
-int newnode()
+#define inf 0x3f3f3f3f
+const char tab = 0;
+const int max_next = 128;
+int idx;
+struct trie
 {
-      for( int i = 0; i < max_next; i++ )
-            next[siz][i] = 0;
-      fail[siz] = num[siz] = 0;
-      return siz++;
+      struct trie *fail;
+      struct trie *next[max_next];
+      int isword;
+      int index;
+      trie()
+      {
+            isword = 0;
+            index = 0;
+            memset( next, NULL, sizeof next );
+            fail = NULL;
+      }
+};
+int rev[256];
+trie *que[100005], ac[100005];
+int head, tail;
+
+trie *New()
+{
+      trie *temp = &ac[idx];
+      for( int i = 0; i < max_next; i++ )temp->next[i] = NULL;
+      temp->fail = NULL;
+      temp->isword = 0;
+      temp->index = idx++;
+      return temp;
 }
-void init()
+void Insert( trie *root, char *word, int len )
 {
-      siz = 0;
-      newnode();
-}
-void Insert( char *s, int len )
-{
-      int p = 0;
+      trie *t = root;
       for( int i = 0; i < len; i++ )
       {
-            int &x = next[p][s[i] - '0'];
-            p = x ? x : x = newnode();
+            if( t->next[word[i]] == NULL )
+                  t->next[word[i]] = New();
+            t = t->next[word[i]];
       }
-      num[p]++;
+      t->isword++;
 }
 
-void acbuild()
+void acbuild( trie *root )
 {
-      queue<int>Q;
-      Q.push( 0 );
-      while( !Q.empty() )
+      int head = 0, tail = 0;
+      que[tail++] = root;
+      root->fail = NULL;
+      while( head < tail )
       {
-            int temp = Q.front();
-            Q.pop();
+            trie *temp = que[head++], *p;
             for( int i = 0; i < max_next; i++ )
             {
-                  int v = next[temp][i];
-                  if( v == 0 )next[temp][i] = next[fail[temp]][i];
-                  else Q.push( v );
-                  if( temp != 0 )fail[v] = next[fail[temp]][i];
-                  if( num[next[fail[temp]][i]] )num[next[temp][i]]++;
+                  if( temp->next[i] )
+                  {
+                        if( temp == root )temp->next[i]->fail = root;
+                        else
+                        {
+                              p = temp->fail;
+                              while( p != NULL )
+                              {
+                                    if( p->next[i] )
+                                    {
+                                          temp->next[i]->fail = p->next[i];
+                                          break;
+                                    }
+                                    p = p->fail;
+                              }
+                              if( p == NULL )temp->next[i]->fail = root;
+                        }
+                        if( temp->next[i]->fail->isword )temp->next[i]->isword++;
+                        que[tail++] = temp->next[i];
+                  }
+                  else if( temp == root )temp->next[i] = root;
+                  else temp->next[i] = temp->fail->next[i];
             }
       }
 }
-int vis[maxn];
-bool dfs( int now )
+void del( trie *root )
 {
-      vis[now] = 1;
-      for( int j = 0; j < max_next; j++ )
-      {
-            if( num[next[now][j]] )continue;
-            if( vis[next[now][j]] == 1 )return true;
-            if( vis[next[now][j]] == 0 && dfs( next[now][j] ) )return true;
-      }
-      vis[now] = -1;
-      return false;
+      for( int i = 0; i < max_next; i++ )
+            if( root->next[i] )del( root->next[i] );
+      free( root );
 }
 
-char word[30005];
+int dp[205][205];
+int solve( char *word, int len, trie *root )
+{
+      trie *r = root;
+      int ans = 0;
+      for( int i = 0; i < len; i++ )
+      {
+            if( r->next[word[i]]->isword )r = root, ans++;
+            else r = r->next[word[i]];
+      }
+      return ans;
+}
+char word[10005];
 int main()
 {
-      int n, L;
-      while( scanf( "%d", &n ) != EOF )
+      int n, cas = 1, m;
+      while( scanf( "%d%d", &n, &m ) != EOF )
       {
-            init();
-            while( n-- )
+            getchar();
+            if( n == 0 && m == 0 )break;
+            idx = 0;
+            trie *root = New();
+            for( int i = 1; i <= n; i++ )
             {
-                  scanf( "%s", word );
-                  Insert( word, strlen( word ) );
+                  gets( word );
+                  Insert( root, word, strlen( word ) );
             }
-            acbuild();
-            memset( vis, 0, sizeof vis );
-            bool ans = false;
-            for( int i = 0; i < siz; i++ )
-                  if( !vis[i] && dfs( i ) )
-                  {
-                        ans = true;
-                        break;
-                  }
-            acdebug();
-            if( ans )puts( "TAK\n" );
-            else puts( "NIE\n" );
+            acbuild( root );
+            int ans = 0;
+            while( m-- )
+            {
+                  gets( word );
+                  ans += solve( word, strlen( word ), root );
+            }
+            printf( "%d\n", ans );
       }
       return 0;
 }

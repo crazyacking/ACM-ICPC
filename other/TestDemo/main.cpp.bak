@@ -1,287 +1,103 @@
-#pragma comment(linker, "/STACK:1024000000,1024000000")
-#include <cstdio>
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-05-09-21.22
+* Time: 0MS
+* Memory: 137KB
+*/
 #include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
 #include <cstring>
+#define  LL long long
+#define  ULL unsigned long long
 using namespace std;
-
-#define D(x)
-
-const int MAX_CHILD_NUM = 26;
-const int MAX_NODE_NUM = 10 + 3 * ( int )1e5;
-const int MAX_LEN = 10 + 3 * ( int )1e5 ;
-const int MAX_N = 10 + 2 * ( int )1e4;
-
-#define MAX_EDGE_NUM MAX_NODE_NUM * 2
-
-struct Edge
+const int MAXN = 100010;
+//以下为倍增算法求后缀数组
+int wa[MAXN], wb[MAXN], wv[MAXN], Ws[MAXN];
+int cmp( int *r, int a, int b, int l )
+{return r[a] == r[b] && r[a + l] == r[b + l];}
+/**< 传入参数：str,sa,len+1,ASCII_MAX+1 */
+void da( const char *r, int *sa, int n, int m )
 {
-      int v, next;
-      Edge()
-      {}
-      Edge( int v, int next ): v( v ), next( next )
-      {}
-} edge[MAX_EDGE_NUM];
-
-int head[MAX_NODE_NUM];
-int edge_cnt;
-
-void init_edge()
+      int i, j, p, *x = wa, *y = wb, *t;
+      for( i = 0; i < m; i++ ) Ws[i] = 0;
+      for( i = 0; i < n; i++ ) Ws[x[i] = r[i]]++;
+      for( i = 1; i < m; i++ ) Ws[i] += Ws[i - 1];
+      for( i = n - 1; i >= 0; i-- ) sa[--Ws[x[i]]] = i;
+      for( j = 1, p = 1; p < n; j *= 2, m = p )
+      {
+            for( p = 0, i = n - j; i < n; i++ ) y[p++] = i;
+            for( i = 0; i < n; i++ ) if( sa[i] >= j ) y[p++] = sa[i] - j;
+            for( i = 0; i < n; i++ ) wv[i] = x[y[i]];
+            for( i = 0; i < m; i++ ) Ws[i] = 0;
+            for( i = 0; i < n; i++ ) Ws[wv[i]]++;
+            for( i = 1; i < m; i++ ) Ws[i] += Ws[i - 1];
+            for( i = n - 1; i >= 0; i-- ) sa[--Ws[wv[i]]] = y[i];
+            for( t = x, x = y, y = t, p = 1, x[sa[0]] = 0, i = 1; i < n; i++ )
+                  x[sa[i]] = cmp( y, sa[i - 1], sa[i], j ) ? p - 1 : p++;
+      }
+      return;
+}
+int sa[MAXN], Rank[MAXN], height[MAXN];
+//求height数组
+/**< str,sa,len */
+void calheight( const char *r, int *sa, int n )
 {
-      memset( head, -1, sizeof( head ) );
-      edge_cnt = 0;
+      int i, j, k = 0;
+      for( i = 1; i <= n; i++ ) Rank[sa[i]] = i;
+      for( i = 0; i < n; height[Rank[i++]] = k )
+            for( k ? k-- : 0, j = sa[Rank[i] - 1]; r[i + k] == r[j + k]; k++ );
+      return;
 }
 
-void add_edge( int u, int v )
-{
-      edge[edge_cnt] = Edge( v, head[u] );
-      head[u] = edge_cnt++;
-}
-
-struct Trie
-{
-      int next[MAX_NODE_NUM][MAX_CHILD_NUM];
-      int fail[MAX_NODE_NUM];
-      int count[MAX_NODE_NUM];
-      int node_cnt;
-      int root;
-      bool vis[MAX_NODE_NUM]; //set it to false
-
-      void init()
-      {
-            node_cnt = 0;
-            root = newnode();
-      }
-
-      int newnode()
-      {
-            for( int i = 0; i < MAX_CHILD_NUM; i++ )
-                  next[node_cnt][i] = -1;
-            count[node_cnt++] = 0;
-            return node_cnt - 1;
-      }
-
-      int get_id( char a )
-      {
-            return a - 'a';
-      }
-
-      void insert( char buf[], int index )
-      {
-            int now = root;
-            for( int i = 0; buf[i]; i++ )
-            {
-                  int id = get_id( buf[i] );
-                  if( next[now][id] == -1 )
-                        next[now][id] = newnode();
-                  now = next[now][id];
-            }
-            count[now] = index;
-      }
-
-      void build()
-      {
-            queue<int>Q;
-            fail[root] = root;
-            for( int i = 0; i < MAX_CHILD_NUM; i++ )
-                  if( next[root][i] == -1 )
-                        next[root][i] = root;
-                  else
-                  {
-                        fail[next[root][i]] = root;
-                        Q.push( next[root][i] );
-                  }
-            while( !Q.empty() )
-            {
-                  int now = Q.front();
-                  Q.pop();
-                  for( int i = 0; i < MAX_CHILD_NUM; i++ )
-                        if( next[now][i] == -1 )
-                              next[now][i] = next[fail[now]][i];
-                        else
-                        {
-                              fail[next[now][i]] = next[fail[now]][i];
-                              Q.push( next[now][i] );
-                        }
-            }
-      }
-
-      void debug()
-      {
-            for( int i = 0; i < node_cnt; i++ )
-            {
-                  printf( "id = %3d,fail = %3d,end = %3d,chi = [", i, fail[i], count[i] );
-                  for( int j = 0; j < MAX_CHILD_NUM; j++ )
-                        printf( "%2d", next[i][j] );
-                  printf( "]\n" );
-            }
-      }
-
-
-      void build_fail_tree()
-      {
-            init_edge();
-            for( int i = 1; i < node_cnt; i++ )
-            {
-                  add_edge( i, fail[i] );
-                  add_edge( fail[i], i );
-            }
-      }
-
-} ac;
-
-const int MAX_INTERVAL = MAX_LEN;
-
-struct SegmentTree
-{
-
-      struct Node
-      {
-            int l, r;
-            Node *pleft, *pright;
-            int value;
-      } tree[MAX_INTERVAL * 4];
-
-      int node_cnt;
-
-      void init()
-      {
-            node_cnt = 0;
-      }
-
-      Node* new_node()
-      {
-            node_cnt++;
-            return tree + node_cnt;
-      }
-
-      void build_tree( Node *proot, int s, int e )
-      {
-            proot->l = s;
-            proot->r = e;
-            proot->value = 0;
-            if( s == e )
-            {
-                  proot->pleft = proot->pright = NULL;
-                  return;
-            }
-            int mid = ( s + e ) / 2;
-            build_tree( proot->pleft = new_node(), s, mid );
-            build_tree( proot->pright = new_node(), mid + 1, e );
-      }
-
-      void pull_up( Node *proot )
-      {
-      }
-
-      void push_down( Node *proot )
-      {
-      }
-
-      void update( Node *proot, int start, int end, int value )
-      {
-            if( start > proot->r || end < proot->l )
-                  return;
-            start = max( start, proot->l );
-            end = min( end, proot->r );
-            if( start == proot->l && end == proot->r )
-            {
-                  proot->value = max( proot->value, value );
-                  return;
-            }
-            push_down( proot );
-            update( proot->pleft, start, end, value );
-            update( proot->pright, start, end, value );
-            pull_up( proot );
-      }
-
-      int query( Node *proot, int start, int end )
-      {
-            int ret = proot->value;
-            if( start > proot->r || end < proot->l )
-                  return 0;
-            start = max( start, proot->l );
-            end = min( end, proot->r );
-            if( start == proot->l && end == proot->r )
-            {
-                  return ret;
-            }
-            push_down( proot );
-            ret = max( ret, query( proot->pleft, start, end ) );
-            ret = max( ret, query( proot->pright, start, end ) );
-            pull_up( proot );
-            return ret;
-      }
-} tree;
-
-char st[MAX_LEN];
-int pos[MAX_N];
-int dfn[MAX_LEN][2];
-int dfn_cnt;
-int n;
-int weight[MAX_N];
-
-void dfs( int u, int parent )
-{
-      dfn[u][0] = ++dfn_cnt;
-      for( int i = head[u]; i != -1; i = edge[i].next )
-      {
-            int v = edge[i].v;
-            if( v != parent )
-            {
-                  dfs( v, u );
-            }
-      }
-      dfn[u][1] = dfn_cnt;
-}
-
-int work()
-{
-      int ret = 0;
-      tree.init();
-      tree.build_tree( tree.tree, 0, dfn_cnt );
-      for( int i = 0; i < n; i++ )
-      {
-            int u = ac.root;
-            int temp = 0;
-            for( int j = pos[i]; j < pos[i + 1]; j++ )
-            {
-                  u = ac.next[u][ac.get_id( st[j] )];
-                  temp = max( temp, tree.query( tree.tree, dfn[u][0], dfn[u][0] ) + weight[i] );
-            }
-            tree.update( tree.tree, dfn[u][0], dfn[u][1], temp );
-            ret = max( ret, temp );
-      }
-      return ret;
-}
-
-void input()
-{
-      scanf( "%d", &n );
-      int temp = 0;
-      for( int i = 0; i < n; i++ )
-      {
-            scanf( "%s%d", st + temp, &weight[i] );
-            pos[i] = temp;
-            ac.insert( st + temp, i );
-            int len = strlen( st + temp );
-            temp += len;
-      }
-      pos[n] = temp;
-}
-
+char str[MAXN];
 int main()
 {
-      int t;
-      scanf( "%d", &t );
-      for( int i = 1; i <= t; i++ )
+      while( scanf( "%s", str ) != EOF )
       {
-            ac.init();
-            input();
-            ac.build();
-            ac.build_fail_tree();
-            dfn_cnt = 0;
-            dfs( 0, -1 );
-            printf( "Case #%d: %d\n", i, work() );
+            int len = strlen( str );
+            da( str, sa, len + 1, 130 );
+            calheight( str, sa, len );
+            puts( "<-------------All Suffix------------->" );
+            puts( "" );
+            for( int i = 0; i < len; ++i )
+            {
+                  printf( "%d:\t", i + 1 );
+                  for( int j = i; j < len; ++j )
+                        printf( "%c", str[j] );
+                  puts( "" );
+            }
+            puts( "" );
+            puts( "<------------After sort-------------->" );
+            puts( "" );
+            for( int i = 1; i <= len; ++i )
+            {
+                  printf( "sa[%2d ] = %2d\t", i, sa[i] + 1 );
+                  for( int j = sa[i]; j < len; ++j )
+                        printf( "%c", str[j] );
+                  puts( "" );
+            }
+            puts( "" );
+            puts( "<--------------Height---------------->" );
+            puts( "" );
+            puts( "height[ 1 ]=null" );
+            for( int i = 2; i <= len; ++i )
+                  printf( "height[%2d ]=%2d \n", i, height[i] );
+            puts( "" );
+            puts( "<---------------Rank----------------->" );
+            for( int i = 0; i < len; ++i )
+                  printf( "Rank[%2d ] = %2d\n", i + 1, Rank[i] );
+            puts( "<------------------------------------>" );
       }
       return 0;
 }
