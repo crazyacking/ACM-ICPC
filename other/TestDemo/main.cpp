@@ -1,140 +1,58 @@
-/*
-* this code is made by crazyacking
-* Verdict: Accepted
-* Submission Date: 2015-05-09-21.22
-* Time: 0MS
-* Memory: 137KB
-*/
-#include <queue>
-#include <cstdio>
-#include <set>
-#include <string>
-#include <stack>
-#include <cmath>
-#include <climits>
-#include <map>
-#include <cstdlib>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cstring>
-#define  LL long long
-#define  ULL unsigned long long
-using namespace std;
-const int MAXN = 100010;
-//以下为倍增算法求后缀数组
-int wa[MAXN], wb[MAXN], wv[MAXN], Ws[MAXN];
-int cmp( int *r, int a, int b, int l )
-{return r[a] == r[b] && r[a + l] == r[b + l];}
-/**< 传入参数：str,sa,len+1,ASCII_MAX+1 */
-void da( const char *r, int *sa, int n, int m )
+#include<stdio.h>
+#include<string.h>
+void makeNext( const char P[], int next[] )
 {
-      int i, j, p, *x = wa, *y = wb, *t;
-      for( i = 0; i < m; i++ ) Ws[i] = 0;
-      for( i = 0; i < n; i++ ) Ws[x[i] = r[i]]++;
-      for( i = 1; i < m; i++ ) Ws[i] += Ws[i - 1];
-      for( i = n - 1; i >= 0; i-- ) sa[--Ws[x[i]]] = i;
-      for( j = 1, p = 1; p < n; j *= 2, m = p )
+      int q, k;
+      int m = strlen( P );
+      next[0] = 0;
+      for( q = 1, k = 0; q < m; ++q )
       {
-            for( p = 0, i = n - j; i < n; i++ ) y[p++] = i;
-            for( i = 0; i < n; i++ ) if( sa[i] >= j ) y[p++] = sa[i] - j;
-            for( i = 0; i < n; i++ ) wv[i] = x[y[i]];
-            for( i = 0; i < m; i++ ) Ws[i] = 0;
-            for( i = 0; i < n; i++ ) Ws[wv[i]]++;
-            for( i = 1; i < m; i++ ) Ws[i] += Ws[i - 1];
-            for( i = n - 1; i >= 0; i-- ) sa[--Ws[wv[i]]] = y[i];
-            for( t = x, x = y, y = t, p = 1, x[sa[0]] = 0, i = 1; i < n; i++ )
-                  x[sa[i]] = cmp( y, sa[i - 1], sa[i], j ) ? p - 1 : p++;
+            while( k > 0 && P[q] != P[k] )
+                  k = next[k - 1];
+            if( P[q] == P[k] )
+            {
+                  k++;
+            }
+            next[q] = k;
       }
-      return;
-}
-int sa[MAXN], Rank[MAXN], height[MAXN];
-//求height数组
-/**< str,sa,len */
-void calheight( const char *r, int *sa, int n )
-{
-      int i, j, k = 0;
-      for( i = 1; i <= n; i++ ) Rank[sa[i]] = i;
-      for( i = 0; i < n; height[Rank[i++]] = k )
-            for( k ? k-- : 0, j = sa[Rank[i] - 1]; r[i + k] == r[j + k]; k++ );
-      return;
 }
 
-char str[MAXN];
+int kmp( const char P[], const char T[], int next[] )
+{
+      int n, m;
+      int i, k;
+      m = strlen( P );
+      n = strlen( T );
+      makeNext( P, next );
+      for( i = 0, k = 0; i < n; ++i )
+      {
+            while( k > 0 && P[k] != T[i] )
+                  k = next[k - 1];
+            if( P[k] == T[i] )
+            {
+                  k++;
+            }
+            if( k == m )
+            {
+                  printf( "Pattern appear start with index:%d\n", ( i - m + 1 ) );
+            }
+      }
+}
+
 int main()
 {
-      while( scanf( "%s", str ) != EOF )
+      int i;
+      int next[20] = {0};
+      char P[] = "boxbox";
+      char T[] = "ababoxbafdboxboxsss";
+      printf( "%s\n", P );
+      printf( "%s\n", T );
+      // makeNext(P,next);
+      kmp( P, T, next );
+      for( i = 0; i < strlen( P ); ++i )
       {
-            int len = strlen( str );
-            int mid=len+1;
-//            cout<<"mid="<<mid<<endl;
-            str[len]='A'-1;
-            int cnt=len+1;
-            for(int i=len-1;i>=0;--i)
-            {
-                  str[cnt++]=str[i];
-            }
-            str[cnt]='\0';
-//            puts(str);
-            len=strlen(str);
-            da( str, sa, len + 1, 250 );
-            calheight( str, sa, len );
-//            puts( "<-------------All Suffix------------->" );
-//            puts( "" );
-//            for( int i = 0; i < len; ++i )
-//            {
-//                  printf( "%d:\t", i + 1 );
-//                  for( int j = i; j < len; ++j )
-//                        printf( "%c", str[j] );
-//                  puts( "" );
-//            }
-//            puts( "" );
-//            puts( "<------------After sort-------------->" );
-//            puts( "" );
-//            for( int i = 1; i <= len; ++i )
-//            {
-//                  printf( "sa[%2d ] = %2d\t", i, sa[i] + 1 );
-//                  for( int j = sa[i]; j < len; ++j )
-//                        printf( "%c", str[j] );
-//                  puts( "" );
-//            }
-//            puts( "" );
-//            puts( "<--------------Height---------------->" );
-//            puts( "" );
-//            puts( "height[ 1 ]=null" );
-//            for( int i = 2; i <= len; ++i )
-//                  printf( "height[%2d ]=%2d \n", i, height[i] );
-//            puts("- - - - - - - - - - - Program Run Here ! - - - - - - - - - - - - ");
-
-            int start = 0,maxx=1,l,r;
-            for(int i=1;i<=len;++i)
-            {
-                  l=min(sa[i]+1,sa[i-1]+1);
-                  r=max(sa[i]+1,sa[i-1]+1);
-                  if(l<mid && r>mid)
-                  {
-                        if(height[i]>maxx)
-                        {
-                              maxx=height[i];
-                              start=l;
-                        }
-                        else if(height[i]== maxx)
-                        {
-                              start=min(start ,l);
-                        }
-                  }
-            }
-            start --;
-            for(int i=start ;i<start + maxx;++i)
-            {
-                  if(str[i])
-                        printf("%c",str[i]);
-            }
-            puts( "" );
-//            puts( "<---------------Rank----------------->" );
-//            for( int i = 0; i < len; ++i )
-//                  printf( "Rank[%2d ] = %2d\n", i + 1, Rank[i] );
-//            puts( "<------------------------------------>" );
+            printf( "%d ", next[i] );
       }
+      printf( "\n" );
       return 0;
 }
