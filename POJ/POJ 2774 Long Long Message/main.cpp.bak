@@ -18,7 +18,7 @@
 #define LL long long
 using namespace std;
 int num[N];
-char s[N],str[N];
+char s[N], str[N];
 namespace Suf
 {
 int sa[N], rank[N], height[N];
@@ -51,6 +51,7 @@ void calcHeight( int *r, int n )       //  求height数组
 {
       int i, j, k = 0;
       for( i = 1; i <= n; i ++ ) rank[sa[i]] = i;
+      cout << "hefdsakasdf" << endl;
       for( i = 0; i < n; height[rank[i ++]] = k )
       {
             for( k ? k -- : 0, j = sa[rank[i] - 1]; r[i + k] == r[j + k]; k ++ );
@@ -58,75 +59,89 @@ void calcHeight( int *r, int n )       //  求height数组
 }
 }
 using namespace Suf;
+
+int main()
+{
+      ios_base::sync_with_stdio( false );
+      cin.tie( 0 );
+      while( ~scanf( "%s", str ) )
+      {
+            int len = strlen( str );
+            str[len]='A'-1;
+            int cnt=len+1;
+            for(int i=len-1;i>=0;--i)
+            {
+                  str[cnt++]=str[i];
+            }
+            str[cnt]='\0';
+            puts(str);
+//            for( int i = 0; i < len1; ++i )
+//                  num[i] = str[i] - 'a' + 2;
+//            num[len1] = 1;
+//            gets( str );
+//            int len2 = strlen( str );
+//            for( int i = 0; i < len2; ++i )
+//                  num[i + len1 + 1] = str[i] - 'a' + 2;
+//            int n = len1 + len2;
+//            da( num, n + 1, 30 );
+//            calcHeight( num, n );
+//            int ans = 0;
+//            for( int i = 2; i < n; ++i )
+//            {
+//                  if( ( sa[i] < len1 && sa[i - 1] > len1 ) || ( sa[i - 1] < len1 && sa[i] > len1 ) ) //判断是否属于不同串
+//                        ans = max( ans, height[i] );
+//            }
+//            cout << ans << endl;
+      }
+      return 0;
+}
+
+
 //
 //int main()
 //{
 //      ios_base::sync_with_stdio( false );
 //      cin.tie( 0 );
-//      gets( str );
-//      int len1 = strlen( str );
-//      for( int i = 0; i < len1; ++i )
-//            num[i] = str[i] - 'a' + 2;
-//      num[len1] = 1;
-//      gets( str );
-//      int len2 = strlen( str );
-//      for( int i = 0; i < len2; ++i )
-//            num[i + len1 + 1] = str[i] - 'a' + 2;
-//      int n = len1 + len2;
-//
-//      da( num, n + 1, 30 );
-//      calcHeight( num, n );
-//      int ans = 0;
-//      for( int i = 2; i < n; ++i )
+//      while( ~scanf( "%s", s ) )
 //      {
-//            if( ( sa[i] < len1 && sa[i - 1] > len1 ) || ( sa[i - 1] < len1 && sa[i] > len1 ) ) //判断是否属于不同串
-//                  ans = max( ans, height[i] );
+//            int len = strlen( s );
+//            int cnt = 0;
+//            for( int i = len - 1; i >= 0; --i )
+//                  str[cnt++] = s[i];
+//            str[cnt] = '\0';
+//            puts( s );
+//            puts( str );
+//            s[len] = 'A' - 1;
+//            strcat( s, str );
+//            puts( s );
+//            int n = strlen( s );
+//            for( int i = 0; i < n; ++i )
+//            {
+//                  num[i] = s[i] - 'A' + 2;
+//            }
+//            n--;
+//            da( sa, n + 1, 130 );
+//            puts( "- - - - - - - - - - - Program Run Here ! - - - - - - - - - - - - " );
+//            calcHeight( num, n );
+//            puts( "- - - - - - - hehehehe- - - - Program Run Here ! - - - - - - - - - - - - " );
+//            int start = 0;
+//            int maxx = 0;
+//            for( int i = 2; i < n; ++i )
+//            {
+//                  if( ( sa[i] < len && sa[i - 1] > len ) || ( sa[i] > len && sa[i - 1] < len ) )
+//                  {
+//                        start = min( sa[i], sa[i - 1] );
+//                        maxx = max( maxx, height[i] );
+//                  }
+//            }
+//            for( int i = start ; i < start + maxx ; ++i )
+//            {
+//                  printf( "%c", s[i] );
+//            }
+//            puts( "" );
 //      }
-//      cout << ans << endl;
 //      return 0;
 //}
+///*
 //
-
-
-int main()
-{
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      while(~scanf("%s",s))
-      {
-            int len=strlen(s);
-            int cnt=0;
-            for(int i=len-1;i>=0;--i)
-                  str[cnt++]=s[i];
-            str[cnt]='\0';
-            puts(s);
-            puts(str);
-            s[len]='a'-1;
-            strcat(s,str);
-            puts(s);
-            int n=strlen(s);
-            n--;
-            da(sa,n+1,130);
-            calcHeight(num,n);
-            puts("- - - - - - - - - - - Program Run Here ! - - - - - - - - - - - - ");
-            int start = 0;
-            int maxx=0;
-            for(int i=2;i<n;++i)
-            {
-                  if((sa[i]<len && sa[i-1]>len) || (sa[i]>len &&sa[i-1]<len))
-                  {
-                        start=min(sa[i],sa[i-1]);
-                        maxx=max(maxx,height[i]);
-                  }
-            }
-            for(int i=start ;i<start + maxx ; ++i)
-            {
-                  printf("%c",s[i]);
-            }
-            puts("");
-      }
-      return 0;
-}
-/*
-
-*/
+//*/

@@ -66,38 +66,75 @@ int main()
       while( scanf( "%s", str ) != EOF )
       {
             int len = strlen( str );
-            da( str, sa, len + 1, 130 );
+            int mid=len+1;
+//            cout<<"mid="<<mid<<endl;
+            str[len]='A'-1;
+            int cnt=len+1;
+            for(int i=len-1;i>=0;--i)
+            {
+                  str[cnt++]=str[i];
+            }
+            str[cnt]='\0';
+//            puts(str);
+            len=strlen(str);
+            da( str, sa, len + 1, 250 );
             calheight( str, sa, len );
-            puts( "<-------------All Suffix------------->" );
-            puts( "" );
-            for( int i = 0; i < len; ++i )
+//            puts( "<-------------All Suffix------------->" );
+//            puts( "" );
+//            for( int i = 0; i < len; ++i )
+//            {
+//                  printf( "%d:\t", i + 1 );
+//                  for( int j = i; j < len; ++j )
+//                        printf( "%c", str[j] );
+//                  puts( "" );
+//            }
+//            puts( "" );
+//            puts( "<------------After sort-------------->" );
+//            puts( "" );
+//            for( int i = 1; i <= len; ++i )
+//            {
+//                  printf( "sa[%2d ] = %2d\t", i, sa[i] + 1 );
+//                  for( int j = sa[i]; j < len; ++j )
+//                        printf( "%c", str[j] );
+//                  puts( "" );
+//            }
+//            puts( "" );
+//            puts( "<--------------Height---------------->" );
+//            puts( "" );
+//            puts( "height[ 1 ]=null" );
+//            for( int i = 2; i <= len; ++i )
+//                  printf( "height[%2d ]=%2d \n", i, height[i] );
+//            puts("- - - - - - - - - - - Program Run Here ! - - - - - - - - - - - - ");
+
+            int start = 0,maxx=1,l,r;
+            for(int i=1;i<=len;++i)
             {
-                  printf( "%d:\t", i + 1 );
-                  for( int j = i; j < len; ++j )
-                        printf( "%c", str[j] );
-                  puts( "" );
+                  l=min(sa[i]+1,sa[i-1]+1);
+                  r=max(sa[i]+1,sa[i-1]+1);
+                  if(l<mid && r>mid)
+                  {
+                        if(height[i]>maxx)
+                        {
+                              maxx=height[i];
+                              start=l;
+                        }
+                        else if(height[i]== maxx)
+                        {
+                              start=min(start ,l);
+                        }
+                  }
+            }
+            start --;
+            for(int i=start ;i<start + maxx;++i)
+            {
+                  if(str[i])
+                        printf("%c",str[i]);
             }
             puts( "" );
-            puts( "<------------After sort-------------->" );
-            puts( "" );
-            for( int i = 1; i <= len; ++i )
-            {
-                  printf( "sa[%2d ] = %2d\t", i, sa[i] + 1 );
-                  for( int j = sa[i]; j < len; ++j )
-                        printf( "%c", str[j] );
-                  puts( "" );
-            }
-            puts( "" );
-            puts( "<--------------Height---------------->" );
-            puts( "" );
-            puts( "height[ 1 ]=null" );
-            for( int i = 2; i <= len; ++i )
-                  printf( "height[%2d ]=%2d \n", i, height[i] );
-            puts( "" );
-            puts( "<---------------Rank----------------->" );
-            for( int i = 0; i < len; ++i )
-                  printf( "Rank[%2d ] = %2d\n", i + 1, Rank[i] );
-            puts( "<------------------------------------>" );
+//            puts( "<---------------Rank----------------->" );
+//            for( int i = 0; i < len; ++i )
+//                  printf( "Rank[%2d ] = %2d\n", i + 1, Rank[i] );
+//            puts( "<------------------------------------>" );
       }
       return 0;
 }

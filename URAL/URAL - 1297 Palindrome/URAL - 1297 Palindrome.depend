@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1437438227 source:d:\code_fantasy\acm-icpc\poj\poj 2774 long long message\main.cpp
+1437441722 source:d:\code_fantasy\acm-icpc\ural\ural - 1297 palindrome\main.cpp
 	<algorithm>
 	<cstdio>
 	<cstring>
