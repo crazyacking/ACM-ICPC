@@ -1,16 +1,16 @@
 # depslib dependency file v1.0
-1437454091 source:d:\code_fantasy\acm-icpc\hdu\2015 multi-university training contest 1 a\main.cpp
-	<iostream>
-	<sstream>
-	<iomanip>
-	<fstream>
-	<algorithm>
-	<cstdio>
-	<cmath>
-	<string>
-	<cstring>
-	<vector>
+1437530985 source:d:\code_fantasy\acm-icpc\hdu\2015 multi-university training contest 1 a\main.cpp
 	<queue>
-	<utility>
+	<cstdio>
 	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
 
