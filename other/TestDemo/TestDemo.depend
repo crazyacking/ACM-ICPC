@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1437444496 source:d:\code_fantasy\acm-icpc\other\testdemo\main.cpp
+1437566488 source:d:\code_fantasy\acm-icpc\other\testdemo\main.cpp
 	<stdio.h>
-	<string.h>
+	<math.h>
 
