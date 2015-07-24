@@ -24,8 +24,24 @@ using namespace std;
 
 LL L,N,K;
 multiset<pair<int,int> > apple;
+void debug()
+{
+      multiset<pair<int,int> > ::iterator it;
+      puts("- - - - - - - - - -debug   begin-- - - - - - - - - - - - ");
+
+      for(it=apple.begin();it!=apple.end();++it)
+      {
+            cout<<(*it).first<<" "<<(*it).second<<endl;
+      }
+
+      puts("- - - - - - - - - -debug   end-- - - - - - - - - - - - ");
+
+}
 int main()
 {
+      freopen("C:\\Users\\crazyacking\\Desktop\\cin.txt","r",stdin);
+//      freopen("C:\\Users\\crazyacking\\Desktop\\cout.txt","w",stdout);
+
       ios_base::sync_with_stdio(false);
       cin.tie(0);
       int cas;
@@ -38,25 +54,17 @@ int main()
             for(int i=0;i<N;++i)
             {
                   cin>>x>>m;
-                  while(m--)
+                  while(x!=0 && m--)
                   {
                         apple.insert(make_pair(x,cnt++));
                   }
             }
+            debug();
             LL ans=0;
             LL mid=L/2;
-            multiset<pair<int,int> >::iterator ibe=apple.begin(),it,tmp;
-            multiset<pair<int,int> >::iterator ien=apple.end();
-            puts("- - - - - - - - - - - Program Run Here ! - - - - - - - - - - - - ");
-
-            for(it=apple.begin();it!=apple.end();++it)
-            {
-                  cout<<(*it).first<< " "<<(*it).second<<endl;
-            }
-            puts("- - - - - - - - - - - Program Run Here ! - - - - - - - - - - - - ");
-
             int container;
-            for(;ibe!=apple.end() && (*ibe).first<mid;)
+            multiset<pair<int,int> >::iterator ibe,it,tmp;
+            for(ibe=apple.begin();ibe!=apple.end() && (*ibe).first<mid;)
             {
                   container=0;
                   while(container!=K && (*ibe).first<mid)
@@ -64,6 +72,7 @@ int main()
                         ibe++;
                         container++;
                   }
+                  --ibe;
                   if(container==K)
                   {
                         it=ibe;
@@ -76,29 +85,31 @@ int main()
                   }
                   else break;
             }
-            cout<<ans<<endl;
-            for(;ien!=apple.begin() && (*ien).first>=mid;)
+            debug();
+            multiset<pair<int,int> > :: reverse_iterator rev=apple.rbegin(),rit;
+            for(rev=apple.rbegin();rev!=apple.rend() && (*rev).first>=mid;)
             {
                   container=0;
-                  while(container!=K && (*ien).first>=mid)
+                  while(container!=K && (*rev).first>=mid)
                   {
-                        ien--;
+                        rev++;
                         container++;
                   }
+                  rev--;
                   if(container==K)
                   {
-                        it=ien;
-                        ans+=(L-(*it).first)*2;
+                        rit=rev;
+                        cout<<"hehe="<<(*rit).first<<endl;
+                        ans+=(L-(*rit).first)*2;
                         for(int i=0;i<K;++i)
                         {
-                              it=apple.end();
-                              apple.erase(*it);
+                              rit=apple.rbegin();
+                              apple.erase(*rit);
                         }
                   }
                   else break;
             }
-            int si=apple.size();
-            if(si<K)
+            if(apple.size()<K)
             {
                   ans+=L; // run a cycle
             }
