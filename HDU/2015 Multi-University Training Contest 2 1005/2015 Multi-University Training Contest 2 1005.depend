@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1437702974 source:d:\code_fantasy\acm-icpc\hdu\2015 multi-university training contest 2 1005\main.cpp
+	<iostream>
+	<windows.h>
+	<conio.h>
+	<time.h>
+	<cstdlib>
+

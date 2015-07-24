@@ -47,14 +47,6 @@ int main()
             LL mid=L/2;
             multiset<pair<int,int> >::iterator ibe=apple.begin(),it,tmp;
             multiset<pair<int,int> >::iterator ien=apple.end();
-            puts("- - - - - - - - - - - Program Run Here ! - - - - - - - - - - - - ");
-
-            for(it=apple.begin();it!=apple.end();++it)
-            {
-                  cout<<(*it).first<< " "<<(*it).second<<endl;
-            }
-            puts("- - - - - - - - - - - Program Run Here ! - - - - - - - - - - - - ");
-
             int container;
             for(;ibe!=apple.end() && (*ibe).first<mid;)
             {
@@ -76,7 +68,7 @@ int main()
                   }
                   else break;
             }
-            cout<<ans<<endl;
+
             for(;ien!=apple.begin() && (*ien).first>=mid;)
             {
                   container=0;

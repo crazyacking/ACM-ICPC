@@ -22,7 +22,7 @@
 #define  ULL unsigned long long
 using namespace std;
 
-int n, m, ans;
+int n, m, cnt, ans;
 int time[10], online[10], offonline[10];
 
 struct edge
@@ -64,6 +64,7 @@ int main()
     scanf("%d", &T);
     while(T --)
     {
+        cnt = 0;
         ans = 0;
         memset(time, 0, sizeof(time));
         memset(e, 0, sizeof(e));
