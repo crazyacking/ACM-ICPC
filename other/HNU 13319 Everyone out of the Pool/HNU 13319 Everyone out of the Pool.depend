@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1437963401 source:d:\code_fantasy\acm-icpc\other\hnu 13319 everyone out of the pool\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+

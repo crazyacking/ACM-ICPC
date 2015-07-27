@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1438002577 source:d:\code_fantasy\acm-icpc\hdu\hdu 3746 cyclic nacklace\main.cpp
+	<iostream>
+	<cstring>
+	<cstdio>
+	<algorithm>
+

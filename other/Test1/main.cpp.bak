@@ -1,43 +1,49 @@
-/*
-* this code is made by crazyacking
-* Verdict: Accepted
-* Submission Date: 2015-07-21-10.20
-* Time: 0MS
-* Memory: 137KB
-*/
-#include <queue>
-#include <cstdio>
-#include <set>
-#include <string>
-#include <stack>
-#include <cmath>
-#include <climits>
-#include <map>
-#include <cstdlib>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cstring>
-#define  LL long long
-#define  ULL unsigned long long
+#include<iostream>
+#include<cstring>
+#include<cstdio>
+#include<algorithm>
 using namespace std;
+#define N 100010
 
-const int MAXN=10010;
-int next[MAXN];
-char P[MAXN],T[MAXN];
+char s[N];
+int nextval[N];
+int len;
+
+void getnext(const char *s)
+{
+	int i = 0, j = -1;
+	nextval[0] = -1;
+	while(i != len)
+	{
+		if(j == -1 || s[i] == s[j])
+			nextval[++i] = ++j;
+		else
+			j = nextval[j];
+	}
+}
+
 int main()
 {
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      while(~scanf("%s %s",P,T))
-      {
-            kmp(P,T,next);
-            for(int i=0;i<strlen(P);++i)
-                  printf("%d ",next[i]);
-            putchar(10);
-      }
-      return 0;
+	int ncase;
+	int length, add;
+	scanf("%d", &ncase);
+	while(ncase--)
+	{
+		scanf("%s", s);
+		len = strlen(s);
+		getnext(s);
+		/*for(int i = 0; i <= len; ++i) //查看next数组的内容
+			cout<<nextval[i]<<" ";
+		cout<<endl;*/
+		length = len - nextval[len]; //循环节的长度
+		cout<<"xun huan jie ="<<length<<endl;
+		if(len != length && len % length == 0) //循环多次
+			printf("0\n");
+		else
+		{
+			add = length - nextval[len] % length; //取余的作用：abcab，去掉abc
+			printf("%d\n",add);
+		}
+	}
+	return 0;
 }
-/*
-
-*/

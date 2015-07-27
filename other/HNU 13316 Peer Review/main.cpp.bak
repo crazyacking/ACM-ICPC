@@ -1,0 +1,87 @@
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-07-27-10.44
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define  LL long long
+#define  ULL unsigned long long
+using namespace std;
+
+struct node
+{
+      int num;
+      string name;
+      int see[10];
+};
+node a[1010];
+bool flag[1010];
+int main()
+{
+//      freopen("C:\\Users\\crazyacking\\Desktop\\cin.txt","r",stdin);
+//      freopen("C:\\Users\\crazyacking\\Desktop\\cout.txt","w",stdout);
+      ios_base::sync_with_stdio( false );
+      cin.tie( 0 );
+      int K, N;
+      while( cin >> K >> N && ( K || N ) )
+      {
+            for( int i = 0; i < N; ++i )
+            {
+                  cin >> a[i].name;
+                  a[i].num = i + 1;
+                  for( int j = 0; j < K; ++j ) cin >> a[i].see[j];
+            }
+            memset( flag, true, sizeof flag );
+            for( int q = 0; q < N; ++q )
+            {
+                  int cnt = 0;
+                  bool f = false;
+                  for( int i = 0; i < N; ++i )
+                  {
+                        for( int j = 0; j < K; ++j )
+                        {
+                              if( a[i].see[j] == a[q].num )
+                                    cnt++;
+                        }
+                        if( a[q].name.compare( a[i].name ) == 0 )
+                        {
+                              for( int j = 0; j < K; ++j )
+                              {
+                                    if( a[q].num == a[i].see[j] )
+                                    {
+                                          f = true;
+                                          break;
+                                    }
+                              }
+                        }
+                  }
+                  if( cnt != K || f ) flag[q] = false;
+            }
+            int ans = 0;
+            for( int i = 0; i < N; ++i )
+            {
+                  if( !flag[i] ) ans++;
+            }
+            if( ans == 0 ) cout << "NO PROBLEMS FOUND" << endl;
+            else if( ans == 1 ) cout << "1 PROBLEM FOUND" << endl;
+            else cout << ans << " PROBLEMS FOUND" << endl;
+      }
+      return 0;
+}
+/*
+
+*/
