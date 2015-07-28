@@ -27,7 +27,7 @@ char s[MAXN];
 int Next[MAXN];
 void getNext()
 {
-      Next[0]=0;
+      Next[0]=0;f
       for(int i=1,k=0;i<n;++i)
       {
             while(s[i]!=s[k]&&k) k=Next[k-1];
@@ -39,21 +39,12 @@ int main()
 {
       ios_base::sync_with_stdio(false);
       cin.tie(0);
-      int cas=1;
-      while(~scanf("%d",&n)&&n)
+      while(~scanf("%s",s))
       {
-            scanf("%s",s);
+            n=strlen(s);
             getNext();
-            printf("Test case #%d\n",cas++);
-            for(int i=1;i<n;++i)
-            {
-                  int now_cycle=(i+1)-Next[i];
-                  if((now_cycle!=i+1) && (i+1)%now_cycle==0)
-                  {
-                        printf("%d %d\n",i+1,(i+1)/now_cycle);
-                  }
-            }
-            puts("");
+            int min_cycle=n-Next[n-1];
+            printf("%d\n",min_cycle);
       }
       return 0;
 }

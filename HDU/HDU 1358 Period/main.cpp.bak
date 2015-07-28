@@ -37,9 +37,6 @@ void getNext()
 }
 int main()
 {
-//      freopen("C:\\Users\\crazyacking\\Desktop\\cin.txt","r",stdin);
-      //freopen("C:\\Users\\crazyacking\\Desktop\\cout.txt","w",stdout);
-
       ios_base::sync_with_stdio(false);
       cin.tie(0);
       int cas=1;
