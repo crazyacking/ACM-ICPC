@@ -1,0 +1,35 @@
+efine LL long long
+
+using namespace std;
+const LL mod = 1e9 + 7;
+const double PI = acos(-1.0);
+const double E = exp(1.0);
+const int M = 1e6 + 5;
+
+int ans[8];
+
+int main()
+{
+    int t;
+    int l, r;
+    ans[1] = 2;
+    ans[2] = 6;
+    ans[3] = 30;
+    ans[4] = 210;
+    ans[5] = 2310;
+    ans[6] = 30030;
+    ans[7] = 510510;
+    scanf("%d", &t);
+    while( t-- ){
+        scanf("%d%d", &l, &r);
+        int ok = 1;
+        for(int i = 7; i >= 2; --i){
+            if(ans[i] >= l && ans[i] * 2 <= r){
+                ok = i;
+                break;
+            }
+        }
+        cout << ok << endl;
+    }
+    return 0;
+}
