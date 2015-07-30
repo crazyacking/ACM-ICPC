@@ -12,6 +12,7 @@
 #include <stack>
 #include <cmath>
 #include <climits>
+#include <mgap>
 #include <cstdlib>
 #include <iostream>
 #include <vector>
@@ -41,22 +42,27 @@ int main()
             int ans = 2,s1 = 2,s2 = 2;
             for( int i = 2; i < n; ++i )
             {
-                  if( a[i] - a[i - 1] == gap ) s1++;
+                  if( a[i] - a[i - 1] == gap )
+                        s1++;
                   else
                   {
                         gap = a[i] - a[i - 1];
                         ans = max( ans, s1 );
                         s1 = 2;
                   }
-                  if( fabs( a[i] *1.0 / a[i - 1] - gp ) <= 1e-6 ) s2++;
+                  if( fabs( a[i] / ( double )a[i - 1] - gp ) <= 1e-6 )
+                  {
+                        s2++;
+                  }
                   else
                   {
-                        gp = a[i]*1.0 / a[i - 1];
+                        gp = a[i] / ( double )a[i - 1];
                         ans = max( ans, s2 );
                         s2 = 2;
                   }
             }
-            cout << max( ans, max( s1, s2 ) ) << endl;
+            ans = max( ans, max( s1, s2 ) );
+            cout << ans << endl;
       }
       return 0;
 }
