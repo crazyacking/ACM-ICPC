@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-07-28-14.01
+* Submission Date: 2015-07-28-19.01
 * Time: 0MS
 * Memory: 137KB
 */
@@ -22,43 +22,47 @@
 #define  ULL unsigned long long
 using namespace std;
 
-const int NN=10000010;
-bool v[NN];
+int T, a, b;
+int f[1000009][10];
+const int NN = 1000005;
 int p[NN];
-void makePrime()
+bool v[NN];
+void cntPrimeNum()
 {
-      int num=-1,i,j;
-      for(i=2; i<NN; ++i)
+      for( int i = 2; i < NN; ++i )
       {
-            if(!v[i]) { p[++num]=i; }
-            for(j=0; j<=num && i*p[j]<NN; ++j)
-            {
-                  v[i*p[j]]=true;
-                  if(i%p[j]==0) { break; }
-            }
+            if( !v[i] )
+                  for( int j = i; j < NN; j += i )
+                  {
+                        v[j] = true;
+                        ++p[j];
+                  }
       }
-      //cout<<num<<endl;
 }
 
 int main()
 {
-//      freopen("C:\\Users\\crazyacking\\Desktop\\cin.txt","r",stdin);
-//      freopen("C:\\Users\\crazyacking\\Desktop\\cout.txt","w",stdout);
-
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      makePrime();
-      for(int i=0;i<20;++i)
+      cntPrimeNum();
+      for( int i = 1; i < NN; ++i )
+            for( int j = 7; j > 0; --j )
+                  if( p[i] == j ) f[i][j] = 1;
+      for( int i = 1; i <= 1000000; ++i )
+            for( int j = 1; j <= 7; ++j )
+                  f[i][j] += f[i - 1][j];
+      scanf( "%d", &T );
+      while( T-- )
       {
-            LL ans=1;
-            for(int j=0;j<i;++j)
+            int ans = 1;
+            scanf( "%d %d", &a, &b );
+            for( int i = 7; i > 0; --i )
             {
-                  ans*=p[j];
+                  if( f[b][i] - f[a - 1][i] > 1 )
+                  {
+                        ans = i;
+                        break;
+                  }
             }
-            printf("%d,",ans);
+            printf( "%d\n", ans );
       }
       return 0;
 }
-/*
-
-*/
