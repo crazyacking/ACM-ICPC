@@ -1,6 +1,7 @@
 /*
 * this code is made by crazyacking
-* Submission Date: 2015-07-30-14.53
+* Verdict: Accepted
+* Submission Date: 2015-07-31-08.55
 * Time: 0MS
 * Memory: 137KB
 */
@@ -21,85 +22,142 @@
 #define  ULL unsigned long long
 using namespace std;
 
-int n,a[44722];
+struct point
+{
+      int x,y;
+      int from;
+      point(){;}
+      point(int a,int b,int f){x=a,y=b,from=f;}
+};
+struct dis_point
+{
+public:
+      int dis;
+      int x,y;
+      int from;
+      bool operator < (dis_point a) const
+      {
+            return dis<a.dis;
+      }
+      dis_point(int d,int a,int b,int f)
+      {
+            dis=d,x=a,y=b,from=f;
+      }
+      dis_point(){;}
+};
+int n,m;
+int cnt[1010];
+char G[1010][1010],ans[1010][1010];
+set<dis_point> se;
+queue<dis_point> q;
+int si;
+
 void pre()
 {
-      for(int i=0;1;++i)
+      if(G[0][0]=='1')
       {
-            a[i]=(1+i)*i/2;
-            if(a[i]>1000000050) return ;
+            q.push( dis_point( abs(n+m),0,0,1) );
+            si=1;
+            return;
+      }
+      else
+      {
+            queue<point> q1;
+            q1.push(point(0,0,-1));
+            point now;
+            while(!q1.empty())
+            {
+                  now=q1.front(); q1.pop();
+                  if(G[now.x+1][now.y]=='0')
+                  {
+                        q1.push(point(now.x+1,now.y,-1));
+                  }
+                  else
+                  {
+                        se.insert(dis_point( abs(n-now.x+1)+abs(m-now.y),now.x+1,now.y,-1));
+                  }
+                  if(G[now.x][now.y+1]=='0')
+                  {
+                        q1.push(point(now.x,now.y+1,-1));
+                  }
+                  else
+                  {
+                        se.insert(dis_point(  abs(n-now.x) + abs(m-now.y+1), now.x,now.y+1 ,-1 ));
+                  }
+            }
+      }
 
+      while(!q.empty()) q.pop();
+      set<dis_point>::iterator it=se.begin(),tm=se.begin();
+      ++it;
+      int cnt=0;
+      for(;it!=se.end();++it,++tm)
+      {
+            if((*it).dis == (*tm).dis )
+            {
+                  q.push( dis_point( (*tm).dis,(*tm).x,(*tm).y,cnt++) );
+            }
+            else
+            {
+                  q.push( dis_point( (*tm).dis,(*tm).x,(*tm).y,cnt++) );
+                  break;
+            }
+      }
+      si=q.size();
+}
+
+void bfs()
+{
+      for(int i=0;i<1010;++i) memset(ans[i],0,sizeof ans[i]);
+      memset(cnt,0,sizeof cnt);
+      dis_point now;
+      while(!q.empty())
+      {
+            now=q.front();q.pop();
+            ans[now.from][cnt[now.from]++]=G[now.x][now.y];
+            if(now.x+1<n && now.y<m)
+            {
+                  q.push(dis_point(abs(n-now.x-1) + abs(m-now.y),now.x+1,now.y,now.from));
+            }
+            if(now.x<n && now.y+1<m)
+            {
+                  q.push(dis_point(abs(n-now.x) + abs(m-now.y-1),now.x,now.y+1,now.from));
+            }
+      }
+      for(int i=0;i<si;++i)
+      {
+            for(int j=0;ans[i][j];++j)
+            {
+                  putchar(ans[i][j]);
+            }
+            puts("");
       }
 
 }
 
-void out(int a)
-{
-    if(a>9)
-        out(a/10);
-    putchar(a%10+'0');
-}
-
 int main()
 {
-      pre();
-      while(~scanf("%d",&n))
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      int t;
+      scanf("%d",&t);
+      while(t--)
       {
-            int idx=0;
-            for(int i=0;i<44722;++i)
+            scanf("%d %d",&n,&m);
+            for(int i=0;i<n;++i) scanf("%s",G[i]);
+
+            for(int i=0;i<n;++i)
             {
-                  if(n>a[i]&& n<=a[i+1])
-                  {
-                      idx=i+1;break;
-                  }
+                  puts(G[i]);
             }
-            int same=0;
-            bool haveAns=false;
-            LL abandon=0;
-            for(same=0;same<=idx;++same)
+            pre();
+            printf("si= %d\n",si);
+            if(si==0)
             {
-                  abandon=(LL)(1+same)*same/2;
-                  if(a[idx]-abandon==n)
-                  {
-                        haveAns=true;
-                        break;
-                  }
+                  puts("");
+                  continue;
             }
-            if(haveAns)
-            {
-                  printf("%d\n",idx);
-                  int i;
-                  if(same==0)
-                        for(int i=1;i<=idx;++i)
-                              printf(i==idx?"%d\n":"%d ",i);
-                  else
-                  {
-                        int i;
-                        for(i=1;i<=idx-same;++i)
-                        {
-                              out(i);
-                              printf(" ");
-                        }
-                        i--;
-                        for(int j=1;j<=same;++j)
-                        {
-                              if(j==same)
-                              {
-                                    out(i);
-                                    puts("");
-                              }
-                              else
-                              {
-                                    out(i);
-                                    printf(" ");
-                              }
-                        }
-                  }
-            }
-            else
-                  for(int i=1;i<=n;++i)
-                        if(i==n) printf("1\n");
-                        else printf("1 ");
+            bfs();
       }
       return 0;
 }
