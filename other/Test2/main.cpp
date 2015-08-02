@@ -1,70 +1,55 @@
-/*
-* this code is made by crazyacking
-* Verdict: Accepted
-* Submission Date: 2015-07-30-09.36
-* Time: 0MS
-* Memory: 137KB
-*/
-#include <queue>
-#include <cstdio>
-#include <set>
-#include <string>
-#include <stack>
-#include <cmath>
-#include <climits>
-#include <map>
-#include <cstdlib>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cstring>
-#define  LL long long
-#define  ULL unsigned long long
+#include<cstdio>
+#include<map>
 using namespace std;
-
-
-int a[1000050];
-set<int> se;
-int fun1(int gap)
-{
-      for(int i=0;i<n;++i)
-      {
-            if()
-      }
-}
-
-int main()
-{
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      int t;
-      scanf("%d",&t);
-      while(t--)
-      {
-            int n;
-            scanf("%d",&n);
-            for(int i=0;i<n;++i)
-            {
-                  scanf("%d",&a[i]);
-                  se.insert(a[i]);
+map<int, int> mr, mc;
+map<int, map<int, int> > mp;
+int main() {
+      int T, n, m, k, cas = 0;
+      scanf("%d",&T);
+      while(T--) {
+            mr.clear();
+            mc.clear();
+            mp.clear();
+            scanf("%d %d %d",&n,&m,&k);
+            int a, b, c;
+            int p = 0, q = 0;
+            for(int i = 0; i < k; i++) {
+                  scanf("%d %d %d",&a, &b, &c);
+                  if(!mr[a])
+                        mr[a] = ++p;
+                  if(!mc[b])
+                        mc[b] = ++q;
+                  mp[mr[a]][mc[b]] = c;
             }
-            sort(a,a+n);
-            int gap=0;
-            int div=0;
-            int ans=INT_MIN;
-            for(int i=0;i<n;++i)
+            map<int,map<int,int> >::iterator mpit=mp.begin();
+            map<int,int> it;
+            for(;mpit!=mp.end();++mpit)
             {
-                  for(int j=i+1;j<n;++j)
+                  it=(*mpit).begin();
+                  for(;it!=(*mpit).end();++it)
                   {
-                        gap=a[j]-a[i];
-                        div=a[j]/a[i];
-                        ans=max(fun1(gap),fun2(div));
+                        printf("%d ",*it);
+                  }
+                  puts("");
+            }
+
+            int Q, type;
+            scanf("%d",&Q);
+            printf("Case #%d:\n", ++cas);
+            while(Q--) {
+                  scanf("%d %d %d",&type, &a, &b);
+                  if(type == 1) {
+                        int tmp = mr[a];
+                        mr[a] = mr[b];
+                        mr[b] = tmp;
+                  } else if(type == 2) {
+                        int tmp = mc[a];
+                        mc[a] = mc[b];
+                        mc[b] = tmp;
+                  } else {
+                        printf("%d\n", mp[mr[a]][mc[b]]);
                   }
             }
-            cout<<ans<<endl;
       }
       return 0;
 }
-/*
-
-*/

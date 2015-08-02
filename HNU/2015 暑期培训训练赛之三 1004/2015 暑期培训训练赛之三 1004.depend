@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1438415403 source:d:\code_fantasy\acm-icpc\hnu\2015 暑期培训训练赛之三 1004\main.cpp
+	<algorithm>
+	<iostream>
+	<cstdio>
+	<cstring>
+	<cmath>
+	<utility>
+	<set>
+
