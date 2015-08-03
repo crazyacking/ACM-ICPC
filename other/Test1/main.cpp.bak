@@ -1,87 +1,82 @@
-#include<cstdio>
-#include<cstring>
-#include<algorithm>
-#include<map>
-#include<string>
-#include<cmath>
-#include<stdlib.h>
-#include<queue>
-#include<map>
-#include<iostream>
-#include<time.h>
-#include<set>
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-08-03-15.46
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define  LL long long
+#define  ULL unsigned long long
 using namespace std;
-#define ll long long
-#define db double
-const int maxn=100008;
-int a[maxn],b[maxn];
-struct fuck{
-	int x,y;
-	bool operator<(const fuck &a)	const
-	{
-		return x<a.x;
-	}
-}f;
-set<fuck> st;
+
+const int MAXN=10+(int)1e6;
+LL a,n,ans,cnt;
+LL p[MAXN];
+
+LL rongchi(LL n)
+{
+      LL rup=(1<<cnt),su,tmp,ans=0;
+//      cout<<rup<<endl;
+      for(int i=1;i<rup;++i)
+      {
+            su=0,tmp=1;
+            for(int j=0;j<cnt;++j)
+            {
+                  if((1<<j)&i)
+                  {
+                        tmp*=p[j];
+                        su++;
+                  }
+            }
+            if(su&1) ans+=n/tmp;
+            else ans-=n/tmp;
+      }
+      cout<<ans<<endl;
+      return ans;
+
+}
+
+LL solve(LL a,LL n)
+{
+      cnt=0;
+      for(int i=2;i*i<=a;++i)
+      {
+            if(!(a%i))
+            {
+                  while(!(a%i)) { a/=i; }
+                  p[cnt++]=i;
+            }
+      }
+      if(a>1) p[cnt++]=a;
+      return rongchi(n);
+}
+
 int main()
 {
-	int n,p,tmp1,tmp2,cnt,limit;
-	long long x1,y1,x2,y2,difx,dify,dif;
-	bool flag;
-	double poss;
-	srand(time(0));
-	while(scanf("%d%d",&n,&p)!=EOF)
-	{
-		flag=false;
-		limit=n*p;
-		for(int i=1;i<=n;i++)
-		{
-			scanf("%d%d",&a[i],&b[i]);
-		}
-		if(n==1||n==2)
-		{
-			printf("possible\n");
-			continue;
-		}
-		int total=0;
-		while(total<=2000)
-		{
-			tmp1=rand()%n+1;
-			while(1)
-			{
-				tmp2 = rand()%n+1;
-				if(tmp2!=tmp1)
-				break;
-			}
-			f.x=tmp1;
-			f.y=tmp2;
-			//printf("%d %d\n",f.x,f.y);
-			st.insert(f);
-			total ++;
-			//printf("%d\n",total);
-		}
-		//cout<<st.size()<<endl;
-		set<fuck> :: iterator iter;
-		for(iter=st.begin();iter!=st.end();iter++)
-		{
-			cnt=0;
-			x1=a[iter->x];
-			x2=a[iter->y];
-			y1=b[iter->x];
-			y2=b[iter->y];
-			difx=x1-x2;
-			dify=y1-y2;
-			dif=y2*x1-y1*x2;
-			for(int j=1;j<=n;j++)
-				if((b[j]*difx)==(dify*a[j]+dif))	cnt++;
-			if(100*cnt>=limit)
-			{
-				flag=true;
-				break;
-			}
-		}
-		if(flag)	printf("possible\n");
-		else	printf("impossible\n");
-	}
-	return 0;
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      while(cin>>a>>n)
+      {
+//            if(a&1) cout<<((n+1)/2+solve(a,(n/2)))<<endl;
+//            else cout<<solve(a,n)<<endl;
+            printf("%lld\n",a&1?(n+1)>>1+solve(a,(n>>1)) : solve(a,n));
+//            cout<<( a&1? (n+1)>>1+solve(a,(n>>1)) : solve(a,n) )<<endl;
+      }
+      return 0;
 }
+/*
+
+*/

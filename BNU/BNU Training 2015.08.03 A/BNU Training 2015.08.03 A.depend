@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1438583318 source:d:\code_fantasy\acm-icpc\bnu\bnu training 2015.08.03 a\main.cpp
+	<iostream>
+	<cstring>
+	<cstdio>
+	<map>
+	<algorithm>
+
