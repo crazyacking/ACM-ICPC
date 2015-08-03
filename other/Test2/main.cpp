@@ -1,55 +1,80 @@
 #include<cstdio>
+#include<cstring>
+#include<algorithm>
 #include<map>
+#include<string>
+#include<cmath>
+#include<stdlib.h>
+#include<queue>
+#include<map>
+#include<iostream>
+#include<time.h>
+#include<set>
 using namespace std;
-map<int, int> mr, mc;
-map<int, map<int, int> > mp;
+#define ll long long
+#define db double
+const int maxn=100008;
+int a[maxn],b[maxn];
+struct fuck {
+      int x,y;
+      bool operator<(const fuck &a) const {
+            return x<a.x;
+      }
+} f;
+multiset<fuck> st;
 int main() {
-      int T, n, m, k, cas = 0;
-      scanf("%d",&T);
-      while(T--) {
-            mr.clear();
-            mc.clear();
-            mp.clear();
-            scanf("%d %d %d",&n,&m,&k);
-            int a, b, c;
-            int p = 0, q = 0;
-            for(int i = 0; i < k; i++) {
-                  scanf("%d %d %d",&a, &b, &c);
-                  if(!mr[a])
-                        mr[a] = ++p;
-                  if(!mc[b])
-                        mc[b] = ++q;
-                  mp[mr[a]][mc[b]] = c;
+      int n,p,tmp1,tmp2,cnt,limit;
+      long long x1,y1,x2,y2,difx,dify,dif;
+      bool flag;
+      double poss;
+      srand(time(0));
+      while(scanf("%d%d",&n,&p)!=EOF) {
+            flag=false;
+//            limit=n*p;
+            if(n*p%100==0) limit=n*p/100;
+            else limit=n*p/100+1;
+            for(int i=1; i<=n; i++) {
+                  scanf("%d%d",&a[i],&b[i]);
             }
-            map<int,map<int,int> >::iterator mpit=mp.begin();
-            map<int,int> it;
-            for(;mpit!=mp.end();++mpit)
-            {
-                  it=(*mpit).begin();
-                  for(;it!=(*mpit).end();++it)
-                  {
-                        printf("%d ",*it);
+            if(n==1||n==2) {
+                  printf("possible\n");
+                  continue;
+            }
+            int total=0;
+            while(total<=1000) {
+                  tmp1=rand()%n+1;
+                  while(1) {
+                        tmp2 = rand()%n+1;
+                        if(tmp2!=tmp1)
+                              break;
                   }
-                  puts("");
+                  f.x=tmp1;
+                  f.y=tmp2;
+                  //printf("%d %d\n",f.x,f.y);
+                  st.insert(f);
+                  total ++;
+                  //printf("%d\n",total);
             }
-
-            int Q, type;
-            scanf("%d",&Q);
-            printf("Case #%d:\n", ++cas);
-            while(Q--) {
-                  scanf("%d %d %d",&type, &a, &b);
-                  if(type == 1) {
-                        int tmp = mr[a];
-                        mr[a] = mr[b];
-                        mr[b] = tmp;
-                  } else if(type == 2) {
-                        int tmp = mc[a];
-                        mc[a] = mc[b];
-                        mc[b] = tmp;
-                  } else {
-                        printf("%d\n", mp[mr[a]][mc[b]]);
+            //cout<<st.size()<<endl;
+            multiset<fuck> :: iterator iter;
+            for(iter=st.begin(); iter!=st.end(); iter++) {
+                  cnt=0;
+                  x1=a[iter->x];
+                  x2=a[iter->y];
+                  y1=b[iter->x];
+                  y2=b[iter->y];
+                  difx=x1-x2;
+                  dify=y1-y2;
+                  dif=y2*x1-y1*x2;
+                  for(int j=1; j<=n; j++)
+                        if((b[j]*difx)==(dify*a[j]+dif))    cnt++;
+                  if(100*cnt>=limit) {
+                        flag=true;
+                        break;
                   }
             }
+            if(flag)    printf("possible\n");
+            else  printf("impossible\n");
       }
       return 0;
 }

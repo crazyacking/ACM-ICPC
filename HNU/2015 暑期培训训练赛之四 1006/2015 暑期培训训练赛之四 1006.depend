@@ -1,0 +1,18 @@
+# depslib dependency file v1.0
+1438517835 source:d:\code_fantasy\acm-icpc\hnu\2015 暑期培训训练赛之四 1006\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+	<ctime>
+	<bits/stdc++.h>
+

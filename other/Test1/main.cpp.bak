@@ -1,44 +1,87 @@
-
-/*
-* 求最长回文子串
-*/
-const int MAXN=110010;
-char Ma[MAXN*2];
-int Mp[MAXN*2];
-void Manacher(char s[],int len) {
-      int l=0;
-      Ma[l++]='$';
-      Ma[l++]='#';
-      for(int i=0; i<len; i++) {
-            Ma[l++]=s[i];
-            Ma[l++]='#';
-      }
-      Ma[l]=0;
-      int mx=0,id=0;
-      for(int i=0; i<l; i++) {
-            Mp[i]=mx>i?min(Mp[2*id-i],mx-i):1;
-            while(Ma[i+Mp[i]]==Ma[i-Mp[i]])Mp[i]++;
-            if(i+Mp[i]>mx) {
-                  mx=i+Mp[i];
-                  id=i;
-            }
-      }
-}
-/*
-* abaaba
-* i: 0 1 2 3 4 5 6 7 8 9 10 11 12 13
-* Ma[i]: $ # a # b # a # a $ b # a #
-* Mp[i]: 1 1 2 1 4 1 2 7 2 1 4 1 2 1
-*/
-char s[MAXN];
-int main() {
-      while(scanf("%s",s)==1) {
-            int len=strlen(s);
-            Manacher(s,len);
-            int ans=0;
-            for(int i=0; i<2*len+2; i++)
-                  ans=max(ans,Mp[i]-1);
-            printf("%d\n",ans);
-      }
-      return 0;
+#include<cstdio>
+#include<cstring>
+#include<algorithm>
+#include<map>
+#include<string>
+#include<cmath>
+#include<stdlib.h>
+#include<queue>
+#include<map>
+#include<iostream>
+#include<time.h>
+#include<set>
+using namespace std;
+#define ll long long
+#define db double
+const int maxn=100008;
+int a[maxn],b[maxn];
+struct fuck{
+	int x,y;
+	bool operator<(const fuck &a)	const
+	{
+		return x<a.x;
+	}
+}f;
+set<fuck> st;
+int main()
+{
+	int n,p,tmp1,tmp2,cnt,limit;
+	long long x1,y1,x2,y2,difx,dify,dif;
+	bool flag;
+	double poss;
+	srand(time(0));
+	while(scanf("%d%d",&n,&p)!=EOF)
+	{
+		flag=false;
+		limit=n*p;
+		for(int i=1;i<=n;i++)
+		{
+			scanf("%d%d",&a[i],&b[i]);
+		}
+		if(n==1||n==2)
+		{
+			printf("possible\n");
+			continue;
+		}
+		int total=0;
+		while(total<=2000)
+		{
+			tmp1=rand()%n+1;
+			while(1)
+			{
+				tmp2 = rand()%n+1;
+				if(tmp2!=tmp1)
+				break;
+			}
+			f.x=tmp1;
+			f.y=tmp2;
+			//printf("%d %d\n",f.x,f.y);
+			st.insert(f);
+			total ++;
+			//printf("%d\n",total);
+		}
+		//cout<<st.size()<<endl;
+		set<fuck> :: iterator iter;
+		for(iter=st.begin();iter!=st.end();iter++)
+		{
+			cnt=0;
+			x1=a[iter->x];
+			x2=a[iter->y];
+			y1=b[iter->x];
+			y2=b[iter->y];
+			difx=x1-x2;
+			dify=y1-y2;
+			dif=y2*x1-y1*x2;
+			for(int j=1;j<=n;j++)
+				if((b[j]*difx)==(dify*a[j]+dif))	cnt++;
+			if(100*cnt>=limit)
+			{
+				flag=true;
+				break;
+			}
+		}
+		if(flag)	printf("possible\n");
+		else	printf("impossible\n");
+	}
+	return 0;
 }
