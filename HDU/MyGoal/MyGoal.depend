@@ -1,16 +1,4 @@
 # depslib dependency file v1.0
-1438670284 source:d:\code_fantasy\acm-icpc\hdu\mygoal\main.cpp
-	<queue>
-	<cstdio>
-	<set>
-	<string>
-	<stack>
-	<cmath>
-	<climits>
-	<map>
-	<cstdlib>
-	<iostream>
-	<vector>
-	<algorithm>
-	<cstring>
+1438797841 source:d:\code_fantasy\acm-icpc\hdu\mygoal\main.cpp
+	<bits/stdc++.h>
 

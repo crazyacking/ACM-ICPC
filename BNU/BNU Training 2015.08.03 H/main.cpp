@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-08-03-15.54
+* Submission Date: 2015-08-06-02.13
 * Time: 0MS
 * Memory: 137KB
 */
@@ -22,51 +22,35 @@
 #define  ULL unsigned long long
 using namespace std;
 
-LL get(LL n,LL MAX)
-{
-    vector<LL>q;
-    LL ans=0,tt ;
-    for(LL i = 2 ; i*i <= n ;i++)
-    if(n%i==0)
-    {
-        while(n%i==0)
-        {
-            n /= i ;
-        }
-        q.push_back(i) ;
-    }
-    // q数组存的是n的所有质因数
-    if(n>1)q.push_back(n) ;
-    int m = q.size();
-    int len=(1<<m) ,e ;
-//    cout<<len<<endl;
-    for( int i = 1 ; i < len ;i++)
-    {
-        e=0;
-        tt=1;
-        for( int j = 0 ; j < m ;j++)
-              if((1<<j)&i)
-              {
-                  tt *= q[j];
-                  e++;
-              }
-        if(e&1) ans += MAX/tt ;
-        else ans -= MAX/tt ;
-    }
-    cout<<ans<<endl;
-    return ans;
-}
-
+typedef long long ll;
 int main()
 {
-    int i,j,k;
-    LL n ,a,ans ;
-    while(cin >> a >> n)
-    {
-        if(a&1)
-            ans=(n+1)/2 ,n/=2;
-        else ans=0;
-        ans += get(a,n) ;
-        cout << ans<<endl;
-    }
+      freopen("C:\\Users\\crazyacking\\Desktop\\cin.txt","r",stdin);
+      //freopen("C:\\Users\\crazyacking\\Desktop\\cout.txt","w",stdout);
+
+      int n,k,a;
+      while(~scanf("%d %d",&n,&k))
+      {
+            map<ll,ll> dp[4];
+            for(int i=1;i<=n;++i)
+            {
+                  scanf("%d",&a);
+                  if(a%k==0)
+                  {
+                        dp[3][a]+=dp[2][a/k];
+                        dp[2][a]+=dp[1][a/k];
+                  }
+                  dp[1][a]++;
+            }
+            ll ans=0;
+            for(map<ll,ll> :: iterator it=dp[3].begin();it!=dp[3].end();++it)
+            {
+                  ans+=it->second;
+            }
+            printf("%lld\n",ans);
+      }
+      return 0;
 }
+/*
+
+*/

@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-08-05-16.21
+* Submission Date: 2015-08-06-02.19
 * Time: 0MS
 * Memory: 137KB
 */
@@ -24,9 +24,38 @@ using namespace std;
 
 int main()
 {
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      
+      freopen("C:\\Users\\crazyacking\\Desktop\\cin.txt","r",stdin);
+      //freopen("C:\\Users\\crazyacking\\Desktop\\cout.txt","w",stdout);
+
+      int n,k;
+      while(~scanf("%d %d",&n,&k))
+      {
+            map<int,int> l,r;
+            long long ans=0;
+            vector<int> input;
+            for(int i=0;i<n;++i)
+            {
+                  int x;
+                  scanf("%d",&x);
+                  input.push_back(x);
+                  ++r[x];
+            }
+            for(int i=0;i<n;++i)
+            {
+                  --r[input[i]];
+                  if(input[i]%k==0)
+                  {
+                        long long ll=((long long) input[i])/k;
+                        long long rr=((long long) input[i])*k;
+                        long long cl=l[ll];
+                        long long cr=r[rr];
+                        ans+=cl*cr;
+                  }
+                  ++l[input[i]];
+            }
+      cout<<ans<<endl;
+      }
+
       return 0;
 }
 /*
