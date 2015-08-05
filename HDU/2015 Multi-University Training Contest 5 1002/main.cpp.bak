@@ -1,0 +1,13 @@
+#include <iostream>
+using namespace std;
+int main() {
+      int t,n,m,z,l,ans,tmp;
+      cin>>t;
+      while(t--) {
+            ans=tmp=0;
+            cin>>n>>m>>z>>l;
+            for(int i=1; i<=n; ++i) ans^=(tmp+tmp); tmp=(tmp*m+z)%l;
+            cout<<ans<<endl;
+      }
+      return 0;
+}

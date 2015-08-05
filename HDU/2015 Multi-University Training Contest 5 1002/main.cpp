@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-08-04-19.30
+* Submission Date: 2015-08-04-21.25
 * Time: 0MS
 * Memory: 137KB
 */
@@ -22,22 +22,14 @@
 #define  ULL unsigned long long
 using namespace std;
 
-int main()
-{
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      int n;
-      cin>>n;
-      while(n--)
-      {
-            multiset<int> ms;
-            int tmp;
-            cin>>tmp;
-            ms.insert(tmp);
-            cout<<(*(--ms.end()))<<endl;
+int main() {
+      long long t,n,m,z,l,ans,tmp;
+      cin>>t;
+      while(t--) {
+            ans=tmp=0;
+            cin>>n>>m>>z>>l;
+            for(int i=1; i<=n; ++i) { ans^=(tmp+tmp); tmp=(tmp*m+z)%l;}
+            cout<<ans<<endl;
       }
       return 0;
 }
-/*
-
-*/
