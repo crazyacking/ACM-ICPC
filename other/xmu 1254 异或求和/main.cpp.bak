@@ -1,0 +1,77 @@
+#include <iostream>
+#include <map>
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
+#include <stdlib.h>
+#include <algorithm>
+using namespace std;
+#define LL long long
+struct node
+{
+    LL rc[32][2];
+};
+void get1(LL n,node *R) /**< 求1~n中所有数的每一位的1的个数 */
+{
+    LL t=2,p=1,i;
+    R->rc[1][1]=n/2;
+    if(n%2) R->rc[1][1]++;
+    for(i=1;p<=n;t=(t<<1))
+    {
+        R->rc[i][1]=(n/t)*(t>>1);
+        if(n%t>=p)   R->rc[i][1]+=(n%t-p+1);
+        i++;
+        p=(p<<1);
+    }
+//    for(int j=1;j<i;++j)
+//    {
+//          printf("%lld ",R->rc[j][1]);
+//    }
+//    puts("");
+
+}
+int main()
+{
+      freopen("C:\\Users\\crazyacking\\Desktop\\cin.txt","r",stdin);
+      //freopen("C:\\Users\\crazyacking\\Desktop\\cout.txt","w",stdout);
+
+    node a,b,c,d;
+    int A,B,C,D;
+    int Mod,T;
+    scanf("%d",&T);
+    while(T--)
+    {
+        scanf("%d %d %d %d %d",&A,&B,&C,&D,&Mod);
+        memset(a.rc,0,sizeof(a.rc));
+        memset(b.rc,0,sizeof(b.rc));
+        memset(c.rc,0,sizeof(c.rc));
+        memset(d.rc,0,sizeof(d.rc));
+        get1(A-1,&a);
+        get1(B,&b);
+        int i;
+        for(i=1;i<=31;i++)
+            a.rc[i][1]=b.rc[i][1]-a.rc[i][1];
+        LL len=(B-A+1);
+        for(i=1;i<=31;i++)
+            a.rc[i][0]=len-a.rc[i][1];
+        get1(C-1,&c);
+        get1(D,&d);
+        for(i=1;i<=31;i++)
+            c.rc[i][1]=d.rc[i][1]-c.rc[i][1];
+        len=(D-C+1);
+        for(i=1;i<=31;i++)
+         c.rc[i][0]=len-c.rc[i][1];
+         //
+         //
+         
+         LL sum=0,m=1;
+        for(i=1;i<=31;i++)
+        {
+              printf("%lld ",a.rc[i][0]);
+            sum=(sum+(m<<(i-1))%Mod*(a.rc[i][0]%Mod*c.rc[i][1]%Mod + a.rc[i][1]%Mod*c.rc[i][0]%Mod)%Mod)%Mod;
+        }
+        Mod=(int)sum;
+        printf("%d\n",Mod);
+    }
+    return 0;
+}

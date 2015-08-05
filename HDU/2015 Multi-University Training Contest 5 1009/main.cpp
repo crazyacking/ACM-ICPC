@@ -22,7 +22,24 @@
 #define  ULL unsigned long long
 using namespace std;
 /**< force check */
+int Next[1000];
 vector<string> ve;
+void getNext(const char* s)
+{
+      int len=strlen(s);
+      Next[0]=0;
+      for(int i=1,k=0;i<len;++i)
+      {
+            while(s[i]!=s[k]&&k) k=Next[k-1];
+            if(s[i]==s[k])++k;
+            Next[i]=k;
+      }
+      for(int i=0;i<len;++i)
+      {
+            printf("%d ",Next[i]);
+      }
+      puts("");
+}
 int main()
 {
 //      freopen("C:\\Users\\crazyacking\\Desktop\\cin.txt","r",stdin);
@@ -40,13 +57,29 @@ int main()
             s2=s2+s1;
             s1=tmp;
             ve.push_back(s2);
+            const char* s=s2.c_str();
+            puts(s);
+            getNext(s);
       }
-      for(int i=0;i<=11;++i)
-      {
-            cout<<ve[i]<<endl;
-      }
+//      for(int i=0;i<=11;++i)
+//      {
+//            cout<<ve[i]<<endl;
+//      }
       return 0;
 }
 /*
 
 */
+
+
+
+
+
+
+
+
+
+
+
+
+

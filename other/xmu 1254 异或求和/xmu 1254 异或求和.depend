@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1438762501 source:d:\code_fantasy\acm-icpc\other\xmu 1254 “ÏªÚ«Û∫Õ\main.cpp
+	<iostream>
+	<map>
+	<stdio.h>
+	<math.h>
+	<string.h>
+	<stdlib.h>
+	<algorithm>
+
