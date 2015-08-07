@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-08-06-12.59
+* Submission Date: 2015-08-06-12.08
 * Time: 0MS
 * Memory: 137KB
 */
@@ -22,17 +22,22 @@
 #define  ULL unsigned long long
 using namespace std;
 
-int main()
-{
-//      freopen("C:\\Users\\crazyacking\\Desktop\\cin.txt","r",stdin);
-//      freopen("C:\\Users\\crazyacking\\Desktop\\cin.txt","w",stdout);
+long long Quickpow(long long a,long long b,long long m) {
+      long long ans=1;
+      while(b) {
+            if(b&1) { ans=(ans*a)%m,b--; }
+            b/=2,a=a*a%m;
+      }
+      return ans;
+}
 
+int main() {
       ios_base::sync_with_stdio(false);
       cin.tie(0);
-      puts("1000");
-      for(int i=1;i<=1000;++i)
-      {
-            puts("9999 10");
+      int t,x;
+      cin>>t;
+      while(t--) {
+            cin>>x; cout<<((Quickpow(2,x-1,1000000007)-1)%1000000007)<<endl;
       }
       return 0;
 }
