@@ -28,7 +28,18 @@ int main()
       ios_base::sync_with_stdio(false);
       cin.tie(0);
       LL n;
-      whil
+      while(cin>>n)
+      {
+            for(int i=0;i<n;++i) cin>>a[i];
+            LL ans=a[0],sum=0;
+            for(int i=0;i<n;++i)
+            {
+                  sum+=a[i];
+                  sum=max(sum,0LL);
+                  ans=max(ans,sum);
+            }
+            cout<<ans<<endl;
+      }
       return 0;
 }
 /*

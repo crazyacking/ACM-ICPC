@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-08-07-22.19
+* Submission Date: 2015-08-08-22.32
 * Time: 0MS
 * Memory: 137KB
 */
@@ -21,24 +21,20 @@
 #define  LL long long
 #define  ULL unsigned long long
 using namespace std;
-const int MAXN=50010;
-LL a[MAXN];
+
 int main()
 {
       ios_base::sync_with_stdio(false);
       cin.tie(0);
-      LL n;
+      int n;
       while(cin>>n)
       {
-            for(int i=0;i<n;++i) cin>>a[i];
-            LL ans=a[0],sum=0;
-            for(int i=0;i<n;++i)
+            if(n&1)
             {
-                  sum+=a[i];
-                  sum=max(sum,0LL);
-                  ans=max(ans,sum);
+                  puts("y");
             }
-            cout<<ans<<endl;
+            else puts("n");
+
       }
       return 0;
 }

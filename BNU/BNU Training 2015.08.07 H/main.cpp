@@ -1,5 +1,5 @@
 /*
-* this code is made by cralineyacking
+* this code is made by crazyacking
 * Verdict: Accepted
 * Submission Date: 2015-08-08-13.52
 * Time: 0MS
@@ -23,21 +23,42 @@
 using namespace std;
 const int MAXN=205;
 int n,m;
-struct Data
+
+void scan(int &x)
+{
+      x=0;
+      char c=getchar();
+      while(!(c>='0' && c<='9'  || c=='-')) { c=getchar(); }
+      bool pos=1;
+      if(c=='-')
+      {
+            pos=0; c=getchar();
+      }
+      while(c>='0' && c<='9')
+      {
+            x=x*10+c-'0'; c=getchar();
+      }
+      if(!pos) { x=-x; }
+}
+void scan2(int &x,int &y) { scan(x),scan(y);}
+void scan3(int &x,int &y,int &z) { scan(x),scan(y),scan(z); }
+/**************************************END     define***************************************/
+
+struct Tra
 {
       int x,y,p,k;
-      int sx,ex,sy,ey;
-      int dx,dy;
+      int x1,x2,y1,y2;
+      int xd,yd;
 }d[MAXN];
 
-struct Z
+struct Line
 {
-      int line,v;
-} line[2*MAXN];
+      int pos,flag;
+} Li[2*MAXN];
 int cnt;
-bool comp(const Z a,const Z b)
+bool cmp(Line a,Line b)
 {
-      return a.line<b.line;
+      return a.pos<b.pos;
 }
 int main()
 {
@@ -45,78 +66,83 @@ int main()
       cin.tie(0);
       while(~scanf("%d",&m))
       {
-            scanf("%d",&n);
+            scan(n);
             for(int i=1;i<=n;++i)
             {
                   int x,y,p,k;
-                  scanf("%d %d %d %d",&d[i].x,&d[i].y,&d[i].p,&d[i].k);
-                  x=d[i].x,y=d[i].y,p=d[i].p,k=d[i].k;
+                  scan(x),scan(y),scan(p),scan(k);
+                  d[i].x=x,d[i].y=y,d[i].p=p,d[i].k=k;
                   if(k==0)
                   {
-                        d[i].sx=x,d[i].ex=x+p;
-                        d[i].sy=y-p,d[i].ey=y;
-                        d[i].dx=x+p,d[i].dy=y;
+                        d[i].x1=x,d[i].x2=x+p;
+                        d[i].y1=y-p,d[i].y2=y;
+                        d[i].xd=x+p,d[i].yd=y;
                   }
                   else if(k==1)
                   {
-                        d[i].sx=x,d[i].ex=x+p;
-                        d[i].sy=y,d[i].ey=y+p;
-                        d[i].dx=x+p,d[i].dy=y;
+                        d[i].x1=x,d[i].x2=x+p;
+                        d[i].y1=y,d[i].y2=y+p;
+                        d[i].xd=x+p,d[i].yd=y;
                   }
                   else if(k==2)
                   {
-                        d[i].sx=x,d[i].ex=x-p;
-                        d[i].sy=y,d[i].ey=y+p;
-                        d[i].dx=x,d[i].dy=y+p;
+                        d[i].x1=x,d[i].x2=x-p;
+                        d[i].y1=y,d[i].y2=y+p;
+                        d[i].xd=x,d[i].yd=y+p;
                   }
                   else
                   {
-                        d[i].sx=x,d[i].ex=x-p;
-                        d[i].sy=y-p,d[i].ey=y;
-                        d[i].dx=x,d[i].dy=y-p;
+                        d[i].x1=x,d[i].x2=x-p;
+                        d[i].y1=y-p,d[i].y2=y;
+                        d[i].xd=x,d[i].yd=y-p;
                   }
             }
             int ans=0;
             for(int yi=0;yi<m;++yi)
             {
-                  int from ,to ,t,dd;
+                  int from ,to ,t,xt;
                   cnt=0;
-                  for(int i=01;i<=n;++i)
+                  for(int i=1;i<=n;++i)
                   {
-                        if(d[i].sy<=yi&&yi+1<=d[i].ey)
+                        if(d[i].y1<=yi&&yi+1<=d[i].y2)
                         {
-                              if(d[i].k<=1) from=to=min(d[i].x,d[i].ex);
-                              else from=to=max(d[i].sx,d[i].ex);
-                              t=abs(d[i].dy-yi);
-                              dd=d[i].dx-t;
-                              from=min(from,dd);
-                              to=max(to,dd);
+                              if(d[i].k<=1) from=to=d[i].x>d[i].x2?d[i].x2:d[i].x;
+                              else from=to=d[i].x1>d[i].x2?d[i].x1:d[i].x2;
 
-                              t=abs(d[i].dy-(yi+1));
-                              dd=d[i].dx-t;
-                              from=min(from,dd);
-                              to=max(to,dd);
+                              t=abs(d[i].yd-yi);
+                              xt=d[i].xd-t;
+                              from=from<xt?from:xt;
+                              to=to>xt?to:xt;
 
-                              from=max(from,0);
-                              to=min(to,m);
-                              from+=1;
-                              to+=1;
-                              cout<<from<<"->"<<to+1<<endl;
+                              t=abs(d[i].yd-(yi+1));
+                              xt=d[i].xd-t;
+                              from=from<xt?from:xt;
+                              to=to>xt?to:xt;
+
+                              from=from>0?from:0;
+                              from++;
+                              to=to<m?to:m;
+                              cnt++;
+                              Li[cnt].pos=from;
+                              Li[cnt].flag=+1;
+
+                              cnt++;
+                              Li[cnt].pos=to+1;
+                              Li[cnt].flag=-1;
                         }
                   }
-            }
                   cnt++;
-                  line[cnt].line=m+1;
-                  sort(line+1,line+1+cnt,comp);
-                  int lastline=1,num=0;
+                  Li[cnt].pos=m+1;
+                  sort(Li+1,Li+1+cnt,cmp);
+                  int lastpos=1,num=0;
                   for(int i=1;i<=cnt;)
                   {
-                        if(num&1) ans+=line[i].line-lastline;
-                        lastline=line[i].line;
+                        if(num&1) ans+=Li[i].pos-lastpos;
+                        lastpos=Li[i].pos;
                         int ti=i;
-                        while(ti<=cnt&&line[ti].line==line[i].line)
+                        while(ti<=cnt&&Li[ti].pos==Li[i].pos)
                         {
-                              num+=line[ti].v;
+                              num+=Li[ti].flag;
                               ti++;
                         }
                         i=ti;

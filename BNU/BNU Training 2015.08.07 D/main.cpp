@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-08-07-12.11
+* Submission Date: 2015-08-08-22.04
 * Time: 0MS
 * Memory: 137KB
 */
@@ -22,31 +22,105 @@
 #define  ULL unsigned long long
 using namespace std;
 
+const int MAXN = 30005,MAXM = 105;
+void scan(int &x)
+{
+      x=0;
+      char c=getchar();
+      while(!(c>='0' && c<='9'  || c=='-')) { c=getchar(); }
+      bool flag=1;
+      if(c=='-')
+      {
+            flag=0; c=getchar();
+      }
+      while(c>='0' && c<='9')
+      {
+            x=x*10+c-'0'; c=getchar();
+      }
+      if(!flag) { x=-x; }
+}
+void scan2(int &x,int &y) { scan(x),scan(y);}
+void scan3(int &x,int &y,int &z) { scan(x),scan(y),scan(z); }
+/**************************************END     define***************************************/
+struct Event
+{
+      int x, val;
+      Event() {}
+      Event(int _x, int _val) : x(_x), val(_val) {}
+      bool operator < (const Event &a) const
+      {
+            return x < a.x || (x == a.x && val < a.val);
+      }
+};
+
+int n, m;
+int x[MAXM],y[MAXM],p[MAXM],d[MAXM];
+char str[10];
+
+Event event[MAXM * 2];
+
 int main()
 {
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-
-      while(~scanf("%d %d",&n,&m))
+      while(scanf("%d", &n) != EOF)
       {
-            int ans=0;
-            int a[15];
-            for(int i=n;i<=m;++i)
+            scan(m);
+            for(int i = 0; i < m; ++i)
             {
-                  memset(a,0,sizeof a);
-                  int j=i;
-                  while(j)
-                  {
-                        if(a[j%10]) break;
-                        a[j%10]=1;
-                        j=j/10;
-                  }
-                  if(!j) ans++;
+                  scan2(x[i],y[i]),scan2(p[i],d[i]);
+                  if(d[i] == 0) --y[i];
+                  if(d[i] == 2) --x[i];
+                  if(d[i] == 3) --x[i],--y[i];
             }
-            printf("%d\n",ans);
+            int ans = 0;
+            for(int i = 0; i < n; ++i)
+            {
+                  int cntEvent = 0;
+                  for(int j = 0; j < m; ++j)
+                  {
+                        int low = -1, high = -1,len;
+                        if(d[j] == 0 && x[j] <= i && i <= x[j] + p[j] - 1)
+                        {
+                              len = p[j] - (i - x[j]);
+                              low = max(y[j] - len + 1, 0);
+                              high = y[j];
+                        }
+                        if(d[j] == 1 && x[j] <= i && i <= x[j] + p[j] - 1)
+                        {
+                              len = p[j] - (i - x[j]);
+                              low = y[j];
+                              high = min(y[j] + len - 1, n - 1);
+                        }
+                        if(d[j] == 2 && x[j] - p[j] + 1 <= i && i <= x[j])
+                        {
+                              len = p[j] - (x[j] - i);
+                              low = y[j];
+                              high = min(y[j] + len - 1, n - 1);
+                        }
+                        if(d[j] == 3 && x[j] - p[j] + 1 <= i && i <= x[j])
+                        {
+                              len = p[j] - (x[j] - i);
+                              low = max(y[j] - len + 1, 0);
+                              high = y[j];
+                        }
+                        if(low != -1 && high != -1 && low <= high)
+                        {
+//                              printf( "%d %d\n", low, high );
+                              event[cntEvent++] = Event(low, 1);
+                              event[cntEvent++] = Event(high + 1, -1);
+                        }
+                  }
+                  sort(event, event + cntEvent);
+                  int res = 0,sum = 0;
+                  for(int j = 0; j < cntEvent; ++j)
+                  {
+                        if((sum & 1))
+                              res += event[j].x - event[j - 1].x;
+                        sum += event[j].val;
+                  }
+//                  printf("%d\n", res);
+                  ans += res;
+            }
+            printf("%d\n", ans);
       }
       return 0;
 }
-/*
-
-*/
