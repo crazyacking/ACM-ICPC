@@ -1,16 +1,4 @@
 # depslib dependency file v1.0
-1438843417 source:d:\code_fantasy\acm-icpc\other\test1\main.cpp
-	<queue>
-	<cstdio>
-	<set>
-	<string>
-	<stack>
-	<cmath>
-	<climits>
-	<map>
-	<cstdlib>
+1438955508 source:d:\code_fantasy\acm-icpc\other\test1\main.cpp
 	<iostream>
-	<vector>
-	<algorithm>
-	<cstring>
 

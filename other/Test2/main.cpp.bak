@@ -1,46 +1,43 @@
-/*
-* this code is made by crazyacking
-* Verdict: Accepted
-* Submission Date: 2015-08-06-12.25
-* Time: 0MS
-* Memory: 137KB
-*/
-#include <queue>
-#include <cstdio>
-#include <set>
-#include <string>
-#include <stack>
-#include <cmath>
-#include <climits>
-#include <map>
-#include <cstdlib>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cstring>
-#define  LL long long
-#define  ULL unsigned long long
+#include<iostream>
+#include<cstdio>
+#include<climits>
+typedef long long LL;
 using namespace std;
 
+const int MAXN=50010;
+LL a[MAXN];
 
-long long quickPower(long long a,long long b,long long m)
+LL fen(int l,int r)
 {
-      long long ans=1;
-      while(b)
+      if(l==r) return max(a[l],0LL);
+      else
       {
-            if(b&1) { ans=(ans*a)%m,b--; }
-            b/=2,a=a*a%m;
+            int mid=(l+r)/2;
+            LL fl=fen(l,mid);
+            LL fr=fen(mid+1,r);
+            LL ll=INT_MIN,rr=INT_MIN;
+            LL s=0;
+            for(int i=mid;i>=l;--i)
+            {
+                  s+=a[i];
+                  ll=max(ll,s);
+            }
+            s=0;
+            for(int i=mid+1;i<=r;++i)
+            {
+                  s+=a[i];
+                  rr=max(rr,s);
+            }
+            return max(max(fl,fr),ll+rr);
       }
-      return ans;
 }
-
 int main()
 {
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      cout<<quickPoew
+      int n;
+      while(cin>>n)
+      {
+            for(int i=0;i<n;++i) cin>>a[i];
+            cout<<fen(0,n-1)<<endl;
+      }
       return 0;
 }
-/*
-
-*/

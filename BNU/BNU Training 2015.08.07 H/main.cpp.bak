@@ -1,0 +1,59 @@
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-08-07-12.53
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define  LL long long
+#define  ULL unsigned long long
+using namespace std;
+
+
+
+
+bool v[1000];
+int main()
+{
+ double m,h,a,b,c;
+ memset(v,0,sizeof v);
+ int mn=INT_MAX,mx=INT_MIN;
+ for(h=0;h<24;++h)
+ {
+       for(int m=0;m<60;++m)
+       {
+             a=m*6;
+             b=(h+m/60.0)*30;
+             c=360-b+a;
+             int t=(int)(c+0.00000001);
+             cout<<t<<endl;
+             mn=min(mn,t);
+             mx=max(mx,t);
+//             v[t]=1;
+       }
+       cout<<mn<<" "<<mx<<endl;
+ }
+
+// for(int i=0;i<360;++i)
+// {
+//       if(v[i])
+//       {
+//             printf("%d y\n",i);
+//       }
+//       else printf("%d n\n",i);
+// }
+ return 0;
+}

@@ -1,41 +1,43 @@
-/*
-* this code is made by crazyacking
-* Verdict: Accepted
-* Submission Date: 2015-08-06-12.59
-* Time: 0MS
-* Memory: 137KB
-*/
-#include <queue>
-#include <cstdio>
-#include <set>
-#include <string>
-#include <stack>
-#include <cmath>
-#include <climits>
-#include <map>
-#include <cstdlib>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cstring>
-#define  LL long long
-#define  ULL unsigned long long
+#include<iostream>
+#include<cstdio>
+#include<climits>
+typedef long long LL;
 using namespace std;
 
+const int MAXN=50010;
+LL a[MAXN];
+
+LL fen(int l,int r)
+{
+      if(l==r) return max(a[l],0LL);
+      else
+      {
+            int mid=(l+r)/2;
+            LL fl=fen(l,mid);
+            LL fr=fen(mid+1,r);
+            LL ll=INT_MIN,rr=INT_MIN;
+            LL s=0;
+            for(int i=mid;i>=l;--i)
+            {
+                  s+=a[i];
+                  ll=max(ll,s);
+            }
+            s=0;
+            for(int i=mid+1;i<=r;++i)
+            {
+                  s+=a[i];
+                  rr=max(rr,s);
+            }
+            return max(max(fl,fr),ll+rr);
+      }
+}
 int main()
 {
-//      freopen("C:\\Users\\crazyacking\\Desktop\\cin.txt","r",stdin);
-//      freopen("C:\\Users\\crazyacking\\Desktop\\cin.txt","w",stdout);
-
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      puts("1000");
-      for(int i=1;i<=1000;++i)
+      int n;
+      while(~scanf("%d",&n))
       {
-            puts("9999 10");
+            for(int i=0;i<n;++i) scanf("%I64d",&a[i]);
+            printf("%I64d\n",fen(0,n-1));
       }
       return 0;
 }
-/*
-
-*/

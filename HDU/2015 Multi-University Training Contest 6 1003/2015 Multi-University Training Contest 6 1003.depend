@@ -1,16 +1,15 @@
 # depslib dependency file v1.0
-1438912678 source:d:\code_fantasy\acm-icpc\hdu\2015 multi-university training contest 6 1003\main.cpp
+1438916321 source:d:\code_fantasy\acm-icpc\hdu\2015 multi-university training contest 6 1003\main.cpp
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
 	<queue>
-	<cstdio>
-	<set>
-	<string>
-	<stack>
-	<cmath>
-	<climits>
-	<map>
-	<cstdlib>
-	<iostream>
+	<math.h>
 	<vector>
+	<map>
+	<set>
+	<cmath>
+	<string>
 	<algorithm>
-	<cstring>
+	<iostream>
 
