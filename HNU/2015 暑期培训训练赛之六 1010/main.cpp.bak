@@ -1,0 +1,111 @@
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-08-10-08.37
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define  LL long long
+#define  ULL unsigned long long
+using namespace std;
+const int MAXN=2010;
+const ULL seed=1000000007;
+char G1[MAXN][MAXN],G2[MAXN][MAXN];
+int hp,wp,hm,wm;
+ULL hash1[MAXN],hash2[MAXN];
+int solve()
+{
+      memset(hash1,0,sizeof hash1);
+      memset(hash2,0,sizeof hash2);
+      ULL ha=0,hb=0,l1=1,l2=1;
+      for(int i=0;i<hm;++i) // 行
+      {
+            ha=0,hb=0;
+            if(i<hp) // 两个都算
+            {
+                  for(int j=0;j<wp;++j) // 列
+                  {
+                        ha=ha*seed+G1[i][j];
+                        hb=hb*seed+G2[i][j];
+                  }
+                  hash1[i]=ha;
+                  hash2[i]=hb;
+            }
+            else // 只计算大的
+            {
+                  for(int j=0;j<wp;++j)  // 列
+                  {
+                        hb=hb*seed+G2[i][j];
+                  }
+                  hash2[i]=hb;
+            }
+      }
+      int ans=0;
+      ha=0,hb=0;
+      for(int i=0;i<hm;++i)  // 列
+      {
+            if(i<hp)
+            {
+                  l1*=seed;
+                  ha=ha*seed+hash1[i];
+                  hb=hb*seed+hash2[i];
+            }
+            else
+            {
+                  if(ha==hb) ++ans;
+                  hb=hb*seed+hash2[i]-l1*hash2[i-hp];
+            }
+      }
+      if(ha==hb) ++ans; // ????
+
+      //
+      for(int i=0;i<wp;++i) l2*=seed;
+      for(int i=wp;i<wm;++i)  // 每一列
+      {
+            for(int j=0;j<hm;++j)  // 每一行
+            {
+                  hash2[j]=hash2[j]*seed+G2[j][i]-l2*( G2[j][i-wp]);
+            }
+            hb=0;
+            for(int j=0;j<hp;++j) // 先算出1~hp行的hash值 // 行
+            {
+                  hb=hb*seed+hash2[j];
+            }
+            if(hb==ha) ++ans;
+            for(int j=hp;j<hm;++j) // 
+            {
+                  hb=hb*seed + hash2[j] - l1*hash2[j-hp];
+                  if(hb==ha) ++ ans;
+            }
+      }
+      return ans;
+}
+int main()
+{
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      while(~scanf("%d %d %d %d",&hp,&wp,&hm,&wm))
+      {
+            getchar();
+            for(int i=0;i<hp;++i) gets(G1[i]);
+            for(int i=0;i<hm;++i) gets(G2[i]);
+            printf("%d\n",solve());
+      }
+      return 0;
+}
+/*
+
+*/
