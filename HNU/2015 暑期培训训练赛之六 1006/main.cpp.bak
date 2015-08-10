@@ -30,9 +30,7 @@ struct L
 };
 int n;
 vector<L> L1,L2;
-
-
-LL A[MAXN];
+LL A[MAXN],answer[MAXN];
 void scan(int &x)
 {
       x=0;
@@ -51,7 +49,7 @@ void scan(int &x)
 }
 void scan2(int &x,int &y) { scan(x),scan(y);}
 void scan3(int &x,int &y,int &z) { scan(x),scan(y),scan(z); }
-/**************************************END     define***************************************/
+/**************************************END define***************************************/
 
 bool cmp1(L a,L b)  //
 {
@@ -63,8 +61,6 @@ bool cmp2(L a,L b)
 }
 
 int f[MAXN];
-
-
 int Find(int x)
 {
       return f[x]==x?x:f[x]=Find(f[x]);
@@ -149,8 +145,11 @@ int main()
             LL ans=INT_MIN,tmp;
             for(int i=0;i<n;++i)
             {
-                  tmp=Counter(i);
-                  ans=ans>tmp?ans:tmp;
+                  answer[Find(i)]+=A[i];
+            }
+            for(int i=0;i<n;++i)
+            {
+                  ans=max(ans,answer[i]);
             }
             cout<<ans<<endl;
       }

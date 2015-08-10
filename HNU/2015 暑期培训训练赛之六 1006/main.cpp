@@ -30,9 +30,7 @@ struct L
 };
 int n;
 vector<L> L1,L2;
-
-
-LL A[MAXN];
+LL A[MAXN],answer[MAXN];
 void scan(int &x)
 {
       x=0;
@@ -51,7 +49,7 @@ void scan(int &x)
 }
 void scan2(int &x,int &y) { scan(x),scan(y);}
 void scan3(int &x,int &y,int &z) { scan(x),scan(y),scan(z); }
-/**************************************END     define***************************************/
+/**************************************END define***************************************/
 
 bool cmp1(L a,L b)  //
 {
@@ -63,8 +61,6 @@ bool cmp2(L a,L b)
 }
 
 int f[MAXN];
-
-
 int Find(int x)
 {
       return f[x]==x?x:f[x]=Find(f[x]);
@@ -127,8 +123,6 @@ LL Counter(int x)
       return ans;
 }
 
-int answer[MAXN];
-
 int main()
 {
       ios_base::sync_with_stdio(false);
@@ -144,17 +138,14 @@ int main()
                   L2.push_back(L(x,y,x+w,y,i));  // heng
                   L2.push_back(L(x,y+h,x+w,y+h,i));
                   A[i]=w*h;
-                  answer[i]=0;
             }
             sort(L1.begin(),L1.end(),cmp1);
             sort(L2.begin(),L2.end(),cmp2);
             for(int i=0;i<MAXN;++i) { f[i]=i; }
-            int ans=INT_MIN,tmp;
+            LL ans=INT_MIN,tmp;
             for(int i=0;i<n;++i)
             {
                   answer[Find(i)]+=A[i];
-//                  tmp=Counter(i);
-//                  ans=ans>tmp?ans:tmp;
             }
             for(int i=0;i<n;++i)
             {
