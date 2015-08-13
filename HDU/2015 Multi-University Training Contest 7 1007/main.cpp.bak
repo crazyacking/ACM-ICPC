@@ -1,0 +1,122 @@
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-08-12-22.01
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define  LL long long
+#define  ULL unsigned long long
+using namespace std;
+
+const int MAXN=5+2*(int)1e5;
+int n,a[MAXN];
+char s[MAXN];
+int main()
+{
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      int t;
+      scanf("%d",&t);
+      for(int Cas=1;Cas<=t;++Cas)
+      {
+            scanf("%s",s);
+            n=strlen(s);
+            
+            for(int i=0;i<n;++i)
+            {
+                  scanf("%d",&a[i]);
+            }
+            if(n==1)
+            {
+                  if(s[0]=='?' || s[0]=='1') {printf("Case #%d: %lld\n",Cas,a[0]);}
+                  else {puts("0");}
+                  continue;
+            }
+            LL ans=0,i=0;
+
+            if(s[0]=='?')
+            {
+                  int num=0,minn=INT_MAX;
+                  char tou=s[i-1];
+                  while(s[i]=='?')
+                  {
+                        minn=min(a[i],minn);
+                        ans+=a[i];
+                        ++num,++i;
+                  }
+                  ans+=a[i];
+                  i++;
+                  if(i>n-1)
+                  {
+                        printf("Case #%d: %lld\n",Cas,ans);
+                        continue;
+                  }
+                  if(s[i]=='1')
+                  {
+                        if(num&1) ans-=minn;
+                  }
+                  else if(!(num&1)) ans-=minn;
+            }
+
+            int en=n;
+            if(s[n-1]=='?')
+            {
+                  en=n-1;
+                  int num=0;
+                  while(s[en]=='?'))
+                  {
+                        ans+=a[en];
+                        ++num;
+                        --en;
+                  }
+            }
+            for(;i<en;++i)
+            {
+                  if(s[i]!='?')
+                  {
+                        if(i==0 && s[i]=='1') {ans+=a[i];}
+                        if(s[i]!=s[i-1] && i>0)
+                              ans+=a[i];
+                  }
+                  else
+                  {
+                        char tou=s[i-1];
+                        int num=0,minn=INT_MAX;
+                        while(s[i]=='?')
+                        {
+                              minn=min(a[i],minn);
+                              ans+=a[i];
+                              ++num,++i;
+                        }
+                        ans+=a[i];
+                        minn=min(a[i],minn);
+                        char wei=s[i];
+                        if(tou==wei)
+                        {
+                              if(!(num&1)) ans-=minn;
+                        }
+                        else if(num&1) ans-=minn;
+                  }
+            }
+
+            printf("Case #%d: %lld\n",Cas,ans);
+      }
+      return 0;
+}
+/*
+
+*/
