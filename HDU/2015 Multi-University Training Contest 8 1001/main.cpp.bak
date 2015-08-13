@@ -1,0 +1,57 @@
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-08-13-12.41
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define  LL long long
+#define  ULL unsigned long long
+using namespace std;
+
+
+
+
+LL fenzi,fenmu;
+void add(LL x1,LL y1,LL x2,LL y2)
+{
+      if(y1 == y2 )
+      {
+            fenmu=y1;
+            fenzi=x1+x2;
+      }
+      else // tong fen
+      {
+            long long g=gcd(y1,y2);
+            fenmu=y1*y2/g;
+            fenzi=(fenmu/y1)*x1+(fenmu/y2)*x2;
+      }
+}
+
+int main()
+{
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      LL x1,x2,y1,y2;
+      while(cin>>x1>>y1>>x2>>y2)
+      {
+            cout<<fenzi<<fenmu<<endl;
+      }
+      return 0;
+}
+/*
+
+*/

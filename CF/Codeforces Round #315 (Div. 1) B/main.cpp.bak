@@ -48,24 +48,24 @@ int main()
       LL n;
       cin>>n;
       {
-            for(int i=0;i<=n;++i)
+            for(int i=0; i<=n; ++i)
             {
                   c[i][0]=1;
             }
-            for(int i=1;i<=n;++i)
+            for(int i=1; i<=n; ++i)
             {
-                  for(int j=1;j<=n;++j)
-                  c[i][j]=(c[i-1][j]+c[i-1][j-1])%mod;
+                  for(int j=1; j<=n; ++j)
+                        c[i][j]=(c[i-1][j]+c[i-1][j-1])%mod;
             }
             B[0]=1;
             B[1]=1;
             LL ans=0;
-            for(int i=2;i<=n;++i)
+            for(int i=2; i<=n; ++i)
             {
-                  for(int k=0;k<i;++k)
+                  for(int k=0; k<i; ++k)
                         B[i]=(B[i]+1LL*c[i-1][k]*B[k]%mod)%mod;
             }
-            for(int i=1;i<=n;++i)
+            for(int i=1; i<=n; ++i)
                   ans=(ans+1LL*c[n][i]*B[n-i]%mod)%mod;
             cout<<ans<<endl;
       }

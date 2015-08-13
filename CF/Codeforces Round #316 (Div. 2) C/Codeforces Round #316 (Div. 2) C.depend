@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1439486515 source:d:\code_fantasy\acm-icpc\cf\codeforces round #316 (div. 2) c\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+
