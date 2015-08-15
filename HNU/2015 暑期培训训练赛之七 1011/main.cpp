@@ -24,9 +24,10 @@ using namespace std;
 const LL MAXN=200010;
 struct node
 {
-      LL val,fla;
-      bool operator <(const node&a) const{
-            return val>a.val;
+      LL v,c;
+      bool operator <(const node&a) const
+      {
+            return v>a.v;
       }
 } a[MAXN];
 LL dp[MAXN][10];
@@ -36,26 +37,27 @@ int main()
       ios_base::sync_with_stdio(false);
       cin.tie(0);
       LL Cas;
-      scanf("%d",&Cas);
+      scanf("%I64d",&Cas);
       while(Cas--)
       {
             LL n,k;
             scanf("%I64d %I64d",&n,&k);
-            for(LL i=1;i<=n;++i)
+            for(LL i=1; i<=n; ++i)
             {
-                  scanf("%I64d %I64d",&a[i].val,&a[i].fla);
+                  scanf("%I64d %I64d",&a[i].v,&a[i].c);
             }
             sort(a+1,a+n+1);
-            LL ans=0;
+            LL ans=0,val;
             memset(dp,0,sizeof dp);
-            for(LL i=1;i<=n;++i)
+            for(LL i=1; i<=n; ++i)
             {
-                  dp[i][0]=dp[i-1][0]>a[i].val-a[i].fla?dp[i-1][0]:a[i].val-a[i].fla;
-                  for(LL j=1;j<=k;++j)
+                  val=a[i].v-a[i].c;
+                  dp[i][0]=max(dp[i-1][0],val);
+                  for(LL j=1; j<=k; ++j)
                   {
-                        dp[i][j]=max(dp[i-1][j],min(dp[i-1][j-1]-a[i].fla,a[i].val-a[i].fla));
+                        dp[i][j]=max(dp[i-1][j],min(dp[i-1][j-1]-a[i].c,val));
                   }
-                  ans=ans>dp[i][k]?ans:dp[i][k];
+                  ans=max(ans,dp[i][k]);
             }
             printf("%I64d\n",ans);
       }
