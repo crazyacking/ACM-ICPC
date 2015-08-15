@@ -25,54 +25,41 @@ using namespace std;
 char c[300005],d[15];
 int main()
 {
-      LL n,m;
+      LL n,m,i,answer=0;
       scanf("%I64d %I64d",&n,&m);
       scanf("%s",c);
-      LL i,ans=0;
       for(i=1; c[i]!='\0'; i++)
       {
             if(c[i]!='.') continue;
-            else if(c[i-1]=='.') ans++;
+            else if(c[i-1]=='.') answer++;
       }
       for(i=0; i<m; i++)
       {
-            LL loc;
-            scanf("%I64d%s",&loc,d);
-            loc--;
-            if((d[0]=='.')&&(c[loc]=='.'))
+            LL fau;
+            scanf("%I64d%s",&fau,d); fau--;
+            if((d[0]=='.')&&(c[fau]=='.'))
             {
-                  printf("%I64d\n",ans);
+                  printf("%I64d\n",answer);
                   continue;
             }
-            if((d[0]!='.')&&(c[loc]!='.'))
+            if((d[0]!='.')&&(c[fau]!='.'))
             {
-                  printf("%d\n",ans);
-                  continue;
+                  printf("%d\n",answer); continue;
             }
+            for(int i=0;i<n;++i)
+            
             if(d[0]!='.')
             {
-                  if((loc!=0)&&(c[loc-1]=='.'))
-                  {
-                        ans--;
-                  }
-                  if((loc!=n-1)&&(c[loc+1]=='.'))
-                  {
-                        ans--;
-                  }
+                  if((fau!=0)&&(c[fau-1]=='.')) answer--;
+                  if((fau!=n-1)&&(c[fau+1]=='.')) answer--;
             }
             else
             {
-                  if((loc!=0)&&(c[loc-1]=='.'))
-                  {
-                        ans++;
-                  }
-                  if((loc!=n-1)&&(c[loc+1]=='.'))
-                  {
-                        ans++;
-                  }
+                  if((fau!=0)&&(c[fau-1]=='.')) answer++;
+                  if((fau!=n-1)&&(c[fau+1]=='.')) answer++;
             }
-            c[loc]=d[0];
-            printf("%d\n",ans);
+            c[fau]=d[0];
+            printf("%d\n",answer);
       }
       return 0;
 }
