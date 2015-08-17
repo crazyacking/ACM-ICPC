@@ -18,8 +18,8 @@
 #include <vector>
 #include <algorithm>
 #include <cstring>
-#define  LL __int64
-#define  ULL unsigned __int64
+#define  LL long long
+#define  ULL unsigned long long
 using namespace std;
 const LL mod = 1000000007;
 LL inv[5000];
@@ -33,7 +33,7 @@ void pre()
 int main()
 {
       pre();
-      while(scanf("%d %I64d %d",&N,&D,&X) && N)
+      while(scanf("%d %lld %d",&N,&D,&X) && N)
       {
             LL ans = 0;
             for(int i=0; i*X<=N; i++)
@@ -49,17 +49,17 @@ int main()
                   }
                   else p = 0;
                   for(int j=0; j<i; j++) p = (mod - p);
-                  int shen = N - i*X;
-                  for(int j=1; j<=shen; j++)
+                  int gap = N - i*X;
+                  for(int j=1; j<=gap; j++)
                   {
-                        p = (D + shen - j + mod) % mod * p % mod;
+                        p = (D + gap - j + mod) % mod * p % mod;
                         p = p * inv[j] % mod;
                   }
                   ans = ans + p;
                   if(ans >= mod)
                         ans -= mod;
             }
-            printf("%I64d\n",ans);
+            printf("%lld\n",ans);
       }
       return 0;
 }

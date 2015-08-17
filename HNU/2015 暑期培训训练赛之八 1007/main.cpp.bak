@@ -49,10 +49,10 @@ int main()
                   }
                   else p = 0;
                   for(int j=0; j<i; j++) p = (mod - p);
-                  int shen = N - i*X;
-                  for(int j=1; j<=shen; j++)
+                  int gap = N - i*X;
+                  for(int j=1; j<=gap; j++)
                   {
-                        p = (D + shen - j + mod) % mod * p % mod;
+                        p = (D + gap - j + mod) % mod * p % mod;
                         p = p * inv[j] % mod;
                   }
                   ans = ans + p;

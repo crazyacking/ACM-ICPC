@@ -1,48 +1,72 @@
-#include <iostream>
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-08-16-19.52
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
 #include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define eps 1e-14
+#define  LL __int64
+#define  ULL unsigned __int64
 using namespace std;
-double pw;
-double vw[100010],pf[100010],vf[100010],th[100010];
-const double eps=1e-9;
-double cnt(int n,double w)
+const int MAXN=10+(int)1e5;
+LL n,pw,vw[MAXN],pf[MAXN],vf[MAXN],th[MAXN];
+double tmp,t;
+double cal(double& w)
 {
-      double ans=n*pw*w;
-      for(int i=0;i<n;i++)
+      tmp=w*pw;
+      for(int i=0;i<n;++i)
       {
-            if(th[i]<=0)
-                  continue;
-            double t=th[i]-w*vw[i];
-            if(t<=0)
-                  continue;
-            ans+=t/vf[i]*pf[i];
+            t=th[i]-w*vw[i];
+            if(t<=0) continue;
+            tmp+=(t)*pf[i]*1./vf[i];
       }
-      return ans;
+      return tmp;
 }
-double work(int n)
+
+double work(double l,double r)
 {
-      double l=0,r=200;
-      while(r-l>eps)
+      double mid,mmid;
+      int st=100;
+      while(st--)
       {
-            double ll=(2*l+r)/3,rr=(l+2*r)/3;
-            if(cnt(n,ll)<cnt(n,rr))
-                  r=rr;
-            else
-                  l=ll;
+            mid=(l+r)/2;
+            mmid=(mid+r)/2;
+            if(cal(mid)-cal(mmid)>eps)
+                  l=mid;
+            else r=mmid;
       }
       return l;
 }
 int main()
 {
-      int n;
-      while(scanf("%d",&n)!=EOF)
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      while(scanf("%I64d",&n),n)
       {
-            if(n==0)
-                  return 0;
-            scanf("%lf",&pw);
-            for(int i=0;i<n;i++)
-                  scanf("%lf%lf%lf%lf",&vw[i],&pf[i],&vf[i],&th[i]);
-            double ans=work(n);
-            printf("%.6f\n",cnt(n,ans));
+            scanf("%I64d",&pw);
+            for(int i=0;i<n;++i)
+            {
+                  scanf("%I64d %I64d %I64d %I64d",&vw[i],&pf[i],&vf[i],&th[i]);
+            }
+            double val=work(0,200);
+            printf("%.6lf\n",cal(val));
       }
       return 0;
 }
+/*
+
+*/
