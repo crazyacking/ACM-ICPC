@@ -1,37 +1,78 @@
-/*
-* this code is made by crazyacking
-* Verdict: Accepted
-* Submission Date: 2015-08-16-15.07
-* Time: 0MS
-* Memory: 137KB
-*/
-#include <queue>
+/**************************************************************************************
+    Palindrome tree. Useful structure to deal with palindromes in strings. O(N)
+    This code counts number of palindrome substrings of the string.
+    Based on problem 1750 from informatics.mccme.ru:
+    http://informatics.mccme.ru/moodle/mod/statements/view.php?chapterid=1750
+**************************************************************************************/
 #include <cstdio>
-#include <set>
-#include <string>
-#include <stack>
-#include <cmath>
-#include <climits>
-#include <map>
-#include <cstdlib>
-#include <iostream>
-#include <vector>
 #include <algorithm>
+#include <iostream>
 #include <cstring>
-#define  LL long long
-#define  ULL unsigned long long
 using namespace std;
-
+const int MAXN = 105000;
+struct node
+{
+      int next[26];
+      int len;
+      int sufflink;
+      int num;
+};
+int len;
+char s[MAXN];
+node tree[MAXN];
+int num; // node 1 - root with len -1, node 2 - root with len 0
+int suff; // max suffix palindrome
+long long ans;
+bool addLetter(int pos)
+{
+      int cur = suff, curlen = 0;
+      int let = s[pos] - 'a';
+      while(true)
+      {
+            curlen = tree[cur].len;
+            if(pos-1-curlen>=0&&s[pos-1-curlen]==s[pos]) break;
+            cur = tree[cur].sufflink;
+      }
+      if(tree[cur].next[let])
+      {
+            suff = tree[cur].next[let];
+            return false;
+      } suff = ++num;
+      tree[num].len = tree[cur].len + 2;
+      tree[cur].next[let] = num;
+      if(tree[num].len == 1)
+      {
+            tree[num].sufflink = 2;
+            tree[num].num = 1;
+            return true;
+      }
+      while(true)
+      {
+            cur = tree[cur].sufflink;
+            curlen = tree[cur].len;
+            if(pos - 1 - curlen >= 0 && s[pos - 1 - curlen] == s[pos])
+            {
+                  tree[num].sufflink = tree[cur].next[let];
+                  break;
+            }
+      }
+      tree[num].num = 1 + tree[tree[num].sufflink].num;
+      return true;
+}
+void initTree()
+{
+      num = 2; suff = 2;
+      tree[1].len = -1; tree[1].sufflink = 1;
+      tree[2].len = 0; tree[2].sufflink = 1;
+}
 int main()
 {
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      char s[]="fadsfjadsjfads";
-      char s1[112];
-      strcpy(s1,s);
-      puts(s1);
+      gets(s);
+      initTree();
+      for(int i = 0;s[i]; i++)
+      {
+            addLetter(i);
+            ans += tree[suff].num;
+      } cout << ans << endl;
       return 0;
 }
-/*
-
-*/

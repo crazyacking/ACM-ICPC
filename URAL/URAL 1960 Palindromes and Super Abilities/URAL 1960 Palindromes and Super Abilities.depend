@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1439802767 source:d:\code_fantasy\acm-icpc\ural\ural 1960 palindromes and super abilities\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+
