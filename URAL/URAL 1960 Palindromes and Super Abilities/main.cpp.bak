@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-08-17-14.58
+* Submission Date: 2015-08-18-16.52
 * Time: 0MS
 * Memory: 137KB
 */
@@ -22,90 +22,162 @@
 #define  ULL unsigned long long
 using namespace std;
 
-const int MAXN = 100005 ;
-const int N = 26 ;
-char s[MAXN];
-namespace Palindromic_Tree
-{
-      int next[MAXN][N] ;//next指针，next指针和字典树类似，指向的串为当前串两端加上同一个字符构成
-      int fail[MAXN] ;//fail指针，失配后跳转到fail指针指向的节点
-      int cnt[MAXN] ;
-      int num[MAXN] ;
-      int len[MAXN] ;//len[i]表示节点i表示的回文串的长度
-      int S[MAXN] ;//存放添加的字符
-      int last ;//指向上一个字符所在的节点，方便下一次add
-      int n ;//字符数组指针
-      int p ;//节点指针
-
-      int newnode(int l)     //新建节点
-      {
-            for(int i = 0 ; i < N ; ++ i) next[p][i] = 0 ;
-            cnt[p] = 0 ;
-            num[p] = 0 ;
-            len[p] = l ;
-            return p ++ ;
-      }
-
-      void init()   //初始化
-      {
-            p = 0 ;
-            newnode(0) ;
-            newnode(-1) ;
-            last = 0 ;
-            n = 0 ;
-            S[n] = -1 ;//开头放一个字符集中没有的字符，减少特判
-            fail[0] = 1 ;
-      }
-
-      int get_fail(int x)     //和KMP一样，失配后找一个尽量最长的
-      {
-            while(S[n - len[x] - 1] != S[n]) x = fail[x] ;
-            return x ;
-      }
-
-      void add(int c)
-      {
-            c -= 'a' ;
-            S[++ n] = c ;
-            int cur = get_fail(last) ;   //通过上一个回文串找这个回文串的匹配位置
-            if(!next[cur][c])     //如果这个回文串没有出现过，说明出现了一个新的本质不同的回文串
-            {
-                  int now = newnode(len[cur] + 2) ;   //新建节点
-                  fail[now] = next[get_fail(fail[cur])][c] ;   //和AC自动机一样建立fail指针，以便失配后跳转
-                  next[cur][c] = now ;
-                  num[now] = num[fail[now]] + 1 ;
-            }
-            last = next[cur][c] ;
-            cnt[last] ++ ;
-      }
-
-      void Count()
-      {
-            for(int i = p - 1 ; i >= 0 ; -- i) cnt[fail[i]] += cnt[i] ;
-            //父亲累加儿子的cnt，因为如果fail[v]=u，则u一定是v的子回文串！
-      }
-} ;
-
-
-using namespace Palindromic_Tree;
+int a[500][500];
 
 int main()
 {
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      while(~scanf("%s",s))
+      int n, m;
+      while(cin >> n >> m)
       {
-            init();
-            LL ans=0;
-            for(int i=0;s[i];++i)
+            int sum = 0;
+            for(int i = 1; i <= n; ++i)
+                  for(int j = 1; j <= m; ++j)
+                  {
+                        scanf("%d", &a[i][j]);
+                        sum += a[i][j];
+                  }
+            if((n & 1) || (m & 1))
             {
-                  add(s[i]);
+                  printf("%d\n", sum);
+                  if(n & 1)
+                  {
+                        for(int i = 1; i <= n; ++i)
+                        {
+                              for(int j = 1; j < m; ++j)
+                              {
+                                    if(i & 1)
+                                          putchar('R');
+                                    else
+                                          putchar('L');
+                              }
+                              if(i < n)
+                                    putchar('D');
+                        }
+                  }
+                  else
+                  {
+                        for(int i = 1; i <= m; ++i)
+                        {
+                              for(int j = 1; j < n; ++j)
+                              {
+                                    if(i & 1)
+                                          putchar('D');
+                                    else
+                                          putchar('U');
+                              }
+                              if(i < m)
+                                    putchar('R');
+                        }
+                  }
+                  puts("");
+                  continue;
             }
-            Count();
-            
+            int x, y;
+            int mn = 1e5;
+            for(int i = 1; i <= n; ++i)
+            {
+                  for(int j = 1; j <= m; ++j)
+                  {
+                        if((i + j) % 2 == 0)
+                              continue;
+                        if(a[i][j] < mn)
+                        {
+                              mn = a[i][j];
+                              x = i;
+                              y = j;
+                        }
+                  }
+            }
+            cout << sum - mn << endl;
+            if(y & 1)
+            {
+                  for(int i = 1; i < x - 1; ++i)
+                  {
+                        for(int j = 1; j < m; ++j)
+                        {
+                              if(i & 1)
+                                    putchar('R');
+                              else
+                                    putchar('L');
+                        }
+                        putchar('D');
+                  }
+                  int p = 1;
+                  for(int i = 1; i <= m; ++i)
+                  {
+                        if(i == y)
+                        {
+                              putchar('R');
+                              p = 0;
+                              continue;
+                        }
+                        if((i + p) & 1)
+                              putchar('U');
+                        else
+                              putchar('D');
+                        if(i < m)
+                              putchar('R');
+                  }
+                  if(x < n)
+                        putchar('D');
+                  for(int i = x + 1; i <= n; ++i)
+                  {
+                        for(int j = 1; j < m; ++j)
+                        {
+                              if(i & 1)
+                                    putchar('L');
+                              else
+                                    putchar('R');
+                        }
+                        if(i < n)
+                              putchar('D');
+                  }
+            }
+            else if(x & 1)
+            {
+                  for(int i = 1; i < y - 1; ++i)
+                  {
+                        for(int j = 1; j < n; ++j)
+                        {
+                              if(i & 1)
+                                    putchar('D');
+                              else
+                                    putchar('U');
+                        }
+                        putchar('R');
+                  }
+                  int p = 1;
+                  for(int i = 1; i <= n; ++i)
+                  {
+                        if(i == x)
+                        {
+                              putchar('D');
+                              p = 0;
+                              continue;
+                        }
+                        if((i + p) & 1)
+                              putchar('L');
+                        else
+                              putchar('R');
+                        if(i < n)
+                              putchar('D');
+                  }
+                  if(y < m)
+                        putchar('R');
+                  for(int i = y + 1; i <= m; ++i)
+                  {
+                        for(int j = 1; j < n; ++j)
+                        {
+                              if(i & 1)
+                                    putchar('U');
+                              else
+                                    putchar('D');
+                        }
+                        if(i < m)
+                              putchar('R');
+                  }
+            }
+            puts("");
       }
       return 0;
 }
-/*
-
-*/
