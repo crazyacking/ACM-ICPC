@@ -1,78 +1,106 @@
-/**************************************************************************************
-    Palindrome tree. Useful structure to deal with palindromes in strings. O(N)
-    This code counts number of palindrome substrings of the string.
-    Based on problem 1750 from informatics.mccme.ru:
-    http://informatics.mccme.ru/moodle/mod/statements/view.php?chapterid=1750
-**************************************************************************************/
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-08-19-21.48
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
 #include <cstdio>
-#include <algorithm>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
 #include <iostream>
+#include <vector>
+#include <algorithm>
 #include <cstring>
+#define  LL long long
+#define  ULL unsigned long long
 using namespace std;
-const int MAXN = 105000;
-struct node
-{
-      int next[26];
-      int len;
-      int sufflink;
-      int num;
-};
-int len;
+const int MAXN = 100005 ;
+const int N = 26 ;
 char s[MAXN];
-node tree[MAXN];
-int num; // node 1 - root with len -1, node 2 - root with len 0
-int suff; // max suffix palindrome
-long long ans;
-bool addLetter(int pos)
+// 注意p是从2开始(前两个结点代表长度为0和长度为-1的)
+struct Palindromic_Tree
 {
-      int cur = suff, curlen = 0;
-      int let = s[pos] - 'a';
-      while(true)
+      int next[MAXN][N] ;//next指针 和Trie的next指针类似,指向下一个结点
+      int fail[MAXN] ;//fail指针，指向不是同一路径上的结点(该结点的回文的最后一个字符和本结点相同，且是最长的一个)
+      int cnt[MAXN] ;//节点i回文串在原串中出现的总次数
+      int num[MAXN] ; //节点i通过fail指针到达0节点或1节点的步数(fail指针的深度)
+      int len[MAXN] ;//节点i表示的回文串的长度
+      int S[MAXN] ;//存放添加的字符
+      int last ;//指向上一个字符所在的节点，方便下一次add
+      int n ;//字符数组指针
+      int p ;//节点指针
+      int newnode(int l)   //新建节点
       {
-            curlen = tree[cur].len;
-            if(pos-1-curlen>=0&&s[pos-1-curlen]==s[pos]) break;
-            cur = tree[cur].sufflink;
+            for(int i = 0 ; i < N ; ++ i) next[p][i] = 0 ;
+            cnt[p] = 0 ;
+            num[p] = 0 ;
+            len[p] = l ;
+            return p ++ ;
       }
-      if(tree[cur].next[let])
+      void init()   //初始化
       {
-            suff = tree[cur].next[let];
-            return false;
-      } suff = ++num;
-      tree[num].len = tree[cur].len + 2;
-      tree[cur].next[let] = num;
-      if(tree[num].len == 1)
-      {
-            tree[num].sufflink = 2;
-            tree[num].num = 1;
-            return true;
+            p = 0 ;
+            newnode(0) ;
+            newnode(-1) ;
+            last = 0 ;
+            n = 0 ;
+            S[n] = -1 ;//开头放一个字符集中没有的字符，减少特判
+            fail[0] = 1 ;
       }
-      while(true)
+      int get_fail(int x)     //和KMP一样，失配后找一个尽量最长的
       {
-            cur = tree[cur].sufflink;
-            curlen = tree[cur].len;
-            if(pos - 1 - curlen >= 0 && s[pos - 1 - curlen] == s[pos])
+            while(S[n - len[x] - 1] != S[n]) x = fail[x] ;
+            return x ;
+      }
+      void add(int c)
+      {
+            c -= 'a';
+            S[++ n] = c ;
+            int cur = get_fail(last) ;   //通过上一个回文串找这个回文串的匹配位置
+            if(!next[cur][c])     //如果这个回文串没有出现过，说明出现了一个新的本质不同的回文串
             {
-                  tree[num].sufflink = tree[cur].next[let];
-                  break;
-            }
+                  int now = newnode(len[cur] + 2) ;   //新建节点
+                  fail[now] = next[get_fail(fail[cur])][c] ;   //和AC自动机一样建立fail指针，以便失配后跳转
+                  next[cur][c] = now ;
+                  num[now] = num[fail[now]] + 1 ;
+                  //输出当前结点的回文串
+                  for(int i=pos-len[now]+1; i<=pos; ++i)
+                        printf("%c",s[i]);
+            } last = next[cur][c] ;
+            cnt[last] ++ ;
+            putchar(10);
       }
-      tree[num].num = 1 + tree[tree[num].sufflink].num;
-      return true;
-}
-void initTree()
-{
-      num = 2; suff = 2;
-      tree[1].len = -1; tree[1].sufflink = 1;
-      tree[2].len = 0; tree[2].sufflink = 1;
-}
+      void count()
+      {
+            for(int i = p - 1 ; i >= 0 ; -- i) cnt[fail[i]] += cnt[i] ;
+            //父亲累加儿子的cnt，因为如果fail[v]=u，则u一定是v的子回文串！
+      }
+} tree;
 int main()
 {
-      gets(s);
-      initTree();
-      for(int i = 0;s[i]; i++)
+      scanf("%s",&s);
+      int n=strlen(s);
+      tree.init();
+      for(int i=0; i<n; i++) tree.add(s[i],i);
+      tree.count();
+      //每个结点回文串出现的次数
+      for(int i=2; i<tree.p; ++i)
       {
-            addLetter(i);
-            ans += tree[suff].num;
-      } cout << ans << endl;
+            printf("%d ",tree.cnt[i]);
+      }
+      putchar(10);
+      //每个结点回文串的长度
+      for(int i=2; i<tree.p; ++i)
+      {
+            printf("%d ",tree.len[i]);
+      }
+      putchar(10);
       return 0;
 }
