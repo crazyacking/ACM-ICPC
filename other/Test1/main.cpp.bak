@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-08-19-21.48
+* Submission Date: 2015-08-20-20.59
 * Time: 0MS
 * Memory: 137KB
 */
@@ -21,86 +21,249 @@
 #define  LL long long
 #define  ULL unsigned long long
 using namespace std;
-const int MAXN = 100005 ;
-const int N = 26 ;
-char s[MAXN];
-// 注意p是从2开始(前两个结点代表长度为0和长度为-1的)
-struct Palindromic_Tree
+
+int __crazyacking_now___,__kitExpression_Tree__(string),__Terminal__now___(string),___Factor_Or__now__(string),__Kat_number_(string);
+int __dx__number_(string),__dbd__number__(string),__and__number__(string) ,__Number_Xor_(string),Or(string),__and__number__2(string),___Orz__number___(string);
+string string__;
+
+/**< set back the __crazyacking_now___'s number */
+int __Kat_number_(string s)
 {
-      int next[MAXN][N] ;//next指针 和Trie的next指针类似,指向下一个结点
-      int fail[MAXN] ;//fail指针，指向不是同一路径上的结点(该结点的回文的最后一个字符和本结点相同，且是最长的一个)
-      int cnt[MAXN] ;//节点i回文串在原串中出现的总次数
-      int num[MAXN] ; //节点i通过fail指针到达0节点或1节点的步数(fail指针的深度)
-      int len[MAXN] ;//节点i表示的回文串的长度
-      int S[MAXN] ;//存放添加的字符
-      int last ;//指向上一个字符所在的节点，方便下一次add
-      int n ;//字符数组指针
-      int p ;//节点指针
-      int newnode(int l)   //新建节点
+      int res = 0;
+      while('0' <= s[__crazyacking_now___] && s[__crazyacking_now___] <= '9')
       {
-            for(int i = 0 ; i < N ; ++ i) next[p][i] = 0 ;
-            cnt[p] = 0 ;
-            num[p] = 0 ;
-            len[p] = l ;
-            return p ++ ;
+            res = res * 10 + s[__crazyacking_now___] - '0';
+            __crazyacking_now___++;
       }
-      void init()   //初始化
+      return res;
+}
+
+
+/**< calculate Or */
+int Or(string s)
+{
+      int res = __Number_Xor_(s);
+      for(;;)
       {
-            p = 0 ;
-            newnode(0) ;
-            newnode(-1) ;
-            last = 0 ;
-            n = 0 ;
-            S[n] = -1 ;//开头放一个字符集中没有的字符，减少特判
-            fail[0] = 1 ;
-      }
-      int get_fail(int x)     //和KMP一样，失配后找一个尽量最长的
-      {
-            while(S[n - len[x] - 1] != S[n]) x = fail[x] ;
-            return x ;
-      }
-      void add(int c)
-      {
-            c -= 'a';
-            S[++ n] = c ;
-            int cur = get_fail(last) ;   //通过上一个回文串找这个回文串的匹配位置
-            if(!next[cur][c])     //如果这个回文串没有出现过，说明出现了一个新的本质不同的回文串
+            if(s[__crazyacking_now___] == '|' && s[__crazyacking_now___ + 1] != '|')
             {
-                  int now = newnode(len[cur] + 2) ;   //新建节点
-                  fail[now] = next[get_fail(fail[cur])][c] ;   //和AC自动机一样建立fail指针，以便失配后跳转
-                  next[cur][c] = now ;
-                  num[now] = num[fail[now]] + 1 ;
-                  //输出当前结点的回文串
-                  for(int i=pos-len[now]+1; i<=pos; ++i)
-                        printf("%c",s[i]);
-            } last = next[cur][c] ;
-            cnt[last] ++ ;
-            putchar(10);
+                  ++__crazyacking_now___;
+                  res = (res | __Number_Xor_(s));
+            }
+            else
+            {
+                  break;
+            }
       }
-      void count()
+      return res;
+}
+
+/**< Detect the base */
+int __dbd__number__(string s)
+{
+      int res = __dx__number_(s);
+      for(;;)
       {
-            for(int i = p - 1 ; i >= 0 ; -- i) cnt[fail[i]] += cnt[i] ;
-            //父亲累加儿子的cnt，因为如果fail[v]=u，则u一定是v的子回文串！
+            if(s[__crazyacking_now___] == '=' && s[__crazyacking_now___ + 1] == '=')
+            {
+                  __crazyacking_now___ += 2;
+                  res = (res == __dx__number_(s));
+            }
+            else if(s[__crazyacking_now___] == '!' && s[__crazyacking_now___ + 1] == '=')
+            {
+                  __crazyacking_now___ += 2;
+                  res = (res != __dx__number_(s));
+            }
+            else
+            {
+                  break;
+            }
       }
-} tree;
+      return res;
+}
+
+
+int __Number_Xor_(string s)
+{
+      int res = __and__number__(s);
+      for(;;)
+      {
+            if(s[__crazyacking_now___] == '^')
+            {
+                  ++__crazyacking_now___;
+                  res = (res ^ __and__number__(s));
+            }
+            else
+            {
+                  break;
+            }
+      }
+      return res;
+}
+
+/**< judge __and__number__2 ,Is have other case? */
+int __and__number__2(string s)
+{
+      int res = Or(s);
+      for(;;)
+      {
+            if(s[__crazyacking_now___] == '&' && s[__crazyacking_now___ + 1] == '&')
+            {
+                  __crazyacking_now___ += 2;
+                  res = (res && Or(s));
+            }
+            else
+            {
+                  break;
+            }
+      }
+      return res;
+}
+int __and__number__(string s)
+{
+      int res = __dbd__number__(s);
+      for(;;)
+      {
+            if(s[__crazyacking_now___] == '&' && s[__crazyacking_now___ + 1] != '&')
+            {
+                  ++__crazyacking_now___;
+                  res = (res & __dbd__number__(s));
+            }
+            else
+            {
+                  break;
+            }
+      }
+      return res;
+}
+
+
+int __dx__number_(string s)
+{
+      int res = __kitExpression_Tree__(s);
+      for(;;)
+      {
+            if(s[__crazyacking_now___] == '>' && s[__crazyacking_now___ + 1] == '=')
+            {
+                  __crazyacking_now___ += 2;
+                  res = (res >= __kitExpression_Tree__(s));
+            }
+            else if(s[__crazyacking_now___] == '<' && s[__crazyacking_now___ + 1] == '=')
+            {
+                  __crazyacking_now___ += 2;
+                  res = (res <= __kitExpression_Tree__(s));
+            }
+            else if(s[__crazyacking_now___] == '>')
+            {
+                  ++__crazyacking_now___;
+                  res = (res > __kitExpression_Tree__(s));
+            }
+            else if(s[__crazyacking_now___] == '<')
+            {
+                  ++__crazyacking_now___;
+                  res = (res < __kitExpression_Tree__(s));
+            }
+            else
+            {
+                  break;
+            }
+      }
+      return res;
+}
+/**< Factor or  */
+int ___Factor_Or__now__(string s)
+{
+      int res = __Kat_number_(s);
+      if(s[__crazyacking_now___] == '(')
+      {
+            __crazyacking_now___++;
+            res += ___Orz__number___(s);
+            __crazyacking_now___++;
+      }
+      return res;
+}
+
+int __kitExpression_Tree__(string s)
+{
+      int res = __Terminal__now___(s);
+      for(;;)
+      {
+            if(s[__crazyacking_now___] == '+')
+            {
+                  __crazyacking_now___++;
+                  res += __Terminal__now___(s);
+            }
+            else if(s[__crazyacking_now___] == '-')
+            {
+                  __crazyacking_now___++;
+                  res -= __Terminal__now___(s);
+            }
+            else
+            {
+                  break;
+            }
+      }
+      return res;
+}
+
+int __Terminal__now___(string s)
+{
+      int res = ___Factor_Or__now__(s);
+      for(;;)
+      {
+            if(s[__crazyacking_now___] == '*')
+            {
+                  __crazyacking_now___++;
+                  res *= ___Factor_Or__now__(s);
+            }
+            else if(s[__crazyacking_now___] == '&')/**<  */
+            {
+                  __crazyacking_now___++;
+                  res /= ___Factor_Or__now__(s);
+            }
+            else if(s[__crazyacking_now___] == '%')
+            {
+                  __crazyacking_now___++;
+                  res = res % ___Factor_Or__now__(s);
+            }
+            else
+            {
+                  break;
+            }
+      }
+      return res;
+}
+
+
+
+/**< count the __and__number__2 */
+int ___Orz__number___(string s)
+{
+      int res = __and__number__2(s);
+      for(;;)
+      {
+            if(s[__crazyacking_now___] == '|' && s[__crazyacking_now___ + 1] == '|')
+            {
+                  __crazyacking_now___ += 2;/**<  */
+                  res = (res || __and__number__2(s));
+            }
+            else
+            {
+                  break;
+            }
+      }
+      return res;
+}
+
 int main()
 {
-      scanf("%s",&s);
-      int n=strlen(s);
-      tree.init();
-      for(int i=0; i<n; i++) tree.add(s[i],i);
-      tree.count();
-      //每个结点回文串出现的次数
-      for(int i=2; i<tree.p; ++i)
+      while(cin >> string__)
       {
-            printf("%d ",tree.cnt[i]);
+            if(string__[0] == '0' && string__.size() == 1)
+            {
+                  return 0;
+            }
+            __crazyacking_now___ = 0;
+            cout << ___Orz__number___(string__) << endl;
       }
-      putchar(10);
-      //每个结点回文串的长度
-      for(int i=2; i<tree.p; ++i)
-      {
-            printf("%d ",tree.len[i]);
-      }
-      putchar(10);
-      return 0;
 }
