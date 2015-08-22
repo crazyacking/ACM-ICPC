@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-08-20-12.03
+* Submission Date: 2015-08-20-12.27
 * Time: 0MS
 * Memory: 137KB
 */
@@ -18,89 +18,67 @@
 #include <vector>
 #include <algorithm>
 #include <cstring>
+#define mod 1000000007
 #define  LL long long
 #define  ULL unsigned long long
 using namespace std;
 
-/** Lucas
- * p必须是小于100010的质数
- */
-using namespace std;
-long long F[100010];
-void init(long long p)
+//用筛法生成素数
+const LL MAXN = 1000500;
+bool arr[MAXN+1] = {false};
+vector<LL> produce_prim_number()
 {
-      F[0] = 1;
-      for(int i = 1; i <= p; i++)
-            F[i] = F[i-1]*i%p;
-}
-long long inv(long long a,long long m)
-{
-      if(a == 1)return 1;
-      return inv(m%a,m)*(m-m/a)%m;
-}
-long long Lucas(long long n,long long m,long long p)
-{
-      long long ans = 1;
-      while(n&&m)
+      vector<LL> prim;
+      prim.push_back(2);
+      LL i,j;
+      for(i=3; i*i<=MAXN; i+=2)
       {
-            long long a = n%p;
-            long long b = m%p;
-            if(a < b)return 0;
-            ans = ans*F[a]%p*inv(F[b]*F[a-b]%p,p)%p;
-            n /= p;
-            m /= p;
+            if(!arr[i])
+            {
+                  prim.push_back(i);
+                  for(j=i*i; j<=MAXN; j+=i)
+                        arr[j] = true;
+            }
       }
-      return ans;
+      while(i<=MAXN)
+      {
+            if(!arr[i])
+                  prim.push_back(i);
+            i+=2;
+      }
+      return prim;
 }
+
+vector<LL> p;
 
 int main()
 {
-      int T;
-      int n,m,p;
-      scanf("%d",&T);
-      while(T--)
+      p = produce_prim_number();
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      int t;
+      scanf("%d",&t);
+      while(t--)
       {
-            scanf("%d%d%d",&n,&m,&p);
-            init(p);
-            printf("%d\n",(int)Lucas(n,m,p));
+            int n;
+            scanf("%d",&n);
+            int ans=1;
+            for(int i=0; i<p.size(); ++i)
+            {
+                  if(p[i]>n)break;
+                  LL t=p[i];
+                  for(; t<=n; t*=p[i])
+                  {
+                        if((n+1)%t!=0)
+                        {
+                              ans=(LL)ans*p[i]%mod;
+                        }
+                  }
+            }
+            printf("%d\n",ans%mod);
       }
-     return 0;
+      return 0;
 }
+/*
 
-//
-//long long gcd(long long a,long long b)
-//{
-//      return !b?a:gcd(b,a%b);
-//}
-//
-//long long lcm(long long a,long long b)
-//{
-//      return a*b/gcd(a,b);
-//}
-//
-//
-//int main()
-//{
-//      ios_base::sync_with_stdio(false);
-//      cin.tie(0);
-//      int t;
-//      scanf("%d",&t);
-//      while(t--)
-//      {
-//            LL N;
-//            scanf("%lld",&N);
-//            LL ans=0;
-//            init(100010);
-//            for(LL i=0;i<=N;++i)
-//            {
-//                  cout<<Lucas(N,i,1000)<<endl;
-////                  ans=lcm(ans,Lucas(N,i,1000000007));
-//            }
-////            printf("%lld\n",ans%1000000007);
-//      }
-//
-//      return 0;
-//}
-///*
-//
-//*/
+*/
