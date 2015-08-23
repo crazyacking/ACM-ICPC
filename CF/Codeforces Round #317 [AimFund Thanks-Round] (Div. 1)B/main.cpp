@@ -4,6 +4,11 @@ using namespace std;
 
 int main()
 {
-    cout << "Hello world!" << endl;
-    return 0;
+      int l;
+      while(cin>>l)
+      {
+            int ans=(l+1)*(l+1)*(l+2)/6;
+            cout<<ans<<endl;
+      }
+      return 0;
 }

@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-08-23-01.40
+* Submission Date: 2015-08-23-12.24
 * Time: 0MS
 * Memory: 137KB
 */
@@ -18,33 +18,33 @@
 #include <vector>
 #include <algorithm>
 #include <cstring>
-#define  LL long long
-#define  ULL unsigned long long
 using namespace std;
-LL a,b,c,l,gap;
+typedef long long LL;
+
+LL cal(LL a,LL b,LL c,LL l)
+{
+	LL ans=0;
+	for(LL i=max(b+c-a,0LL);i<=l;++i)
+	{
+		LL x=min(l-i,a+i-b-c);
+		ans+=(1+x)*(2+x)/2;
+	}
+	return ans;
+}
+
 int main()
 {
-      while(cin>>a>>b>>c>>l)
-      {
-            LL ans=1;
-            for(LL i=1;i<=l;++i)
-            {
-                  ans+=i*(i+1)/2+i+1;
-            }
-            for(LL i=0;i<=l;++i)
-            {
-                  gap=max((a+b+i-c+1)/2,(LL)0);
-                  if(gap<=i)
-                        ans-=(i-gap+2)*(i-gap+1)/2;
-                  gap=max((c+b+i-a+1)/2,(LL)0);
-                  if(gap<=i)
-                        ans-=(i-gap+2)*(i-gap+1)/2;
-                  gap=max((a+c+i-b+1)/2,(LL)0);
-                  if(gap<=i)
-                        ans-=(i-gap+2)*(i-gap+1)/2;
-            }
-            cout<<ans<<endl;
-      }
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      LL a,b,c,l;
+	cin>>a>>b>>c>>l;
+	LL ans=0;
+	for(LL i=0;i<=l;++i)
+		ans+=LL(1+i)*(2+i)/2;
+	ans-=cal(a,b,c,l);
+	ans-=cal(b,a,c,l);
+	ans-=cal(c,a,b,l);
+	cout<<ans;
       return 0;
 }
 /*
