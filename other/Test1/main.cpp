@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-08-20-20.59
+* Submission Date: 2015-08-23-02.20
 * Time: 0MS
 * Memory: 137KB
 */
@@ -22,248 +22,47 @@
 #define  ULL unsigned long long
 using namespace std;
 
-int __crazyacking_now___,__kitExpression_Tree__(string),__Terminal__now___(string),___Factor_Or__now__(string),__Kat_number_(string);
-int __dx__number_(string),__dbd__number__(string),__and__number__(string) ,__Number_Xor_(string),Or(string),__and__number__2(string),___Orz__number___(string);
-string string__;
-
-/**< set back the __crazyacking_now___'s number */
-int __Kat_number_(string s)
-{
-      int res = 0;
-      while('0' <= s[__crazyacking_now___] && s[__crazyacking_now___] <= '9')
-      {
-            res = res * 10 + s[__crazyacking_now___] - '0';
-            __crazyacking_now___++;
-      }
-      return res;
-}
-
-
-/**< calculate Or */
-int Or(string s)
-{
-      int res = __Number_Xor_(s);
-      for(;;)
-      {
-            if(s[__crazyacking_now___] == '|' && s[__crazyacking_now___ + 1] != '|')
-            {
-                  ++__crazyacking_now___;
-                  res = (res | __Number_Xor_(s));
-            }
-            else
-            {
-                  break;
-            }
-      }
-      return res;
-}
-
-/**< Detect the base */
-int __dbd__number__(string s)
-{
-      int res = __dx__number_(s);
-      for(;;)
-      {
-            if(s[__crazyacking_now___] == '=' && s[__crazyacking_now___ + 1] == '=')
-            {
-                  __crazyacking_now___ += 2;
-                  res = (res == __dx__number_(s));
-            }
-            else if(s[__crazyacking_now___] == '!' && s[__crazyacking_now___ + 1] == '=')
-            {
-                  __crazyacking_now___ += 2;
-                  res = (res != __dx__number_(s));
-            }
-            else
-            {
-                  break;
-            }
-      }
-      return res;
-}
-
-
-int __Number_Xor_(string s)
-{
-      int res = __and__number__(s);
-      for(;;)
-      {
-            if(s[__crazyacking_now___] == '^')
-            {
-                  ++__crazyacking_now___;
-                  res = (res ^ __and__number__(s));
-            }
-            else
-            {
-                  break;
-            }
-      }
-      return res;
-}
-
-/**< judge __and__number__2 ,Is have other case? */
-int __and__number__2(string s)
-{
-      int res = Or(s);
-      for(;;)
-      {
-            if(s[__crazyacking_now___] == '&' && s[__crazyacking_now___ + 1] == '&')
-            {
-                  __crazyacking_now___ += 2;
-                  res = (res && Or(s));
-            }
-            else
-            {
-                  break;
-            }
-      }
-      return res;
-}
-int __and__number__(string s)
-{
-      int res = __dbd__number__(s);
-      for(;;)
-      {
-            if(s[__crazyacking_now___] == '&' && s[__crazyacking_now___ + 1] != '&')
-            {
-                  ++__crazyacking_now___;
-                  res = (res & __dbd__number__(s));
-            }
-            else
-            {
-                  break;
-            }
-      }
-      return res;
-}
-
-
-int __dx__number_(string s)
-{
-      int res = __kitExpression_Tree__(s);
-      for(;;)
-      {
-            if(s[__crazyacking_now___] == '>' && s[__crazyacking_now___ + 1] == '=')
-            {
-                  __crazyacking_now___ += 2;
-                  res = (res >= __kitExpression_Tree__(s));
-            }
-            else if(s[__crazyacking_now___] == '<' && s[__crazyacking_now___ + 1] == '=')
-            {
-                  __crazyacking_now___ += 2;
-                  res = (res <= __kitExpression_Tree__(s));
-            }
-            else if(s[__crazyacking_now___] == '>')
-            {
-                  ++__crazyacking_now___;
-                  res = (res > __kitExpression_Tree__(s));
-            }
-            else if(s[__crazyacking_now___] == '<')
-            {
-                  ++__crazyacking_now___;
-                  res = (res < __kitExpression_Tree__(s));
-            }
-            else
-            {
-                  break;
-            }
-      }
-      return res;
-}
-/**< Factor or  */
-int ___Factor_Or__now__(string s)
-{
-      int res = __Kat_number_(s);
-      if(s[__crazyacking_now___] == '(')
-      {
-            __crazyacking_now___++;
-            res += ___Orz__number___(s);
-            __crazyacking_now___++;
-      }
-      return res;
-}
-
-int __kitExpression_Tree__(string s)
-{
-      int res = __Terminal__now___(s);
-      for(;;)
-      {
-            if(s[__crazyacking_now___] == '+')
-            {
-                  __crazyacking_now___++;
-                  res += __Terminal__now___(s);
-            }
-            else if(s[__crazyacking_now___] == '-')
-            {
-                  __crazyacking_now___++;
-                  res -= __Terminal__now___(s);
-            }
-            else
-            {
-                  break;
-            }
-      }
-      return res;
-}
-
-int __Terminal__now___(string s)
-{
-      int res = ___Factor_Or__now__(s);
-      for(;;)
-      {
-            if(s[__crazyacking_now___] == '*')
-            {
-                  __crazyacking_now___++;
-                  res *= ___Factor_Or__now__(s);
-            }
-            else if(s[__crazyacking_now___] == '&')/**<  */
-            {
-                  __crazyacking_now___++;
-                  res /= ___Factor_Or__now__(s);
-            }
-            else if(s[__crazyacking_now___] == '%')
-            {
-                  __crazyacking_now___++;
-                  res = res % ___Factor_Or__now__(s);
-            }
-            else
-            {
-                  break;
-            }
-      }
-      return res;
-}
-
-
-
-/**< count the __and__number__2 */
-int ___Orz__number___(string s)
-{
-      int res = __and__number__2(s);
-      for(;;)
-      {
-            if(s[__crazyacking_now___] == '|' && s[__crazyacking_now___ + 1] == '|')
-            {
-                  __crazyacking_now___ += 2;/**<  */
-                  res = (res || __and__number__2(s));
-            }
-            else
-            {
-                  break;
-            }
-      }
-      return res;
-}
-
 int main()
 {
-      while(cin >> string__)
+      LL a[3],l;
+      while(cin>>a[0]>>a[1]>>a[2]>>l)
       {
-            if(string__[0] == '0' && string__.size() == 1)
+            sort(a,a+3);
+            LL ans=0;
+            for(LL i=0;i<=l;++i)
             {
-                  return 0;
+                  LL k=a[2]+i-a[1]-a[0]+1;
+                  if(k<=l-i)
+                  {
+                        ans+=((l-i+1)*(l-i+2))/2;
+                        if(k>=0)
+                              ans-=((k+1)*k)/2;
+                  }
+                  LL k1=a[2]+i+a[0]-a[1];
+                  LL c1=max(k1,k);
+                  if(c1<=l-i)
+                  {
+                        LL las=(l-i-c1)/2;
+                        ans-=(c1+2-k1)*(las+1);
+                        ans-=las*(las+1);
+                        if(c1+2*las==l-i)
+                              ans+=((l-i-k1)/2+1);
+                  }
+                  LL k2=a[2]+i+a[1]-a[0];
+                  LL c2=max(k2,k);
+                  if(c2<=l-i)
+                  {
+                        LL las=(l-i-c2)/2;
+                        ans-=(c2+2-k2)*(las+1);
+                        ans-=las*(las+1);
+                        if(c2+2*las==l-i)
+                              ans+=((l-i+k2)/2+1);
+                  }
             }
-            __crazyacking_now___ = 0;
-            cout << ___Orz__number___(string__) << endl;
+            cout<<ans<<endl;
       }
+      return 0;
 }
+/*
+
+*/
