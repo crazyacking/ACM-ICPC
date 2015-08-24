@@ -1,56 +1,91 @@
-#include <iostream>
-#include <cstdio>
-#include <cstring>
-#include <cmath>
-#include <algorithm>
-#include <set>
-#include <map>
-#include <string>
-#include <vector>
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-08-23-23.27
+* Time: 0MS
+* Memory: 137KB
+*/
 #include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
 #include <stack>
-#define mod 1000000007
-#define lowbit(x) (x & (-x))
-#define Key_value ch[ch[root][1]][0]
-#pragma comment(linker, "/STACK:1024000000,1024000000")
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define  LL long long
+#define  ULL unsigned long long
 using namespace std;
-typedef long long LL;
-const int N = 1000005;
-int t , n;
-LL phi[N] , ans[N];
-void Init()
+
+const int MAXN=40005;
+int fac[40],numfac[40];
+bool v[MAXN];
+int p[MAXN];
+void makePrime()
 {
-      for(int i = 2 ; i < N ; i ++)
+      int num=-1,i,j;
+      for(i=2; i<MAXN; ++i)
       {
-            if(phi[i]) continue;
-            for(int j = i ; j < N ; j += i)
+            if(!v[i]) { p[++num]=i; }
+            for(j=0; j<=num && i*p[j]<MAXN; ++j)
             {
-                  if(!phi[j]) phi[j] = j;
-                  phi[j] = phi[j] * 1LL / i * (i - 1);
-            }
-      }
-      ans[1] = 1LL;
-      for(int i = 2 ; i < N ; i ++)
-            ans[i] = ((1LL * i * i * phi[i] >> 1) + i)%mod;
-      for(int i = 2 ; i * i < N ; i ++)
-      {
-            ans[i * i] += 1LL * i * i * phi[i] * i >> 1;
-            ans[i * i]%=mod;
-            for(int j = i * i + i , k = i + 1 ; j < N ; j += i , k ++)
-            {
-                  ans[j] += (1LL * j * phi[i] * i >> 1) + (1LL * j * k * phi[k] >> 1);
-                  ans[j]%=mod;
+                  v[i*p[j]]=true;
+                  if(i%p[j]==0) { break; }
             }
       }
 }
+
+
+LL divFac(LL n)//分解因数
+{
+	LL i,num=0;
+	for(i=0;p[i]*p[i]<=n;i++)
+	{
+		if(n%p[i]==0)
+		{
+			fac[num]=p[i];
+			numfac[num]++;
+			n=n/p[i];
+			while(n%p[i]==0)
+			{
+				numfac[num]++;
+				n=n/p[i];
+			}
+			num++;
+		}
+		if(n==1)
+			break;
+	}
+	if(n>1)
+	{
+		fac[num]=n;
+		numfac[num]++;
+		num++;
+	}
+	return num;
+}
+
 int main()
 {
-      Init();
-      scanf("%d" , &t);
-      while(t --)
+      makePrime();
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      int n;
+      while(cin>>n)
       {
-            scanf("%d" , &n);
-            printf("%lld\n" , ans[n]%mod);
+            int si=divFac(n);
+            for(int i=0;i<si;++i)
+            {
+                  printf("%d ",fac[i]);
+            }
       }
       return 0;
 }
+/*
+
+*/
