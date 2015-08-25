@@ -104,10 +104,10 @@ void scan(int &x)
 void scan2(int &x,int &y) { scan(x),scan(y);}
 void scan3(int &x,int &y,int &z) { scan(x),scan(y),scan(z); }
 
-void print(int &a)
+void print(int x)
 {
-      if(a>9) print(a/10);
-      putchar(a%10+'0');
+      if(x>9) print(x/10);
+      putchar(x%10+'0');
 }
 /**************************************END     define***************************************/
 
