@@ -1,0 +1,104 @@
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-08-25-23.41
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+using namespace std;
+typedef __int64(LL);
+typedef unsigned __int64(ULL);
+const double eps(1e-8);
+
+LL get_eular(LL m)
+{
+      LL ret=1;
+      for(LL i=2; i*i<=m; i++)
+            if(m%i==0)
+            {
+                  ret*=i-1;
+                  m/=i;
+                  while(m%i==0)
+                  {
+                        m/=i;
+                        ret*=i;
+                  }
+            }
+      if(m>1) ret*=m-1;
+      return ret;
+}
+
+long long Quickpow(long long a,long long b,long long m)
+{
+      long long ans=1;
+      while(b)
+      {
+            if(b&1) { ans=(ans*a)%m,b--; }
+            b/=2,a=a*a%m;
+      }
+      return ans;
+}
+
+LL b,p,m,ring[100010];
+int main()
+{
+      int t,Cas=0;
+      scanf("%d",&t);
+      while(t--)
+      {
+            scanf("%I64u %I64u %I64u",&b,&p,&m);
+            if(p==1)
+            {
+                  if(m==18446744073709551615ULL)
+                        printf("18446744073709551616\n");
+                  else
+                        printf("%I64u\n",m+1);
+                  continue;
+            }
+            LL i=0,phi=get_eular(p),fac=1,ans=0;
+            for(i=0; i<=m&&fac<=phi; i++)
+            {
+                  if(Quickpow(i,fac,p)==b)
+                        ans++;
+                  fac*=i+1;
+            }
+            fac=fac%phi;
+            for(; i<=m&&fac; i++)
+            {
+                  if(Quickpow(i,fac+phi,p)==b)
+                        ans++;
+                  fac=(fac*(i+1))%phi;
+            }
+            if(i<=m)
+            {
+                  LL cnt=0;
+                  for(int j=0; j<p; j++)
+                  {
+                        ring[j]=Quickpow(i+j,phi,p);
+                        if(ring[j]==b)
+                              cnt++;
+                  }
+                  LL idx=(m-i+1)/p;
+                  ans+=cnt*idx;
+                  LL remain=(m-i+1)%p;
+                  for(int j=0; j<remain; j++)
+                        if(ring[j]==b)
+                              ans++;
+            }
+            printf("Case #%d: %I64u\n",++Cas,ans);
+      }
+      return 0;
+}/

@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-08-25-22.07
+* Submission Date: 2015-08-25-23.41
 * Time: 0MS
 * Memory: 137KB
 */
@@ -22,70 +22,50 @@ using namespace std;
 typedef __int64(LL);
 typedef unsigned __int64(ULL);
 const double eps(1e-8);
-const int MAXN = 10^100000*2;
-char S[MAXN];
-int  ex[MAXN];
 
-void getNext(char* T, int* next)
+LL get_eular(LL m)
 {
-      int len=strlen(T), a=0;
-      next[0] = len;
-      while(a<len-1 && T[a]==T[a+1]) ++a;
-      next[1] = a;
-      a=1;
-      for(int k=2; k<len; ++k)
-      {
-            int p=a+next[a]-1, L=next[k-a];
-            if(k-1+L >= p)
-            {
-                  int j = max(p-k+1, 0);
-                  while(k+j<len && T[k+j]==T[j]) ++j;
-                  next[k] = j;
-                  a=k;
-            }
-            else
-                  next[k] = L;
-      }
+     LL ret=1;
+     for(LL i=2; i*i<=m; i++)
+           if(m%i==0)
+           {
+                 ret*=i-1;
+                 m/=i;
+                 while(m%i==0)
+                 {
+                       m/=i;
+                       ret*=i;
+                 }
+           }
+     if(m>1) ret*=m-1;
+     return ret;
 }
 
+long long Quickpow(long long a,long long b,long long m)
+{
+     long long ans=1;
+     while(b)
+     {
+           if(b&1) { ans=(ans*a)%m,b--; }
+           b/=2,a=a*a%m;
+     }
+     return ans;
+}
+const int mod=1000000007;
 int main()
 {
-      int cas=1,nCase;
-      scanf("%d",&nCase);
-      while(nCase--)
+//      cout<<get_eular(200LL)<<endl;
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      int A,x;
+      while(cin>>A>>x)
       {
-            scanf("%s",S);
-            int len=strlen(S);
-            for(int i=0; i<len; ++i)
-            {
-                  S[i+len] = S[i];
-            }
-            S[2*len] = '\0';
-            getNext(S,ex);
-            int L=0, E=0, G=0;
-            // 拓展KMP求最短循环节
-            int kk;
-            for(int i=1; i<=len; ++i)
-            {
-                  if(i+ex[i]>=len)
-                  {
-                        kk = len%i?len:i;
-                        break;
-                  }
-            }
-            for(int i=0; i<kk; ++i)
-            {
-                  if(ex[i]>=len)
-                        ++E;
-                  else
-                  {
-                        if(S[i+ex[i]] > S[ex[i]])
-                              ++G;
-                        else
-                              ++L;
-                  }
-            }
-            printf("Case %d: %d %d %d\n",cas++,L,E>0,G);
+            cout<<quickpow(A,(x%get_eular(200)+get_eular(200)),200);
+            cout<<Quickpow(t,100,200)<<endl;
+
       }
       return 0;
 }
+/*
+
+*/

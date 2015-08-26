@@ -1,0 +1,56 @@
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-08-26-21.54
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+using namespace std;
+typedef long long(LL);
+typedef unsigned long long(ULL);
+const double eps(1e-8);
+
+int t1,t2,s1,s2,w;
+double calArea(int w)
+{
+      int ly=t1+w,ry=t2+w;
+      int ux=s2-w,dx=s1-w;
+      if(ly>=s2 || ux<=t1 || ) return 0.;
+      return fabs((s2-ly)*(ux-t1)*1.)*0.5;
+}
+int main()
+{
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      int t;
+      scanf("%d",&t);
+      for(int Cas=1;Cas<=t;++Cas)
+      {
+            scanf("%d %d %d %d %d",&t1,&t2,&s1,&s2,&w);
+            double area=abs((t1-t2)*(s1-s2))*1.;
+            if(area<=eps)
+                  puts("0.00000000");
+            else
+            {
+                  double p=(area-(calArea(w)+calArea(-w)))/area;
+                  printf("Case #%d: %.8f\n",Cas,p);
+            }
+      }
+      return 0;
+}
+/*
+
+*/
