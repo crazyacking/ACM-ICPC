@@ -60,8 +60,8 @@ int main()
       int A,x;
       while(cin>>A>>x)
       {
-            cout<<quickpow(A,(x%get_eular(200)+get_eular(200)),200);
-            cout<<Quickpow(t,100,200)<<endl;
+            cout<<Quickpow(A,(x%get_eular(200LL)+get_eular(200LL)),200)<<endl;;
+            cout<<Quickpow(A,x,200)<<endl;
 
       }
       return 0;

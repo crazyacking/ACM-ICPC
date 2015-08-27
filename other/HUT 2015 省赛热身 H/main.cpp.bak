@@ -1,0 +1,15 @@
+#include <iostream>
+#include <cstdio>
+using namespace std;
+
+int main()
+{
+      int n,d;
+      while(scanf("%d%d",&n,&d)!EOF)
+      {
+            int m=n-2;
+            for(int i=1;i<=m;i++)
+      }
+
+    return 0;
+}

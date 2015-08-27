@@ -32,6 +32,7 @@ LL get_eular(LL m)
                  ret*=i-1;
                  m/=i;
                  while(m%i==0)
+                  
                  {
                        m/=i;
                        ret*=i;

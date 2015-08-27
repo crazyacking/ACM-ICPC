@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1440654020 source:d:\code_fantasy\acm-icpc\other\hut 2015 省赛热身 c\main.cpp
+	<iostream>
+	<cstring>
+	<queue>
+	<cstdio>
+
