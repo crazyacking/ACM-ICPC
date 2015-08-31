@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-08-23-23.15
+* Submission Date: 2015-08-30-21.21
 * Time: 0MS
 * Memory: 137KB
 */
@@ -18,78 +18,20 @@
 #include <vector>
 #include <algorithm>
 #include <cstring>
-#define MAXN 40005
-#define MOD 1000000007
-#define  LL long long
-#define  ULL unsigned long long
+#define Max(a,b) (a>b?a:b)
 using namespace std;
+typedef long long(LL);
+typedef unsigned long long(ULL);
+const double eps(1e-8);
 
-LL ans;
-int fac[40];
-int numfac[40];
-
-bool v[MAXN];
-int p[MAXN];
-void makePrime()
-{
-      int num=-1,i,j;
-      for(i=2; i<MAXN; ++i)
-      {
-            if(!v[i]) { p[++num]=i; }
-            for(j=0; j<=num && i*p[j]<MAXN; ++j)
-            {
-                  v[i*p[j]]=true;
-                  if(i%p[j]==0) { break; }
-            }
-      }
-}
-
-int getFactor(int x)
-{
-      int num=0;
-      memset(numfac,0,sizeof(numfac));
-      for(int i=0; p[i]*p[i]<=x; ++i)
-      {
-            if(x%p[i]==0)
-            {
-                  while(x%p[i]==0)
-                  {
-                        x/=p[i];
-                        ++numfac[num];
-                  }
-                  fac[num++]=p[i];
-            }
-      }
-      if(x>1)
-      {
-            numfac[num]=1;
-            fac[num++]=x;
-      }
-      return num;
-}
-
-void dfs(LL dep,LL k,LL si, LL tm)
-{
-      if(dep==si)
-      {
-            ans=(ans+k*tm/2LL)%MOD;
-            return;
-      }
-      LL tmp=1,tt=1;
-      for(int i=0; i<=numfac[dep]; ++i)
-      {
-            dfs(dep+1,k*tmp,si, tt * tm);
-            tmp=tmp*fac[dep];
-            if(i == 0) tt *= (fac[dep] - 1);
-            else tt *= fac[dep];
-      }
-}
-
+const int MAXN=1000010;
+long long z[MAXN],f[MAXN],zz[MAXN],ff[MAXN];
+int a[MAXN];
 void scan(int &x)
 {
       x=0;
       char c=getchar();
-      while(!(c>='0' && c<='9'  | c=='-')) { c=getchar(); }
+      while(!(c>='0' && c<='9'  || c=='-')) { c=getchar(); }
       bool flag=1;
       if(c=='-')
       {
@@ -110,21 +52,48 @@ void print(int x)
       putchar(x%10+'0');
 }
 /**************************************END     define***************************************/
-
 int main()
 {
-      makePrime();
-      int n,t,si;
-      scan(t);
+      int t;
+      scanf("%d",&t);
       while(t--)
       {
-            ans=0;
+            int n;
             scan(n);
-            si=getFactor(n);
-            dfs(0,1,si, 1);
-            ans = (ans + 1LL) * (LL)n;
-            print(ans%MOD);
-            putchar(10);
+            for(int i=0;i<n;++i) scan(a[i]);
+            long long sum=0,ans1=0,ans2=0,mx;
+            for(int i=0;i<n;++i)
+            {
+                  sum+=a[i];
+                  if(sum<0) sum=0;
+                  ans1=Max(ans1,sum);
+            }
+            z[0]=a[0],f[n-1]=a[n-1];
+            for(int i=1;i<n;++i)
+                  z[i]=z[i-1]+a[i];
+            zz[0]=Max(0LL,z[0]),ff[n-1]=Max(0LL,f[n-1]);
+            mx=zz[0];
+            for(int i=1;i<n;++i)
+            {
+                  mx=Max(z[i],mx);
+                  zz[i]=mx;
+            }
+            for(int i=n-2;i>=0;--i)
+                  f[i]=f[i+1]+a[i];
+            mx=ff[n-1];
+            for(int i=n-2;i>=0;--i)
+            {
+                  mx=Max(f[i],mx);
+                  ff[i]=mx;
+            }
+            for(int i=0;i<n-1;++i)
+            {
+                  ans2=Max(ans2,zz[i]+ff[i+1]);
+            }
+            printf("%I64d\n",Max(ans1,ans2));
       }
       return 0;
 }
+/*
+
+*/
