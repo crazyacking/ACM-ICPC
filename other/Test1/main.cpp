@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-08-08-22.04
+* Submission Date: 2015-09-02-15.40
 * Time: 0MS
 * Memory: 137KB
 */
@@ -18,109 +18,89 @@
 #include <vector>
 #include <algorithm>
 #include <cstring>
-#define  LL long long
-#define  ULL unsigned long long
 using namespace std;
+typedef long long(LL);
+typedef unsigned long long(ULL);
+const double eps(1e-8);
 
-const int MAXN = 30005,MAXM = 105;
-void scan(int &x)
+
+const int MAXN=100010;
+char s[MAXN],ss[110];
+
+
+//以下为倍增算法求后缀数组
+int wa[MAXN],wb[MAXN],wv[MAXN],Ws[MAXN];
+int cmp(int *r,int a,int b,int l)
+{return r[a]==r[b]&&r[a+l]==r[b+l];}
+/**< 传入参数：str,sa,len+1,ASCII_MAX+1 */
+void da(const char *r,int *sa,int n,int m)
 {
-      x=0;
-      char c=getchar();
-      while(!(c>='0' && c<='9'  || c=='-')) { c=getchar(); }
-      bool flag=1;
-      if(c=='-')
+      int i,j,p,*x=wa,*y=wb,*t;
+      for(i=0; i<m; i++) Ws[i]=0;
+      for(i=0; i<n; i++) Ws[x[i]=r[i]]++;
+      for(i=1; i<m; i++) Ws[i]+=Ws[i-1];
+      for(i=n-1; i>=0; i--) sa[--Ws[x[i]]]=i;
+      for(j=1,p=1; p<n; j*=2,m=p)
       {
-            flag=0; c=getchar();
+            for(p=0,i=n-j; i<n; i++) y[p++]=i;
+            for(i=0; i<n; i++) if(sa[i]>=j) y[p++]=sa[i]-j;
+            for(i=0; i<n; i++) wv[i]=x[y[i]];
+            for(i=0; i<m; i++) Ws[i]=0;
+            for(i=0; i<n; i++) Ws[wv[i]]++;
+            for(i=1; i<m; i++) Ws[i]+=Ws[i-1];
+            for(i=n-1; i>=0; i--) sa[--Ws[wv[i]]]=y[i];
+            for(t=x,x=y,y=t,p=1,x[sa[0]]=0,i=1; i<n; i++)
+                  x[sa[i]]=cmp(y,sa[i-1],sa[i],j)?p-1:p++;
       }
-      while(c>='0' && c<='9')
-      {
-            x=x*10+c-'0'; c=getchar();
-      }
-      if(!flag) { x=-x; }
+      return;
 }
-void scan2(int &x,int &y) { scan(x),scan(y);}
-void scan3(int &x,int &y,int &z) { scan(x),scan(y),scan(z); }
-/**************************************END     define***************************************/
-struct Event
+int sa[MAXN],Rank[MAXN],height[MAXN];
+//求height数组
+/**< str,sa,len */
+void calheight(const char *r,int *sa,int n)
 {
-      int x, val;
-      Event() {}
-      Event(int _x, int _val) : x(_x), val(_val) {}
-      bool operator < (const Event &a) const
-      {
-            return x < a.x || (x == a.x && val < a.val);
-      }
-};
+      int i,j,k=0;
+      for(i=1; i<=n; i++) Rank[sa[i]]=i;
+      for(i=0; i<n; height[Rank[i++]]=k)
+            for(k?k--:0,j=sa[Rank[i]-1]; r[i+k]==r[j+k]; k++);
+      // Unified
+      for(int i=n; i>=1; --i) ++sa[i],Rank[i]=Rank[i-1];
+}
 
-int n, m;
-int x[MAXM],y[MAXM],p[MAXM],d[MAXM];
-char str[10];
-
-Event event[MAXM * 2];
-
+char str[MAXN];
 int main()
 {
-      while(scanf("%d", &n) != EOF)
+      while(scanf("%s",str)!=EOF)
       {
-            scan(m);
-            for(int i = 0; i < m; ++i)
+            int len=strlen(str);
+            da(str,sa,len+1,130);
+            calheight(str,sa,len);
+            puts("--------------All Suffix--------------");
+            for(int i=1; i<=len; ++i)
             {
-                  scan2(x[i],y[i]),scan2(p[i],d[i]);
-                  if(d[i] == 0) --y[i];
-                  if(d[i] == 2) --x[i];
-                  if(d[i] == 3) --x[i],--y[i];
+                  printf("%d:\t",i);
+                  for(int j=i-1; j<len; ++j)
+                        printf("%c",str[j]);
+                  puts("");
             }
-            int ans = 0;
-            for(int i = 0; i < n; ++i)
+            puts("");
+            puts("-------------After sort---------------");
+            for(int i=1; i<=len; ++i)
             {
-                  int cntEvent = 0;
-                  for(int j = 0; j < m; ++j)
-                  {
-                        int low = -1, high = -1,len;
-                        if(d[j] == 0 && x[j] <= i && i <= x[j] + p[j] - 1)
-                        {
-                              len = p[j] - (i - x[j]);
-                              low = max(y[j] - len + 1, 0);
-                              high = y[j];
-                        }
-                        if(d[j] == 1 && x[j] <= i && i <= x[j] + p[j] - 1)
-                        {
-                              len = p[j] - (i - x[j]);
-                              low = y[j];
-                              high = min(y[j] + len - 1, n - 1);
-                        }
-                        if(d[j] == 2 && x[j] - p[j] + 1 <= i && i <= x[j])
-                        {
-                              len = p[j] - (x[j] - i);
-                              low = y[j];
-                              high = min(y[j] + len - 1, n - 1);
-                        }
-                        if(d[j] == 3 && x[j] - p[j] + 1 <= i && i <= x[j])
-                        {
-                              len = p[j] - (x[j] - i);
-                              low = max(y[j] - len + 1, 0);
-                              high = y[j];
-                        }
-                        if(low != -1 && high != -1 && low <= high)
-                        {
-//                              printf( "%d %d\n", low, high );
-                              event[cntEvent++] = Event(low, 1);
-                              event[cntEvent++] = Event(high + 1, -1);
-                        }
-                  }
-                  sort(event, event + cntEvent);
-                  int res = 0,sum = 0;
-                  for(int j = 0; j < cntEvent; ++j)
-                  {
-                        if((sum & 1))
-                              res += event[j].x - event[j - 1].x;
-                        sum += event[j].val;
-                  }
-//                  printf("%d\n", res);
-                  ans += res;
+                  printf("sa[%2d ] = %2d\t",i,sa[i]);
+                  for(int j=sa[i]-1; j<len; ++j)
+                        printf("%c",str[j]);
+                  puts("");
             }
-            printf("%d\n", ans);
+            puts("");
+            puts("---------------Height-----------------");
+            for(int i=1; i<=len; ++i)
+                  printf("height[%2d ]=%2d \n",i,height[i]);
+            puts("");
+            puts("----------------Rank------------------");
+            for(int i=1; i<=len; ++i)
+                  printf("Rank[%2d ] = %2d\n",i,Rank[i]);
+            puts("------------------END-----------------");
       }
       return 0;
 }

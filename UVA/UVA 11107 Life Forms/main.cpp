@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-08-31-22.19
+* Submission Date: 2015-09-02-15.01
 * Time: 0MS
 * Memory: 137KB
 */
@@ -23,145 +23,132 @@ typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
-const int maxn = 100 + 20;
-const int maxl = 1000 + 20;
-const int sa_maxl = maxn * maxl;
-int s[sa_maxl];
-int sa[sa_maxl];
-int t[sa_maxl], t2[sa_maxl], c[sa_maxl];
+const int MAXN=10001010;
+char s[MAXN],ss[1010];
 
-char str[maxn][maxl];
-int idx[sa_maxl];
-
-void build_sa(int * s, int * sa, int n, int m)
+//以下为倍增算法求后缀数组
+int wa[MAXN*2],wb[MAXN*2],wv[MAXN],Ws[MAXN];
+int cmp(int *r,int a,int b,int l)
+{return r[a]==r[b]&&r[a+l]==r[b+l];}
+/**< 传入参数：str,sa,len+1,ASCII_MAX+1 */
+void da(const char *r,int *sa,int n,int m)
 {
-      int i, *x = t, *y = t2;
-      for(i = 0; i < m; i++) c[i] = 0;
-      for(i = 0; i < n; i++) c[x[i] = s[i]]++;
-      for(i = 1; i < m; i++) c[i] += c[i-1];
-      for(i = n-1; i >= 0;  i--) sa[--c[x[i]]] = i;
-      for(int k = 1; k <= n; k <<= 1)
+      int i,j,p,*x=wa,*y=wb,*t;
+      for(i=0; i<m; i++) Ws[i]=0;
+      for(i=0; i<n; i++) Ws[x[i]=r[i]]++;
+      for(i=1; i<m; i++) Ws[i]+=Ws[i-1];
+      for(i=n-1; i>=0; i--) sa[--Ws[x[i]]]=i;
+      for(j=1,p=1; p<n; j*=2,m=p)
       {
-            int p = 0;
-            for(i = n-k; i < n; i++) y[p++] = i;
-            for(i = 0; i < n; i++) if(sa[i] >= k) y[p++] = sa[i] - k;
-            for(i = 0; i < m; i++) c[i] = 0;
-            for(i = 0; i < n; i++) c[x[y[i]]]++;
-            for(i = 0; i < m; i++) c[i] += c[i-1];
-            for(i = n-1; i >= 0; i--) sa[--c[x[y[i]]]] = y[i];
-            swap(x, y);
-            p = 1; x[sa[0]] = 0;
-            for(i = 1; i < n; i++)
-                  x[sa[i]] = y[sa[i-1]] == y[sa[i]] && y[sa[i-1]+k] == y[sa[i]+k] ? p-1 : p++;
-            if(p >= n) break;
-            m = p;
+            for(p=0,i=n-j; i<n; i++) y[p++]=i;
+            for(i=0; i<n; i++) if(sa[i]>=j) y[p++]=sa[i]-j;
+            for(i=0; i<n; i++) wv[i]=x[y[i]];
+            for(i=0; i<m; i++) Ws[i]=0;
+            for(i=0; i<n; i++) Ws[wv[i]]++;
+            for(i=1; i<m; i++) Ws[i]+=Ws[i-1];
+            for(i=n-1; i>=0; i--) sa[--Ws[wv[i]]]=y[i];
+            for(t=x,x=y,y=t,p=1,x[sa[0]]=0,i=1; i<n; i++)
+                  x[sa[i]]=cmp(y,sa[i-1],sa[i],j)?p-1:p++;
+      }
+      return;
+}
+int sa[MAXN],Rank[MAXN],height[MAXN];
+//求height数组
+/**< str,sa,len */
+void calheight(const char *r,int *sa,int n)
+{
+      int i,j,k=0;
+      for(i=1; i<=n; i++) Rank[sa[i]]=i;
+      for(i=0; i<n; height[Rank[i++]]=k)
+            for(k?k--:0,j=sa[Rank[i]-1]; r[i+k]==r[j+k]; k++);
+      // Unified
+      for(int i=n; i>=1; --i) ++sa[i],Rank[i]=Rank[i-1];
+}
+
+
+vector<pair<int,int> > same;
+int found(int x)
+{
+      int si=same.size();
+      for(int i=0;i<si;++i)
+      {
+            if(x>=same[i].first && x<=same[i].second)
+                  return same[i].first;
       }
 }
 
-int Rank[sa_maxl], height[sa_maxl];
-void getHeight(int n)
+int len,n;
+bool judge(int p,bool ty)
 {
-      int i, j, k = 0;
-      for(i = 0; i < n; i++) Rank[sa[i]] = i;
-      for(i = 0; i < n; i++)
+      bool f=false;
+      set<int> sta;
+      sta.insert(found(sa[1]-1));
+      for(int i=2;i<=len;++i)
       {
-            if(k) k--;
-            int j = sa[Rank[i]-1];
-            while(s[i+k] == s[j+k]) k++;
-            height[Rank[i]] = k;
-      }
-}
-
-int flag[sa_maxl];
-bool good(int L, int R, int n, int limt)
-{
-      if(R - L < limt) return false;
-      memset(flag, 0, sizeof(flag));
-      int cnt = 0;
-      for(int i = L; i < R; i++)
-      {
-            int x = idx[sa[i]];
-            if(x != n && !flag[x]) { flag[x] = 1; cnt++; }
-      }
-      return cnt >= limt;
-}
-
-void print_sub(int len, int L, int n)
-{
-      while(idx[L] == n) L++;
-      int x = sa[L];
-      for(int i = 0; i < len; i++)
-      {
-            putchar(s[x+i] + 'a' - 1);
-      }
-      putchar('\n');
-}
-
-bool judge(int len, int n, int limt, bool print)
-{
-      int L = 0;
-      for(int R = 1; R <= n; R++)
-      {
-            if(R == n || height[R] < len)
+            while(i<=len && height[i]>=p)
+                  sta.insert(found(sa[i++]-1));
+            if(sta.size()*2>n)
             {
-                  if(good(L, R, n, limt))
+                  if(ty) return true;
+                  else
                   {
-                        if(print) { print_sub(len, L, n); }
-                        else return true;
+                        for(int j=0;j<p;++j)
+                              printf("%c",s[sa[i-1]-1+j]+'a');
+                        puts("");
                   }
-                  L = R;
             }
+            sta.clear();
+            sta.insert(found(sa[i]-1));
       }
-      return false;
+      return f;
 }
 
 
 int main()
 {
-      int n;
-      int kase = 1;
-      while(scanf("%d", &n),n)
+      int Cas=0;
+      while(scanf("%d",&n),n)
       {
-            if(kase++ > 1) putchar(10);
-            int len = 0;
-            int maxlen = 0;
-            for(int i=0; i<n; i++)
+            same.clear();
+            int st,en,maxLen=1;
+            memset(s,0,sizeof s);
+            for(int i=0;i<n;++i)
             {
-                  scanf("%s", str[i]);
-                  int sz = strlen(str[i]);
-                  maxlen = max(maxlen, sz);
-                  for(int j=0; j<sz; j++)
-                  {
-                        s[len] = str[i][j] - 'a' + 1;
-                        idx[len++] = i;
-                  }
-                  s[len] = 27 + i;
-                  idx[len++] = n;
+                  scanf("%s",ss);
+                  maxLen=max(maxLen,(int)strlen(ss));
+                  st=strlen(s);
+                  strcat(s,ss);
+                  ss[0]='z'+1+i,ss[1]='\0';
+                  strcat(s,ss);
+                  en=strlen(s);
+                  same.push_back(make_pair(st,en-1));
             }
-            s[len] = 0;
-            idx[len++] = n;
-            int m = 27 + n;
-            if(n == 1)
+            len=strlen(s);
+            if(Cas++) puts("");
+            if(n==1)
             {
-                  puts(str[0]);
+                  s[len-1]='\0';
                   continue;
             }
-            int limt = n / 2 + 1;
-            build_sa(s, sa, len, m);
-            getHeight(len);
-            if(!judge(1, len, limt, false))
+            for(int i=0;i<len;++i) s[i]-='a';
+            da(s,sa,len+1,130);
+            calheight(s,sa,len);
+            if(!judge(1,1))
             {
                   puts("?");
                   continue;
             }
-            int L = 1, R = maxlen;
-            while(L < R)
+            int l=1,r=maxLen+1,mid;
+            while(r>l+1)
             {
-                  int M = L + (R-L+1) / 2;
-                  if(judge(M, len, limt, false)) L = M;
-                  else R = M - 1;
+                  int mid = l+(r-l)/2;
+                  if(judge(mid,1)) l = mid;
+                  else r = mid;
             }
-            judge(L, len, limt, true);
+            judge(l,0);
       }
       return 0;
 }
+/*
+
+*/
