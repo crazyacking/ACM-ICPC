@@ -1,37 +1,21 @@
-/*
-* this code is made by crazyacking
-* Verdict: Accepted
-* Submission Date: 2015-09-04-17.26
-* Time: 0MS
-* Memory: 137KB
-*/
-#include <queue>
-#include <cstdio>
-#include <set>
-#include <string>
-#include <stack>
-#include <cmath>
-#include <climits>
-#include <map>
-#include <cstdlib>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cstring>
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<cmath>
+
 using namespace std;
-typedef long long(LL); 
-typedef unsigned long long(ULL);
-const double eps(1e-8);
 
 int main()
 {
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      int a,b;
-      cin>>a>>b;
-      cout<<a+b<<endl;
+      int t,n;
+      scanf("%d",&t);
+      while(t--)
+      {
+            scanf("%d",&n);
+            double tmp=log10(double(n));
+            double res=tmp-floor(tmp);
+            cout<<res<<endl;
+            printf("%d\n",(int)pow(10.0,res));
+      }
       return 0;
 }
-/*
-
-*/
