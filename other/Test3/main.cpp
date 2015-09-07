@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-09-06-22.05
+* Submission Date: 2015-09-06-23.12
 * Time: 0MS
 * Memory: 137KB
 */
@@ -24,25 +24,35 @@ typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
+struct buff
+{
+      int t,g,id;
+      buff(){}
+      buff(int t,int g,int id):t(t),g(g),id(id){}
+      bool operator<(const buff& a)const
+      {
+            return t<a.t||(t==a.t&&id<a.id);
+      }
+};
 int main()
 {
       ios_base::sync_with_stdio(false);
       cin.tie(0);
-      int n;
-      while(cin>>n)
+      int id,gap,k;
+      char s[20];
+      multiset<buff> bf;
+      while(~scanf("%s",s),s[0]!='#')
       {
-            priority_queue<int> q;
-            for(int i=0;i<n;++i)
-            {
-                  int tm;
-                  cin>>tm;
-                  q.push(tm);
-            }
-            while(!q.empty())
-            {
-                  cout<<q.top()<<endl;
-                  q.pop();
-            }
+            scanf("%d %d",&id,&gap);
+            bf.insert(buff(gap,gap,id));
+      }
+      scanf("%d",&k);
+      while(k--)
+      {
+            buff b=*bf.begin();
+            bf.erase(bf.begin());
+            printf("%d\n",b.id);
+            bf.insert(buff(b.t+b.g,b.g,b.id));
       }
       return 0;
 }
