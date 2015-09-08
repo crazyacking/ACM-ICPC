@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1441635726 source:d:\code_fantasy\acm-icpc\uva\uvalive 3027 corporative network\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+

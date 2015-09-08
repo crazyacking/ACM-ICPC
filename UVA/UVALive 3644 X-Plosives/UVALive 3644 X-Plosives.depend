@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1441609148 source:d:\code_fantasy\acm-icpc\uva\uvalive 3644 x-plosives\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+
