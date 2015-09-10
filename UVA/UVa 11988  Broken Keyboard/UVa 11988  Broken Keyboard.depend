@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1441807439 source:d:\code_fantasy\acm-icpc\other\test1\main.cpp
+1441810919 source:d:\code_fantasy\acm-icpc\uva\uva 11988  broken keyboard\main.cpp
 	<queue>
 	<cstdio>
 	<set>
@@ -10,6 +10,7 @@
 	<map>
 	<cstdlib>
 	<iostream>
+	<deque>
 	<vector>
 	<algorithm>
 	<cstring>
