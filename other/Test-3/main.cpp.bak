@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-09-11-21.55
+* Submission Date: 2015-09-12-10.06
 * Time: 0MS
 * Memory: 137KB
 */
@@ -28,7 +28,6 @@ int main()
 {
       ios_base::sync_with_stdio(false);
       cin.tie(0);
-      int a,b;
       
       return 0;
 }
