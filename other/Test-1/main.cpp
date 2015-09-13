@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-09-13-13.43
+* Submission Date: 2015-09-13-21.36
 * Time: 0MS
 * Memory: 137KB
 */
@@ -19,36 +19,51 @@
 #include <algorithm>
 #include <cstring>
 #define max(a,b) (a>b?a:b)
-using namespace std;
 typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
-long long a[10000];
-int main()
+class BitWise
 {
-      freopen("C:\\Users\\crazyacking\\Desktop\\cin.txt","r",stdin);
-      freopen("C:\\Users\\crazyacking\\Desktop\\cout.txt","w",stdout);
-
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      int tmp;
-      int cnt=0;
-      while(~scanf("%d, ",&tmp))
+public:
+      BitWise(void) {};
+      ~BitWise(void) {};
+      long long ans;
+      void calc(std::string& st,std::string& en)
       {
-            a[cnt++]=tmp;
-      }
-      for(int i=0;i<cnt;++i)
-      {
-            LL sum=0;
-            for(int j=0;j<i;++j)
+            if(st>en) swap(st,en);
+            int len=st.length();
+            for(int i=0; i<len; ++i)
             {
-                  sum+=a[j];
+                  st[i]-='a';
+                  en[i]-='a';
             }
-            printf("%lld,",sum);
+            std::vector<long long> dp;
+            dp.push_back(0);
+            dp.push_back(en[0]-st[0]);
+            for(int i=1; i<len; ++i)
+            {
+                  dp.push_back(26*(dp[i]+1)-st[i]-1-(26-en[i]));
+            }
+            ans=0;
+            for(auto ptr:dp) ans+=(ptr);
+            ans=max(ans,0);
       }
+protected:
+private:
+};
 
-
+int main(char args[])
+{
+      std::ios_base::sync_with_stdio(false);
+      std::cin.tie(0);
+      std::string s1,s2;
+      BitWise bitwise=BitWise();
+      while(std::cin>>s1>>s2)
+      {
+            bitwise.calc(s1,s2);
+            std::cout<<bitwise.ans<<std::endl;
+      }
       return 0;
 }
 /*
