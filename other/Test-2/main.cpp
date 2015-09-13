@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-05-09-21.22
+* Submission Date: 2015-09-13-11.08
 * Time: 0MS
 * Memory: 137KB
 */
@@ -18,65 +18,54 @@
 #include <vector>
 #include <algorithm>
 #include <cstring>
-#define  LL long long
-#define  ULL unsigned long long
+#define max(a,b) (a>b?a:b)
 using namespace std;
-const int MAXN=100010<<1;
-//以下为倍增算法求后缀数组
-int wa[MAXN],wb[MAXN],wv[MAXN],Ws[MAXN];
-int cmp(int *r,int a,int b,int l)
-{return r[a]==r[b]&&r[a+l]==r[b+l];}
-/**< 传入参数：str,sa,len+1,ASCII_MAX+1 */
-void da(const char *r,int *sa,int n,int m)
+typedef long long(LL);
+typedef unsigned long long(ULL);
+const double eps(1e-8);
+
+/** Lucas
+ * p必须是小于100010的质数
+ */
+using namespace std;
+long long F[100010];
+void init(long long p)
 {
-      int i,j,p,*x=wa,*y=wb,*t;
-      for(i=0; i<m; i++) Ws[i]=0;
-      for(i=0; i<n; i++) Ws[x[i]=r[i]]++;
-      for(i=1; i<m; i++) Ws[i]+=Ws[i-1];
-      for(i=n-1; i>=0; i--) sa[--Ws[x[i]]]=i;
-      for(j=1,p=1; p<n; j*=2,m=p)
-      {
-            for(p=0,i=n-j; i<n; i++) y[p++]=i;
-            for(i=0; i<n; i++) if(sa[i]>=j) y[p++]=sa[i]-j;
-            for(i=0; i<n; i++) wv[i]=x[y[i]];
-            for(i=0; i<m; i++) Ws[i]=0;
-            for(i=0; i<n; i++) Ws[wv[i]]++;
-            for(i=1; i<m; i++) Ws[i]+=Ws[i-1];
-            for(i=n-1; i>=0; i--) sa[--Ws[wv[i]]]=y[i];
-            for(t=x,x=y,y=t,p=1,x[sa[0]]=0,i=1; i<n; i++)
-                  x[sa[i]]=cmp(y,sa[i-1],sa[i],j)?p-1:p++;
-      }
-      return;
+      F[0] = 1;
+      for(int i = 1; i <= p; i++)
+            F[i] = F[i-1]*i%p;
 }
-int sa[MAXN],Rank[MAXN],height[MAXN];
-/**< str,sa,len */
-void calheight(const char *r,int *sa,int n)
+long long inv(long long a,long long m)
 {
-      int i,j,k=0;
-      for(i=1; i<=n; i++) Rank[sa[i]]=i;
-      for(i=0; i<n; height[Rank[i++]]=k)
-            for(k?k--:0,j=sa[Rank[i]-1]; r[i+k]==r[j+k]; k++);
-      // Unified
-      for(int i=n;i>=1;--i) ++sa[i],Rank[i]=Rank[i-1];
+      if(a == 1)return 1;
+      return inv(m%a,m)*(m-m/a)%m;
+}
+long long Lucas(long long n,long long m,long long p)
+{
+      long long ans = 1;
+      while(n&&m)
+      {
+            long long a = n%p;
+            long long b = m%p;
+            if(a < b)return 0;
+            ans = ans*F[a]%p*inv(F[b]*F[a-b]%p,p)%p;
+            n /= p;
+            m /= p;
+      }
+      return ans;
 }
 
-char s1[MAXN],s2[MAXN];
 int main()
 {
-      while(~scanf("%s%s",s1,s2))
+      int T;
+      int n,m,p;
+      scanf("%d",&T);
+      while(T--)
       {
-            int l1=strlen(s1);
-            strcat(s1,"{");
-            strcat(s1,s2);
-            int len=strlen(s1);
-            for(int i=0;i<len;++i) s1[i]-='a'-1;
-            da(s1,sa,len+1,30);
-            calheight(s1,sa,len);
-            int ans=0;
-            for(int i=2;i<=len;++i)
-                  if((sa[i-1]-1<l1 && sa[i]-1>l1) || (sa[i-1]-1>l1 && sa[i]-1<l1))
-                        ans=max(ans,height[i]);
-            printf("%d\n",ans);
+            scanf("%d%d",&n,&m);
+            p=131;
+            init(p);
+            printf("%d\n",(int)Lucas(n,m,p));
       }
-      return 0;
+     return 0;
 }

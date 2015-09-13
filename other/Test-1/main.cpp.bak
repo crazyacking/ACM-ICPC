@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-09-12-21.13
+* Submission Date: 2015-09-13-13.43
 * Time: 0MS
 * Memory: 137KB
 */
@@ -24,11 +24,20 @@ typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
+long long a[10000];
 int main()
 {
+      freopen("C:\\Users\\crazyacking\\Desktop\\cin.txt","r",stdin);
+      //freopen("C:\\Users\\crazyacking\\Desktop\\cout.txt","w",stdout);
+      
       ios_base::sync_with_stdio(false);
       cin.tie(0);
-      int a,b;
+      LL tmp;
+      while(cin>>tmp)
+      {
+            memset(a,0,sizeof a);
+            
+      }
       
       return 0;
 }

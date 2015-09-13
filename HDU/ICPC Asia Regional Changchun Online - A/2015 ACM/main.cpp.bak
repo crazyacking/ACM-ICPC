@@ -40,7 +40,7 @@ struct Query
       {
             return q<a.q;
       }
-
+      
 }tquery;
 vector<Query> query;
 
@@ -91,13 +91,13 @@ int main()
             {
                   for(int j=0;j<q;++j)
                   {
-                        if(i==query[j].q)
+                        if(i==query[j].)
                         {
-                              printf("%s",name[query[j].ans]);
+                              printf("%s",name[]);
                         }
                   }
             }
-
+            
       }
       return 0;
 }

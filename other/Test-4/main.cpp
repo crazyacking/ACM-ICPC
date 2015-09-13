@@ -1,42 +1,36 @@
-#include<cstdio>
-#include<cstring>
-int l1,l2;
-int a[1000010],b[10010],Next[10010];
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-09-13-11.10
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define max(a,b) (a>b?a:b)
+using namespace std;
+typedef long long(LL);
+typedef unsigned long long(ULL);
+const double eps(1e-8);
 
-void getNext()
-{
-      Next[0]=0;
-      int i,k;
-      for(i=1,k=0;i<l2;++i)
-      {
-            while(b[i]!=b[k] && k>0)
-                  k=Next[k-1];
-            if(b[i]==b[k]) ++k;
-            Next[i]=k;
-      }
-}
-int kmp()
-{
-      getNext();
-      for(int i=0,k=0;i<l1;++i)
-      {
-            while(a[i]!=b[k] && k>0)
-                  k=Next[k-1];
-            if(a[i]==b[k]) ++k;
-            if(k==l2) return i-l2+2;
-      }
-      return -1;
-}
 int main()
 {
-      int t;
-      scanf("%d",&t);
-      while(t--)
-      {
-            scanf("%d %d",&l1,&l2);
-            for(int i=0;i<l1;++i) scanf("%d",&a[i]);
-            for(int i=0;i<l2;++i) scanf("%d",&b[i]);
-            printf("%d\n",kmp());
-      }
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      cout<<(126%15)<<endl;
       return 0;
 }
+/*
+
+*/
