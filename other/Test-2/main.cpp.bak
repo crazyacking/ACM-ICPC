@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-09-13-11.08
+* Submission Date: 2015-09-13-10.25
 * Time: 0MS
 * Memory: 137KB
 */
@@ -19,53 +19,73 @@
 #include <algorithm>
 #include <cstring>
 #define max(a,b) (a>b?a:b)
+#define MAXN 150010
 using namespace std;
 typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
-/** Lucas
- * p必须是小于100010的质数
- */
-using namespace std;
-long long F[100010];
-void init(long long p)
+int k,m,q;
+struct Person
 {
-      F[0] = 1;
-      for(int i = 1; i <= p; i++)
-            F[i] = F[i-1]*i%p;
-}
-long long inv(long long a,long long m)
-{
-      if(a == 1)return 1;
-      return inv(m%a,m)*(m-m/a)%m;
-}
-long long Lucas(long long n,long long m,long long p)
-{
-      long long ans = 1;
-      while(n&&m)
+      int id,v;
+      Person(){}
+      Person(int idd,int vv):id(idd),v(vv){}
+      bool operator<(const Person& a)const
       {
-            long long a = n%p;
-            long long b = m%p;
-            if(a < b)return 0;
-            ans = ans*F[a]%p*inv(F[b]*F[a-b]%p,p)%p;
-            n /= p;
-            m /= p;
+            return v<a.v || (v==a.v && id>a.id);
       }
-      return ans;
-}
+};
 
+
+pair<int,int>open[MAXN];
+priority_queue<Person> que;
+int value[MAXN];
+vector<int>ans;
+char name[MAXN][205];
 int main()
 {
-      int T;
-      int n,m,p;
-      scanf("%d",&T);
-      while(T--)
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      int t;
+      scanf("%d",&t);
+      while(t--)
       {
-            scanf("%d%d",&n,&m);
-            p=131;
-            init(p);
-            printf("%d\n",(int)Lucas(n,m,p));
+            scanf("%d %d %d",&k,&m,&q);
+            for(int i=1; i<=k; ++i)
+                  scanf("%s%d",name[i],&value[i]);
+            for(int i=0; i<m; ++i)
+                  scanf("%d %d",&open[i].first,&open[i].second);
+            sort(open,open+m);
+            ans.clear();
+            int id=1;
+            open[m]=make_pair(k,k);
+            while(!que.empty()) que.pop();
+            for(int i=0; i<=m; ++i)
+            {
+                  while(id<=open[i].first)
+                  {
+                        Person tmp;
+                        tmp.id=id;
+                        tmp.v=value[id];
+                        que.push(tmp);
+                        id++;
+                  }
+                  int cnt=open[i].second;
+                  while(cnt-- && !que.empty())
+                  {
+                        Person tmp=que.top();
+                        que.pop();
+                        ans.push_back(tmp.id);
+                  }
+            }
+            for(int i=0; i<q; ++i)
+            {
+                  int query;
+                  scanf("%d",&query);
+                  printf("%s",name[ans[query-1]]);
+                  printf(i==q-1?"\n":" ");
+            }
       }
-     return 0;
+      return 0;
 }

@@ -27,11 +27,11 @@ class BitWise
 {
 public:
       BitWise(void) {};
-      ~BitWise(void){};
+      ~BitWise(void) {};
       long long ans;
       void calc(std::string& st,std::string& en)
       {
-             if(st>en) swap(st,en);
+            if(st>en) swap(st,en);
             int len=st.length();
             for(int i=0; i<len; ++i)
             {
@@ -43,11 +43,15 @@ public:
             dp.push_back(en[0]-st[0]);
             for(int i=1; i<len; ++i)
             {
-                  dp.push_back(26*(dp[i]+1)-st[i]-1-(26-en[i]));
+                  long long tmp=26*(dp[i]+1)-st[i]-1-(26-en[i]);
+                  tmp=i==len-1?tmp:tmp+1;
+                  dp.push_back(tmp);
+//                        dp.push_back(26*(dp[i]+1)-st[i]-1-(26-en[i])+1);
+//                  else  dp.push_back(26*(dp[i]+1)-st[i]-1-(26-en[i]));
             }
             ans=0;
             for(auto ptr:dp) ans+=(ptr);
-            ans=max(ans,0);
+//            ans=max(ans,0);
       }
 protected:
 private:

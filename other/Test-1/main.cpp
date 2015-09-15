@@ -43,7 +43,9 @@ public:
             dp.push_back(en[0]-st[0]);
             for(int i=1; i<len; ++i)
             {
-                  dp.push_back(26*(dp[i]+1)-st[i]-1-(26-en[i]));
+                  long long tmp=26*(dp[i]+1)-st[i]-1-(26-en[i]);
+                  tmp=i==len-1?tmp:tmp+1;
+                  dp.push_back(tmp);
             }
             ans=0;
             for(auto ptr:dp) ans+=(ptr);
