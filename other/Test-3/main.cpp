@@ -1,86 +1,89 @@
-/*
-* this code is made by crazyacking
-* Verdict: Accepted
-* Submission Date: 2015-05-09-21.22
-* Time: 0MS
-* Memory: 137KB
-*/
-#include <queue>
-#include <cstdio>
-#include <set>
-#include <string>
-#include <stack>
-#include <cmath>
-#include <climits>
-#include <map>
-#include <cstdlib>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cstring>
-#define  LL long long
-#define  ULL unsigned long long
+#include<stdio.h>
+#include<string.h>
+#include<algorithm>
 using namespace std;
-const int MAXN=200010;
-//以下为倍增算法求后缀数组
-int wa[MAXN],wb[MAXN],wv[MAXN],Ws[MAXN];
-int cmp(int *r,int a,int b,int l)
-{return r[a]==r[b]&&r[a+l]==r[b+l];}
-/**< 传入参数：str,sa,len+1,ASCII_MAX+1 */
-void da(const char *r,int *sa,int n,int m)
+
+#define INF 300
+int dx[]={-1,0,0,0,1};
+int dy[]={0,1,0,-1,0};
+
+int map[15][15],flip[15][15],ans[15][15];
+int m,n;
+
+int get(int x,int y)//（x,y）的颜色
 {
-     int i,j,p,*x=wa,*y=wb,*t;
-     for(i=0; i<m; i++) Ws[i]=0;
-     for(i=0; i<n; i++) Ws[x[i]=r[i]]++;
-     for(i=1; i<m; i++) Ws[i]+=Ws[i-1];
-     for(i=n-1; i>=0; i--) sa[--Ws[x[i]]]=i;
-     for(j=1,p=1; p<n; j*=2,m=p)
-     {
-           for(p=0,i=n-j; i<n; i++) y[p++]=i;
-           for(i=0; i<n; i++) if(sa[i]>=j) y[p++]=sa[i]-j;
-           for(i=0; i<n; i++) wv[i]=x[y[i]];
-           for(i=0; i<m; i++) Ws[i]=0;
-           for(i=0; i<n; i++) Ws[wv[i]]++;
-           for(i=1; i<m; i++) Ws[i]+=Ws[i-1];
-           for(i=n-1; i>=0; i--) sa[--Ws[wv[i]]]=y[i];
-           for(t=x,x=y,y=t,p=1,x[sa[0]]=0,i=1; i<n; i++)
-                 x[sa[i]]=cmp(y,sa[i-1],sa[i],j)?p-1:p++;
-     }
-     return;
-}
-int sa[MAXN],Rank[MAXN],height[MAXN];
-//求height数组
-/**< str,sa,len */
-void calheight(const char *r,int *sa,int n)
-{
-     int i,j,k=0;
-     for(i=1; i<=n; i++) Rank[sa[i]]=i;
-     for(i=0; i<n; height[Rank[i++]]=k)
-           for(k?k--:0,j=sa[Rank[i]-1]; r[i+k]==r[j+k]; k++);
-     // Unified
-     for(int i=n;i>=1;--i) ++sa[i],Rank[i]=Rank[i-1];
+    int res=map[x][y];
+    for(int i=0;i<5;i++)
+    {
+        int a=x+dx[i],b=y+dy[i];
+        if(a>=0&&a<m&&b>=0&&b<n)
+        {
+            res+=flip[a][b];
+        }
+    }
+    return res&1;
 }
 
-char str1[MAXN],str2[MAXN];
+int calc()//求出第一行确定的情况下的最小操作次数，
+{
+    for(int i=1;i<m;i++)
+        for(int j=0;j<n;j++)
+        {
+            if(get(i-1,j))//（i-1，j）是黑色，就要翻转
+            {
+                flip[i][j]=1;
+            }
+        }
+
+    for(int i=0;i<n;i++)//无解
+    {
+        if(get(m-1,i)) return INF;
+    }
+
+    int res=0;//翻转次数
+    for(int i=0;i<m;i++)
+        for(int j=0;j<n;j++)
+            res+=flip[i][j];
+    return res;
+}
 int main()
 {
-     while(scanf("%s%s",str1,str2)!=EOF)
-     {
-           int l1=strlen(str1);
-           str1[l1]='{';
-           str1[l1+1]='\0';
-           strcat(str1,str2);
-           int len=strlen(str1);
-           for(int i=0;i<len;++i) str1[i]=str1[i]-'a'+2;
-           da(str1,sa,len+1,30);
-           calheight(str1,sa,len);
-           int ans=0;
-           for(int i=2; i<=len; ++i)
-           {
-                 if((sa[i]<l1&&sa[i-1]>l1)||sa[i]>l1&&sa[i-1]<l1)
-                       ans=max(ans,height[i]);
-           }
-           printf("%d\n",ans);
-     }
-     return 0;
+      freopen("C:\\Users\\crazyacking\\Desktop\\cin.txt","r",stdin);
+      //freopen("C:\\Users\\crazyacking\\Desktop\\cout.txt","w",stdout);
+
+    while(~scanf("%d%d",&m,&n))
+    {
+        for(int i=0;i<m;i++)
+            for(int j=0;j<n;j++)
+                scanf("%d",&map[i][j]);
+        int res=INF;
+        memset(ans,0,sizeof(ans));
+        for(int i=0;i< 1<<n;i++)//枚举第一行的所有翻转情况
+        {
+            memset(flip,0,sizeof(flip));
+            for(int j=0;j<n;j++)
+            {
+                flip[0][j]= i>>j&1;//在i的状态下，第一行的j是否翻转
+            }
+            int temp=calc();
+            if(temp<res)
+            {
+                res=temp;
+                for(int i=0;i<m;i++)
+                    for(int j=0;j<n;j++) ans[i][j]=flip[i][j];
+            }
+        }
+        if(res==INF)
+        {
+            printf("IMPOSSIBLE\n");
+            continue;
+        }
+        for(int i=0;i<m;i++)
+            for(int j=0;j<n;j++)
+            {
+                printf("%d",ans[i][j]);
+                if(j!=n-1) printf(" ");
+                else   printf("\n");
+            }
+    }
 }
