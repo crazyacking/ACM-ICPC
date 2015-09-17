@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1442401608 source:d:\code_fantasy\acm-icpc\uva\uva - 1597 searching the web\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<map>
+	<vector>
+	<sstream>
+	<set>
+	<algorithm>
+	<iterator>
+

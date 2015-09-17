@@ -24,21 +24,21 @@ int get(int x,int y)//（x,y）的颜色
       return res&1;
 }
 
-int calc()//求出第一行确定的情况下的最小操作次数
+int calc()
 {
       for(int i=1; i<m; i++)
             for(int j=0; j<n; j++)
             {
-                  if(get(i-1,j))//（i-1，j）是黑色，就要翻转
+                  if(get(i-1,j))
                   {
                         flip[i][j]=1;
                   }
             }
-      for(int i=0; i<n; i++) //无解
+      for(int i=0; i<n; i++)
       {
             if(get(m-1,i)) return INF;
       }
-      int res=0;//翻转次数
+      int res=0;
       for(int i=0; i<m; i++)
             for(int j=0; j<n; j++)
                   res+=flip[i][j];
