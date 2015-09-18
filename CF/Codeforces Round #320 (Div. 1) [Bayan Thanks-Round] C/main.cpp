@@ -32,11 +32,11 @@ long long n;
 double now_max,now_min,mx,mn;
 double calc(double x)
 {
-      for(int i=1;i<=n;++i)
+      for(int i=1; i<=n; ++i)
             b[i]=a[i]*1.+x;
       now_max=now_min=0.0;
       mx=mn=0;
-      for(int i=1;i<=n;++i)
+      for(int i=1; i<=n; ++i)
       {
             now_max+=b[i];
             now_min+=b[i];
@@ -46,32 +46,31 @@ double calc(double x)
             mn=min(mn,now_min);
       }
       return max(mx,-mn);
-
 }
 
 double er_fen(double low,double high)
 {
-        double l=low,h=high;
-        double mid=(l+h)/2,mmid=(mid+h)/2;
-        double cmid=calc(mid),cmmid=calc(mmid);
-        int max_step=110;
-        for(int i=0;i<max_step;++i)
-        {
-                if(cmid>cmmid)
-                        l=mid;
-                else
-                        h=mmid;
-                mid=(l+h)/2,mmid=(mid+h)/2;
-                cmid=calc(mid),cmmid=calc(mmid);
-        }
-        cout<<l<<endl;
-        return calc(l);
+      double l=low,h=high;
+      double mid=(l+h)/2,mmid=(mid+h)/2;
+      double cmid=calc(mid),cmmid=calc(mmid);
+      int max_step=110;
+      for(int i=0; i<max_step; ++i)
+      {
+            if(cmid>cmmid)
+                  l=mid;
+            else
+                  h=mmid;
+            mid=(l+h)/2,mmid=(mid+h)/2;
+            cmid=calc(mid),cmmid=calc(mmid);
+      }
+      cout<<l<<endl;
+      return calc(l);
 }
 
 int main()
 {
       scanf("%I64d",&n);
-      for(int i=1;i<=n;++i)
+      for(int i=1; i<=n; ++i)
       {
             scanf("%I64d",&a[i]);
       }
