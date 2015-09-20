@@ -53,10 +53,10 @@ Matrix pow(Matrix a,long long n,long long m)
     return ret;
 }
 
-
 int main()
 {
-
+    //freopen("D.in","r",stdin);
+   // freopen("D.out","w",stdout);
     Matrix A;
     A.n=A.m=2;
     A.mat[0][0]=3;
@@ -69,10 +69,11 @@ int main()
     f0.mat[0][0]=1;
     f0.mat[1][0]=0;
 
+
     long long n;
     Matrix tmp;
     Matrix temp;
-    while(scanf("%I64d",&n)!=EOF)
+    while(scanf("%I64d\n",&n)!=EOF)
     {
         temp=pow(A,n,MOD3);
         tmp=mul(temp,f0,MOD3);

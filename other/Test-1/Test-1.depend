@@ -1,4 +1,10 @@
 # depslib dependency file v1.0
-1442574054 source:d:\code_fantasy\acm-icpc\other\test-1\main.cpp
-	<bits/stdc++.h>
+1442669716 source:d:\code_fantasy\acm-icpc\other\test-1\main.cpp
+	<stdio.h>
+	<iostream>
+	<map>
+	<set>
+	<algorithm>
+	<string.h>
+	<stdlib.h>
 
