@@ -1,87 +1,38 @@
-#include<stdio.h>
-#include<string.h>
-#include<algorithm>
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-09-20-21.31
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define max(a,b) (a>b?a:b)
 using namespace std;
+typedef long long(LL);
+typedef unsigned long long(ULL);
+const double eps(1e-8);
 
-#define INF 300
-int dx[]= {-1,0,0,0,1};
-int dy[]= {0,1,0,-1,0};
-
-int Mp[15][15],flip[15][15],ans[15][15];
-int m,n;
-
-int get(int x,int y)//（x,y）的颜色
-{
-      int res=Mp[x][y];
-      for(int i=0; i<5; i++)
-      {
-            int a=x+dx[i],b=y+dy[i];
-            if(a>=0&&a<m&&b>=0&&b<n)
-            {
-                  res+=flip[a][b];
-            }
-      }
-      return res&1;
-}
-
-int calc()
-{
-      for(int i=1; i<m; i++)
-            for(int j=0; j<n; j++)
-            {
-                  if(get(i-1,j))
-                  {
-                        flip[i][j]=1;
-                  }
-            }
-      for(int i=0; i<n; i++)
-      {
-            if(get(m-1,i)) return INF;
-      }
-      int res=0;
-      for(int i=0; i<m; i++)
-            for(int j=0; j<n; j++)
-                  res+=flip[i][j];
-      return res;
-}
 int main()
 {
-      freopen("C:\\Users\\crazyacking\\Desktop\\cin.txt","r",stdin);
-      //freopen("C:\\Users\\crazyacking\\Desktop\\cout.txt","w",stdout);
-      while(~scanf("%d%d",&m,&n))
-      {
-            for(int i=0; i<m; i++)
-                  for(int j=0; j<n; j++)
-                        scanf("%d",&Mp[i][j]);
-            int res=INF;
-            memset(ans,0,sizeof(ans));
-            for(int i=0; i< 1<<n; i++) //枚举第一行的所有翻转情况
-            {
-                  memset(flip,0,sizeof(flip));
-                  for(int j=0; j<n; j++)
-                  {
-                        flip[0][j]= i>>j&1;//在i的状态下，第一行的j是否翻转
-                  }
-                  int tmp=calc();
-                  if(tmp<res)
-                  {
-                        res=tmp;
-                        for(int i=0; i<m; i++)
-                              for(int j=0; j<n; j++)
-                                    ans[i][j]=flip[i][j];
-                  }
-            }
-            if(res==INF)
-            {
-                  printf("IMPOSSIBLE\n");
-                  continue;
-            }
-            for(int i=0; i<m; i++)
-                  for(int j=0; j<n; j++)
-                  {
-                        printf("%d",ans[i][j]);
-                        if(j!=n-1) printf(" ");
-                        else   printf("\n");
-                  }
-      }
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      double a=1.2;
+      cout<<ceil(a)<<endl;
+
+      return 0;
 }
+/*
+
+*/

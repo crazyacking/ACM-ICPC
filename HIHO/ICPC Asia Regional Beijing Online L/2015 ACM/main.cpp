@@ -34,7 +34,7 @@ int main()
       while(t--)
       {
             scanf("%d %d",&n,&m);
-            
+
       }
       return 0;
 }
