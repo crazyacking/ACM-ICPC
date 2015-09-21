@@ -42,34 +42,13 @@ int n,m;
 struct point
 {
       double x,y;
-      point(){}
-      point(double x,double y):x(x),y(y){}
 }p[120];
 double calc_dis(point a,point b)
 {
       return sqrt((a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y));
 }
-double max_dis(int k)
-{
-      double ret=-1.;
-      for(int i=0;i<n;++i)
-      {
-            if(i!=k)
-                  ret=max(ret,calc_dis(p[i],p[k]));
-      }
-      return ret;
-}
 
-int cal(double r,int k)
-{
-      int ret=1;
-      for(int i=0;i<n;++i)
-      {
-            if(i!=k && calc_dis(p[i],p[k])<r)
-                  ++ret;
-      }
-      return ret;
-}
+double dis[210];
 int main()
 {
       ios_base::sync_with_stdio(false);
@@ -79,31 +58,22 @@ int main()
       while(t--)
       {
             cin>>n>>m;
-            double x,y;
-            for(int i=0;i<n;++i)
-            {
-                  cin>>x>>y;
-                  p[i]=point(x,y);
-            }
-            double l,r;
+            for(int i=1;i<=n;++i)
+                  cin>>p[i].x>>p[i].y;
             int ans=INT_MAX;
-            for(int i=0;i<n;++i)
+            for(int i=1;i<=n;++i)
             {
-                  l=0.;
-                  r=max_dis(i);
-                  int step=100;
-                  while(step--)
-                  {
-                        double mid=(l+r)/2;
-                        if(cal(mid,i)<m)
-                              l=mid;
-                        else r=mid;
-                  }
-                  int tmp=ceil(l);
-                  if(fabs(l-tmp)<=eps || fabs(tmp-0)<=eps) ++tmp;
+                  for(int j=1;j<=n;++j)
+                        dis[j]=calc_dis(p[i],p[j]);
+                  sort(dis+1,dis+1+n);
+                  int tmp=ceil(dis[m]);
+                  if(fabs(tmp-dis[m])<=eps) ++tmp;
+                  if(fabs(tmp-0)<=eps) ++tmp;
+                  if(m!=n && dis[m+1]<=tmp+eps) tmp=INT_MAX;
                   ans=min(ans,tmp);
             }
-            printf("%d\n",ans);
+            if(ans==INT_MAX) puts("-1");
+            else printf("%d\n",ans);
 
       }
       return 0;
