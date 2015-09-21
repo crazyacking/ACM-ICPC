@@ -24,7 +24,7 @@ typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
-const int MOD=1000000007;
+const int MOD=222222224;
 int main()
 {
       int a=1,b=3,c;
