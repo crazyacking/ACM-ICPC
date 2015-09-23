@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-09-19-12.44
+* Submission Date: 2015-09-22-17.35
 * Time: 0MS
 * Memory: 137KB
 */
@@ -24,17 +24,24 @@ typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
+const int MAXN=1010;
+int mat[MAXN*MAXN],ans[MAXN][MAXN];
 int main()
 {
       ios_base::sync_with_stdio(false);
       cin.tie(0);
-      map<int,int> mp;
-      mp.insert(6,5);
-//      mp.insert(6,7);
-      map<int,int>::iterator p=mp.begin();
-      for(p=mp.begin();p!=mp.end();++p)
+      int n;
+      while(cin>>n)
       {
-            cout<<(p->first)<<" "<<(p->second)<<endl;
+            for(int i=1;i<=n;++i)
+                  
+            for(int i=n;i>=1;--i) // lie
+            {
+                  for(int j=1;j<=n;++j) // hang
+                  {
+                        ans[j][i]=mat[j][i];
+                  }
+            }
       }
       return 0;
 }

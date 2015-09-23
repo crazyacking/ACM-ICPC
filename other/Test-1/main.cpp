@@ -1,46 +1,51 @@
-/*
-* this code is made by crazyacking
-* Verdict: Accepted
-* Submission Date: 2015-09-21-21.28
-* Time: 0MS
-* Memory: 137KB
-*/
-#include <queue>
-#include <cstdio>
-#include <set>
-#include <string>
-#include <stack>
-#include <cmath>
-#include <climits>
-#include <map>
-#include <cstdlib>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cstring>
-#define max(a,b) (a>b?a:b)
-using namespace std;
-typedef long long(LL);
-typedef unsigned long long(ULL);
-const double eps(1e-8);
+#include<stdio.h>
+#include<cstring>
+#include<cstdlib>
+typedef struct node
+{
+      int integer;
+      struct node *next;
+      node()
+      {
+            next=NULL;
+      }
+} INTLINK;
 
-const int MOD=222222224;
+void lc(INTLINK *h)
+{
+      h=new INTLINK();
+      h->next=NULL;
+      h->integer=0;
+}
+void ll(INTLINK h,int e)
+{
+      INTLINK t;
+      t.integer=e;
+      t.next=NULL;
+      h.next=&t;
+      h=*h.next;
+}
+void ld(INTLINK h)
+{
+      puts("-----------------------------------------------------------------");
+      while(h.next!=NULL)
+      {
+            printf("%d ",h.integer);
+            h=*h.next;
+      }
+}
+
 int main()
 {
-      int a=1,b=3,c;
-      for(int i=1;;++i)
+      INTLINK L;
+      INTLINK head;
+      head.next=&L;
+      int x;
+      scanf("%d",&x);
+      while(x>=0)
       {
-            if(a==0 && b==1)
-            {
-                  printf("%d\n",i);
-                  break;
-            }
-            c=(3*b+a)%MOD;
-            a=b;
-            b=c;
+            ll(L,x);
+            scanf("%d",&x);
       }
-      return 0;
+      ld(head);
 }
-/*
-
-*/
