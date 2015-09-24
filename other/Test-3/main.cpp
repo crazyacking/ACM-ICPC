@@ -161,18 +161,12 @@ int main()
             }
             else
             {
-                  //if ((r - l + 1) % c != 0) {
-                  //    cout << "NO\n";
-                  //}
-                  //else {
-                  //cout << "query pe " << ' ' << l << ' ' << r - c << endl;
                   aux.h1 = aux.h2 = 0;
                   if(l <= r - c)
                         query(l, r - c, 1);
                   aa = aux.h1;
                   bb = aux.h2;
                   aux.h1 = aux.h2 = 0;
-                  //cout << "query pe " << ' ' << l + c << ' ' << r << endl;
                   if(l + c <= r)
                         query(l + c, r, 1);
                   cc = aux.h1;
