@@ -1,51 +1,43 @@
-#include<stdio.h>
-#include<cstring>
-#include<cstdlib>
-typedef struct node
-{
-      int integer;
-      struct node *next;
-      node()
-      {
-            next=NULL;
-      }
-} INTLINK;
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-09-23-23.58
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define max(a,b) (a>b?a:b)
+using namespace std;
+typedef long long(LL);
+typedef unsigned long long(ULL);
+const double eps(1e-8);
 
-void lc(INTLINK *h)
-{
-      h=new INTLINK();
-      h->next=NULL;
-      h->integer=0;
-}
-void ll(INTLINK h,int e)
-{
-      INTLINK t;
-      t.integer=e;
-      t.next=NULL;
-      h.next=&t;
-      h=*h.next;
-}
-void ld(INTLINK h)
-{
-      puts("-----------------------------------------------------------------");
-      while(h.next!=NULL)
-      {
-            printf("%d ",h.integer);
-            h=*h.next;
-      }
-}
 
+void change(int &a)
+{
+      a=5;
+}
 int main()
 {
-      INTLINK L;
-      INTLINK head;
-      head.next=&L;
-      int x;
-      scanf("%d",&x);
-      while(x>=0)
-      {
-            ll(L,x);
-            scanf("%d",&x);
-      }
-      ld(head);
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      int a=12;
+      change(a);
+      cout<<a<<endl;
+      return 0;
 }
+/*
+
+*/

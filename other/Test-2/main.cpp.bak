@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-09-22-17.35
+* Submission Date: 2015-09-24-00.02
 * Time: 0MS
 * Memory: 137KB
 */
@@ -24,25 +24,42 @@ typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
-const int MAXN=1010;
-int mat[MAXN*MAXN],ans[MAXN][MAXN];
+struct node
+{
+      int num;
+      node* next;
+};
+
+void Insert(node *& now,int x)
+{
+      now->next=new node;
+}
+
+void print(node *p)
+{
+      while(p->next!=NULL)
+      {
+            getchar();
+            printf("%d ",p->num);
+      }
+
+}
 int main()
 {
       ios_base::sync_with_stdio(false);
       cin.tie(0);
-      int n;
-      while(cin>>n)
+      node *head,*now;
+      head=now;
+      now=new node;
+      cout<<(head)<<endl;
+      int x;
+      while(cin>>x,x>=0)
       {
-            for(int i=1;i<=n;++i)
-                  
-            for(int i=n;i>=1;--i) // lie
-            {
-                  for(int j=1;j<=n;++j) // hang
-                  {
-                        ans[j][i]=mat[j][i];
-                  }
-            }
+            cout<<"now="<<now<<endl;
+            Insert(now,x);
       }
+      cout<<(head)<<endl;
+      print(head);
       return 0;
 }
 /*
