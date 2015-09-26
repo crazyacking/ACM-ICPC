@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1443257961 source:d:\code_fantasy\acm-icpc\hdu\icpc asia regional shanghai online l\2015 acm\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+

@@ -60,7 +60,8 @@ void change(LL pos, LL val, LL l, LL r, LL rt)
 
 int t;
 LL Q,cnt,n,pos;
-map<LL, LL> P,mp;
+map<LL, LL> P;
+map<LL, LL> mp;
 int main()
 {
       scanf("%d",&t);
