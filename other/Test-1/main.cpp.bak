@@ -1,44 +1,154 @@
-#include<bits/stdc++.h>
-#define LL long long
-
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-09-27-12.22
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define max(a,b) (a>b?a:b)
 using namespace std;
+typedef long long(LL);
+typedef unsigned long long(ULL);
+const double eps(1e-8);
 
-const LL N = 500010;
-LL n, q, a[N], dp[N], cnt[N], m = 500000;
-bool vis[N];
-vector<LL> d[N];
+char ss[1000],sss[1000];
+char* itoa(int num,char*str,int base)
+{
+      /*索引表*/
+      char index[]="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      unsigned unum;/*中间变量*/
+      int i=0,j,k;
+      /*确定unum的值*/
+      if(base==10&&num<0)/*十进制负数*/
+      {
+            unum=(unsigned)-num;
+            str[i++]='-';
+      }
+      else unum=(unsigned)num;/*其他情况*/
+      /*转换*/
+      do
+      {
+            str[i++]=index[unum%(unsigned)base];
+            unum/=base;
+      }while(unum);
+      str[i]='\0';
+      /*逆序*/
+      if(str[0]=='-')k=1;/*十进制负数*/
+      else k=0;
+      char temp;
+      for(j=k; j<=(i-1)/2; j++)
+      {
+            temp=str[j];
+            str[j]=str[i-1+k-j];
+            str[i-1+k-j]=temp;
+      }
+      return str;
+}
+
+LL get_val(char *ss)
+{
+      LL ret=0;
+      int len=strlen(ss);
+      for(int i=len-1;i>=0;--i)
+      {
+            if(ss[i]=='1')
+            {
+                  int tmp=len-1-i;
+                  ret+=(1<<tmp);
+            }
+      }
+      return ret;
+}
+int get1(char *ss)
+{
+      int ret;
+      int len=strlen(ss);
+      for(int i=0;i<len;++i)
+      {
+            if(ss[i]=='1') ret++;
+      }
+      return ret;
+}
 
 int main()
 {
-      LL i, j, k;
-      dp[1] = 1;
-      for(j = 1; j <= m; ++j)
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      int t;
+      scanf("%d",&t);
+      for(int Cas=1;Cas<=t;++Cas)
       {
-            d[j].push_back(j);
-            for(i = j + j; i <= m; i += j)
-                  d[i].push_back(j), dp[i] -= dp[j];
-      }
-      puts("-----------------------------------------------------------------");
-      for(int i=0;i<20;++i)
-      {
-            int si=d[i].size();
-            printf("d[%2d]:---dp[i]=%2d   || \t",i,dp[i]);
-            for(int j=0;j<si;++j)
+            int d,s1,s2;
+            scanf("%d %d %d",&d,&s1,&s2);
+            itoa(d,ss,2);
+            int len=strlen(ss);
+            int L1=0;
+            for(int i=0;i<len;++i)
             {
-                  printf("%LLd ",d[i][j]);
+                  if(ss[i]=='1')
+                  {
+                        L1++;
+                  }
             }
-            puts("");
-      }
-      puts("-----------------------------------------------------------------");
-
-      cin>>n>>q;
-      for(i = 1; i <= n; ++i) cin>>a[i];
-      LL ans = 0;
-      while(q--)
-      {
-            cin>>i;
-            for(LL y : d[a[i]]) ans += dp[y] * (cnt[y]++);
-            cout<<ans<<"\n";
+            strcpy(sss,ss);
+            int ct=get1(ss);
+            for(int i=len-1;i>=0;--i)
+            {
+                  if(ss[i]=='0')
+                  {
+                        ss[i]='1';
+                        if(i!=len-1)
+                        {
+                              for(int j=i+1;j<len;++j)
+                              {
+                                    ss[j]='0';
+                              }
+                        }
+                  }
+                  int cnt=get1(ss);
+                  LL val=get_val(ss);
+                  if(cnt>=s1 && cnt<=s2 && val>d)
+                  {
+                        break;
+                  }
+                  if(cnt<s1)
+                  {
+                        int cha=s1-cnt;
+                        for(int k=len-1,j=0;j<cha;++j,--k)
+                        {
+                              ss[k]='1';
+                        }
+                        break;
+                  }
+                  strcpy(ss,sss);
+            }
+            puts(ss);
+            LL ans=0;
+            for(int i=len-1;i>=0;--i)
+            {
+                  if(ss[i]=='1')
+                  {
+                        int tmp=len-1-i;
+                        ans+=(1<<tmp);
+                  }
+            }
+            cout<<ans<<endl;
       }
       return 0;
 }
+/*
+
+*/
