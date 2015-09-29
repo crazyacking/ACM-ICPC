@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-09-27-12.22
+* Submission Date: 2015-09-29-20.55
 * Time: 0MS
 * Memory: 137KB
 */
@@ -24,129 +24,56 @@ typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
-char ss[1000],sss[1000];
-char* itoa(int num,char*str,int base)
-{
-      /*索引表*/
-      char index[]="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      unsigned unum;/*中间变量*/
-      int i=0,j,k;
-      /*确定unum的值*/
-      if(base==10&&num<0)/*十进制负数*/
-      {
-            unum=(unsigned)-num;
-            str[i++]='-';
-      }
-      else unum=(unsigned)num;/*其他情况*/
-      /*转换*/
-      do
-      {
-            str[i++]=index[unum%(unsigned)base];
-            unum/=base;
-      }while(unum);
-      str[i]='\0';
-      /*逆序*/
-      if(str[0]=='-')k=1;/*十进制负数*/
-      else k=0;
-      char temp;
-      for(j=k; j<=(i-1)/2; j++)
-      {
-            temp=str[j];
-            str[j]=str[i-1+k-j];
-            str[i-1+k-j]=temp;
-      }
-      return str;
-}
-
-LL get_val(char *ss)
-{
-      LL ret=0;
-      int len=strlen(ss);
-      for(int i=len-1;i>=0;--i)
-      {
-            if(ss[i]=='1')
-            {
-                  int tmp=len-1-i;
-                  ret+=(1<<tmp);
-            }
-      }
-      return ret;
-}
-int get1(char *ss)
-{
-      int ret;
-      int len=strlen(ss);
-      for(int i=0;i<len;++i)
-      {
-            if(ss[i]=='1') ret++;
-      }
-      return ret;
-}
-
+int n,m,k;
+int sa[20];
+int ad[20][20];
+LL dp[(1<<18)+5][20];
 int main()
 {
       ios_base::sync_with_stdio(false);
       cin.tie(0);
-      int t;
-      scanf("%d",&t);
-      for(int Cas=1;Cas<=t;++Cas)
+      cin>>n>>m>>k;
+      for(int i=0; i<n; ++i)
+            cin>>sa[i];
+      int u,v,d;
+      while(k--)
       {
-            int d,s1,s2;
-            scanf("%d %d %d",&d,&s1,&s2);
-            itoa(d,ss,2);
-            int len=strlen(ss);
-            int L1=0;
-            for(int i=0;i<len;++i)
-            {
-                  if(ss[i]=='1')
-                  {
-                        L1++;
-                  }
-            }
-            strcpy(sss,ss);
-            int ct=get1(ss);
-            for(int i=len-1;i>=0;--i)
-            {
-                  if(ss[i]=='0')
-                  {
-                        ss[i]='1';
-                        if(i!=len-1)
-                        {
-                              for(int j=i+1;j<len;++j)
-                              {
-                                    ss[j]='0';
-                              }
-                        }
-                  }
-                  int cnt=get1(ss);
-                  LL val=get_val(ss);
-                  if(cnt>=s1 && cnt<=s2 && val>d)
-                  {
-                        break;
-                  }
-                  if(cnt<s1)
-                  {
-                        int cha=s1-cnt;
-                        for(int k=len-1,j=0;j<cha;++j,--k)
-                        {
-                              ss[k]='1';
-                        }
-                        break;
-                  }
-                  strcpy(ss,sss);
-            }
-            puts(ss);
-            LL ans=0;
-            for(int i=len-1;i>=0;--i)
-            {
-                  if(ss[i]=='1')
-                  {
-                        int tmp=len-1-i;
-                        ans+=(1<<tmp);
-                  }
-            }
-            cout<<ans<<endl;
+            cin>>u>>v>>d;
+            ad[u-1][v-1]=d;
       }
+      memset(dp,0,sizeof dp);
+      for(int i=0; i<n; ++i)
+      {
+            dp[1<<i][i]=sa[i];
+      }
+      long long ans=0;
+      int tot=1<<n;
+      for(int s=0; s<tot; ++s) // 枚举总状态数
+      {
+            int cnt=0;
+            for(int i=0; i<n; ++i) // 在已选定的菜中，选一道菜i出来在j前面吃
+            {
+                  if((s&(1<<i))==0)
+                        continue;
+                  ++cnt;
+                  for(int j=0; j<n; ++j) // 从未选定的菜中选一道出来，在i后面吃
+                  {
+                        if((s&(1<<j))!=0)
+                              continue;
+                        int ss=s|(1<<j);
+                        dp[ss][j]=max(dp[ss][j],dp[s][i]+sa[j]+ad[i][j]);
+                  }
+            }
+            if(cnt==m)
+            {
+                  for(int i=0; i<n; ++i)
+                  {
+                        if((s&(1<<i))!=0)
+                              ans=max(ans,dp[s][i]);
+                  }
+            }
+      }
+      cout<<ans<<endl;
       return 0;
 }
 /*
