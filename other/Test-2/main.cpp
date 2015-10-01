@@ -26,46 +26,38 @@ const double eps(1e-8);
 
 #define lson l,m,rt<<1
 #define rson m+1,r,rt<<1|1
-const ULL MOD = (1e9+9);
 const int seed = 10;
-const int maxn = 1e5+6;
-char str[maxn];
-ULL s[10][maxn],p[maxn];
+const int MAXN = 1e5+6;
+const ULL MOD = (1e9+9);
+char str[MAXN];
+ULL s[10][MAXN],p[MAXN];
 void pre()
 {
       int i,j;
       p[0]=1;
-      for(i=1; i<maxn; i++)
-            p[i]=p[i-1]*seed%MOD;//
+      for(i=1; i<MAXN; i++)
+            p[i]=p[i-1]*seed%MOD;
       for(i=0; i<=9; i++)
       {
             s[i][1]=i;
             for(j=2; j<=100000; j++)
             {
                   s[i][j]=s[i][j-1]*seed+i;
-                  s[i][j]%=MOD;//
+                  s[i][j]%=MOD;
             }
       }
-//      for(int i=0;i<=9;++i)
-//      {
-//            for(int j=1;j<=10;++j)
-//            {
-//                  printf("%llu ",s[i][j]);
-//            }
-//            putchar(10);
-//      }
 }
 struct node
 {
       ULL v;
       int len;
-      node(){}
+      node() {}
       node(ULL v,int l) :v(v),len(l) {}
 };
-ULL tree[maxn<<2];
+ULL tree[MAXN<<2];
 struct segtree
 {
-      int lazy[maxn<<2];
+      int lazy[MAXN<<2];
       void pushdown(int l,int r,int rt)
       {
             if(lazy[rt]>=0)
@@ -80,7 +72,7 @@ struct segtree
       void pushup(int l,int r,int rt)
       {
             tree[rt]=tree[rt<<1]*p[(r-l+1)>>1]+tree[rt<<1|1];
-            tree[rt]%=MOD;//
+            tree[rt]%=MOD;
       }
       void build(int l,int r,int rt)
       {
@@ -91,8 +83,8 @@ struct segtree
                   return ;
             }
             int m=(l+r)>>1;
-            build(lson);// l,m,rt<<1
-            build(rson);// m+1,r,rt<<1|1
+            build(lson);
+            build(rson);
             pushup(l,r,rt);
       }
       void update(int L,int R,int v,int l,int r,int rt)
@@ -129,15 +121,6 @@ struct segtree
                   return p1;
             return node((p1.v*p[p2.len]+p2.v)%MOD,p1.len+p2.len);
       }
-//      void debug(int l,int r,int rt)
-//      {
-//            printf("[%d %d] %llu \n",l,r,tree[rt]);
-//            if(l==r)
-//                  return ;
-//            int m=(l+r)>>1;
-//            debug(lson);
-//            debug(rson);
-//      }
 } T;
 
 int main()
@@ -146,12 +129,6 @@ int main()
       int n,m,k,tp,x,y,v;
       scanf("%d%d%d%s",&n,&m,&k,str+1);
       T.build(1,n,1);
-//      puts("-----------------------------------------------------------------");
-//      for(int i=1;i<10;++i)
-//      {
-//            printf("%d:%d\n",i,tree[i]);
-//      }
-//      puts("-----------------------------------------------------------------");
       m+=k;
       while(m--)
       {
@@ -169,9 +146,6 @@ int main()
                   node temp2=T.query(x+v,y,1,n,1);
                   temp1.v==temp2.v?puts("YES"):puts("NO");
             }
-//          printf("------------------------------------------------------\n");
-//          T.debug(1,n,1);
-//          printf("------------------------------------------------------\n");
       }
       return 0;
 }

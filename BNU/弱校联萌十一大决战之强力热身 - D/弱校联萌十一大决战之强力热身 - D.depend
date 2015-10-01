@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1443663752 source:d:\code_fantasy\acm-icpc\bnu\弱校联萌十一大决战之强力热身 - d\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+

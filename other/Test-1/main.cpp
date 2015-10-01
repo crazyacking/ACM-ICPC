@@ -1,29 +1,31 @@
-/*
-* this code is made by crazyacking
-* Verdict: Accepted
-* Submission Date: 2015-10-01-08.45
-* Time: 0MS
-* Memory: 137KB
-*/
-#include <queue>
-#include <cstdio>
-#include <set>
 #include <string>
-#include <stack>
-#include <cmath>
-#include <climits>
-#include <map>
-#include <cstdlib>
-#include <iostream>
 #include <vector>
-#include <algorithm>
-#include <cstring>
-#define max(a,b) (a>b?a:b)
-using namespace std;
-typedef long long(LL);
-typedef unsigned long long(ULL);
-const double eps(1e-8);
+std::string DelSubString(std::string strSrc, std::string strDel)
+{
+	std::vector<int> vecMask;
+	vecMask.resize(strSrc.size(), 0);
 
+	size_t i = 0;
+	for (i=0; i<strSrc.size(); i++)
+	{
+		if (strSrc.substr(i, strDel.size()) == strDel)
+		{
+			for (size_t j=0; j<strDel.size(); j++)
+			{
+				vecMask[i + j] = 1;
+			}
+		}
+	}
+	std::string strRet;
+	for (i=0; i<vecMask.size(); i++)
+	{
+		if (0 == vecMask[i])
+		{
+			strRet.append(1, strSrc[i]);
+		}
+	}
+	return strRet;
+}
 
 
 int main()
