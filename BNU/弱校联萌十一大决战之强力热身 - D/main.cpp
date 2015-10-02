@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-10-01-08.59
+* Submission Date: 2015-10-02-20.44
 * Time: 0MS
 * Memory: 137KB
 */
@@ -20,88 +20,63 @@
 #include <cstring>
 #define max(a,b) (a>b?a:b)
 using namespace std;
-const int MAXN=500;
-const int INF=1<<28;
-int g[MAXN][MAXN],Mx[MAXN],My[MAXN],Nx,Ny;
-int dx[MAXN],dy[MAXN],dis;
-bool vst[MAXN];
-int n,m;
-bool searchP()
+typedef long long(LL);
+typedef unsigned long long(ULL);
+const double eps(1e-8);
+
+const int maxn = 505;
+
+int n, m;
+bool lk[maxn][maxn];
+int mk[maxn];
+bool vis[maxn];
+
+bool dfs(int cur)
 {
-    queue<int>Q;
-    dis=INF;
-    memset(dx,-1,sizeof(dx));
-    memset(dy,-1,sizeof(dy));
-    for(int i=0;i<Nx;i++)
-        if(Mx[i]==-1)
-        {
-            Q.push(i);
-            dx[i]=0;
-        }
-    while(!Q.empty())
-    {
-        int u=Q.front();
-        Q.pop();
-        if(dx[u]>dis)  break;
-        for(int v=0;v<Ny;v++)
-            if(g[u][v]&&dy[v]==-1)
+      for(int i = 1; i <= n; ++i)
+      {
+            if(lk[cur][i] && !vis[i])
             {
-                dy[v]=dx[u]+1;
-                if(My[v]==-1)  dis=dy[v];
-                else
-                {
-                    dx[My[v]]=dy[v]+1;
-                    Q.push(My[v]);
-                }
+                  vis[i] = true;
+                  if(mk[i] == 0 || dfs(mk[i]))
+                  {
+                        mk[i] = cur;
+                        return true;
+                  }
             }
-    }
-    return dis!=INF;
+      }
+      return false;
 }
-bool DFS(int u)
+
+int solve()
 {
-    for(int v=0;v<Ny;v++)
-       if(!vst[v]&&g[u][v]&&dy[v]==dx[u]+1)
-       {
-           vst[v]=1;
-           if(My[v]!=-1&&dy[v]==dis) continue;
-           if(My[v]==-1||DFS(My[v]))
-           {
-               My[v]=u;
-               Mx[u]=v;
-               return 1;
-           }
-       }
-    return 0;
+      memset(mk, 0, n+1);
+      int tmp = 0;
+      for(int i = 1; i <= n; ++i)
+      {
+            memset(vis, false, n+1);
+            if(dfs(i)) ++tmp;
+      }
+      return tmp/2;
 }
-int MaxMatch()
-{
-    int res=0;
-    memset(Mx,-1,sizeof(Mx));
-    memset(My,-1,sizeof(My));
-    while(searchP())
-    {
-        memset(vst,0,sizeof(vst));
-        for(int i=0;i<Nx;i++)
-          if(Mx[i]==-1&&DFS(i))  res++;
-    }
-    return res;
-}
+
 int main()
 {
-      while(scanf("%d %d",&n,&m)!=EOF){
-            memset(g,0,sizeof g);
-            for(int i=1,u,v;i<=m;++i){
-                  scanf("%d %d",&u,&v);
-                  --u,--v;
-                  g[u][v]=g[v][u]=1;
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      while(cin >> n >> m)
+      {
+            for(int i = 1; i <= n; ++i)
+            {
+                  memset(lk[i]+1, false, n);
             }
-            Nx=Ny=n;
-            int ans=MaxMatch();
-            printf("%d\n",ans/2);
+            for(int i = 0; i < m; ++i)
+            {
+                  int u, v; cin >> u >> v;
+                  lk[u][v] = true;
+                  lk[v][u] = true;
+            }
+            cout << solve() << endl;
       }
-
       return 0;
 }
-/*
-
-*/
