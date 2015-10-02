@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-10-01-08.59
+* Submission Date: 2015-10-02-17.50
 * Time: 0MS
 * Memory: 137KB
 */
@@ -23,36 +23,29 @@ using namespace std;
 typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
-LL mod=10007;
-LL dp[50010];
-LL d[50010];
 
 int main()
 {
-      LL h=0;
-      for(int i=0;i<s.length();i++)
-            h=(h*10+s[i]-'0')%mod;
-      cout<<h<<endl;
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
       int n,m,k;
-      while(scanf("%d%d%d",&n,&m,&k)!=EOF)
+      while(~scanf("%d %d %d",&n,&m,&k))
       {
-            k>>=1;
-            for(int i=1; i<=m; i++)
+            int x=k>>1;
+            int a_up=x-1;
+            if(a_up>n) a_up=n;
+            long long n1,n2,a1,ans=0;
+            for(int a=1;a<=a_up;++a)
             {
-                  int t=k-i;
-                  dp[i]=dp[i-1];
-                  if(t>0)
-                  {
-                        if(n<=t)
-                              dp[i]+=LL(1+n)*n/2;
-                        else
-                              dp[i]+=LL(1+t)*t/2+(n-t)*t;
-                  }
-                  d[i]=d[i-1]+dp[i];
-                  dp[i]%=mod;
-                  d[i]%=mod;
+                  int b_up=x-a;
+                  if(b_up>m) b_up=m;
+                  n1=n-a+1;
+                  // calc n2
+                  a1=m-b_up+1;
+                  n2=(LL)b_up*a1+((LL)b_up*(b_up-1)/2);
+                  ans+=(n1*n2);
             }
-            cout<<d[m]<<endl;
+            printf("%lld\n",ans);
       }
       return 0;
 }
