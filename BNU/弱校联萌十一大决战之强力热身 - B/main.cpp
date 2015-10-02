@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-10-01-08.59
+* Submission Date: 2015-10-02-21.23
 * Time: 0MS
 * Memory: 137KB
 */
@@ -24,37 +24,40 @@ typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
+const int MAXN=1e5+10;
+int a[MAXN],b[MAXN];
 int main()
 {
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
       int n;
-      while(scanf("%d",&n)!=EOF){
-            vector<LL> a[11];
-            LL ans=0,x;
-            for(int i=1;i<=n;++i){
-                  scanf("%lld",&x);
-                  LL k=1;
-                  for(int j=1;j<=10;++j){
-                        k*=10;
-                        LL tmp=x%k;
-                        a[j].push_back(tmp);
-                  }
-            }
-            LL k=1;
-            for(int i=1;i<=10;++i){
+      while(~scanf("%d",&n))
+      {
+            for(int i=0; i<n; ++i)
+                  scanf("%d",&a[i]);
+            int k=1;
+            LL ans=0;
+            for(int i=1; i<=9; ++i)
+            {
                   k*=10;
-                  sort(a[i].begin(),a[i].end());
-                  int l=0,r=n-1;
-                  while(l<r){
-                        while(l<r&&a[i][l]+a[i][r]<k) ++l;
-                        if(l==r) break;
-                        ans+=(r-l);
-                        --r;
+                  for(int j=0; j<n; ++j)
+                        b[j]=a[j]%k;
+                  sort(b,b+n);
+                  for(int j=0; j<n; ++j)
+                  {
+                        int l=0,r=j,m;
+                        while(l<r)
+                        {
+                              m=(l+r)>>1;
+                              if(b[m]+b[j]<k)
+                                    l=m+1;
+                              else r=m;
+                        }
+                        ans+=j-l;
                   }
             }
             printf("%lld\n",ans);
       }
-
-
       return 0;
 }
 /*
