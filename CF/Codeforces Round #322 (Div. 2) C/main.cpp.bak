@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-09-28-22.57
+* Submission Date: 2015-10-03-21.10
 * Time: 0MS
 * Memory: 137KB
 */
@@ -29,35 +29,28 @@ int main()
 {
       ios_base::sync_with_stdio(false);
       cin.tie(0);
-      int n,f;
-      scanf("%d %d",&n,&f);
-      int ans=0;
+      int n,k;
+      scanf("%d %d",&n,&k);
+      LL ans=0;
       int tmp;
-      ve.clear();
       for(int i=0;i<n;++i)
       {
             scanf("%d",&tmp);
             ans+=tmp/10;
-            tmp%=10;
-            if(tmp!=0) ve.push_back(tmp);
+            ve.push_back(tmp%10);
       }
       sort(ve.begin(),ve.end());
-      int si=ve.size();
-      for(int i=si-1;i>=0;--i)
+      for(int i=ve.size()-1;i>=0;--i)
       {
-            if(f-(10-ve[i])>=0)
+            if(k-(10-ve[i])>=0)
             {
-                  ans++;
-                  f-=(10-ve[i]);
+                  k-=(10-ve[i]);
+                  ++ans;
             }
             else break;
       }
-      if(f>0)
-      {
-            ans+=f/10;
-      }
-      if(ans>n*10) ans=n*10;
-      cout<<ans<<endl;
+      ans+=k/10;
+      printf("%I64d\n",ans);
       return 0;
 }
 /*
