@@ -1,0 +1,76 @@
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-10-03-17.12
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define max(a,b) (a>b?a:b)
+using namespace std;
+typedef long long(LL);
+typedef unsigned long long(ULL);
+const double eps(1e-8);
+
+const int MAXN=1000010;
+long long ans;
+vector<int> gr[MAXN];
+vector<int> a(MAXN),b(MAXN);
+
+int s[MAXN];
+void solve(int x)
+{
+      int top=0;
+      queue<int> q;
+      q.push(x);
+      while(!q.empty())
+      {
+            int r=q.front();
+            q.pop();
+            s[top++]=r;
+            for(int i=0;i<gr[r].size();++i)
+                  q.push(gr[r][i]);
+      }
+      while(top--)
+      {
+            vector<int> t;
+            int r=s[top];
+            for(int i=0;i<gr[r].size();++i)
+                  t.push_back()
+      }
+}
+int main()
+{
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      int n;
+      scanf("%d",&n);
+      for(int i=0;i<n;++i)
+      {
+            scanf("%d %d",a[i],b[i]);
+            if(b[i]!=-1)
+                  gr[b[i]].push_back(i);
+            else gr[n].push_back(i);
+      }
+      for(int i=0;i<gr[n].size();++i)
+      {
+            solve(gr[n][i]);
+      }
+      printf("%lld\n",ans);
+      return 0;
+}
+/*
+
+*/

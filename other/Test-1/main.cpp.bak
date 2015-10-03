@@ -1,40 +1,43 @@
-#include <string>
-#include <vector>
-std::string DelSubString(std::string strSrc, std::string strDel)
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+const int maxn=1000010;
+int n,a[maxn],b[maxn],s[maxn];
+ll ans;
+vector<int> v[maxn];
+void solve(int x)
 {
-	std::vector<int> vecMask;
-	vecMask.resize(strSrc.size(), 0);
-
-	size_t i = 0;
-	for (i=0; i<strSrc.size(); i++)
-	{
-		if (strSrc.substr(i, strDel.size()) == strDel)
-		{
-			for (size_t j=0; j<strDel.size(); j++)
-			{
-				vecMask[i + j] = 1;
-			}
-		}
-	}
-	std::string strRet;
-	for (i=0; i<vecMask.size(); i++)
-	{
-		if (0 == vecMask[i])
-		{
-			strRet.append(1, strSrc[i]);
-		}
-	}
-	return strRet;
-} 
-
-
+      int top=0;
+      queue<int> q;
+      q.push(x);
+      while(!q.empty())
+      {
+            int r=q.front(); q.pop();
+            s[top++]=r;
+            for(int i=0; i<v[r].size(); i++) q.push(v[r][i]);
+      }
+      while(top--)
+      {
+            vector<int> t;
+            int y=s[top];
+            for(int i=0; i<v[y].size(); i++) t.push_back(a[v[y][i]]);
+            sort(t.begin(),t.end());
+            int l=0;
+            for(int i=0; i<t.size(); i++) ans+=l,l+=t[i];
+            a[y]+=l;
+      }
+}
 int main()
 {
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      
+      scanf("%d",&n);
+      for(int i=0; i<n; i++)
+      {
+            scanf("%d%d",a+i,b+i);
+            if(b[i]!=-1)
+                  v[b[i]].push_back(i);
+            else v[n].push_back(i);
+      }
+      for(int i=0; i<v[n].size(); i++) solve(v[n][i]);
+      printf("%lld\n",ans);
       return 0;
 }
-/*
-
-*/
