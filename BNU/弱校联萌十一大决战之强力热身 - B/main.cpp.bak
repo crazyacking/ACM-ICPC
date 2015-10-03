@@ -33,17 +33,17 @@ int main()
       int n;
       while(~scanf("%d",&n))
       {
-            for(int i=0;i<n;++i)
+            for(int i=0; i<n; ++i)
                   scanf("%d",&a[i]);
             int k=1;
             LL ans=0;
-            for(int i=1;i<=9;++i)
+            for(int i=1; i<=9; ++i)
             {
                   k*=10;
-                  for(int j=0;j<n;++j)
+                  for(int j=0; j<n; ++j)
                         b[j]=a[j]%k;
                   sort(b,b+n);
-                  for(int j=0;j<n;++j)
+                  for(int j=0; j<n; ++j)
                   {
                         int l=0,r=j,m;
                         while(l<r)
