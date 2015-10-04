@@ -1,43 +1,71 @@
-#include<bits/stdc++.h>
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<algorithm>
+#include<cstdlib>
+#include<cmath>
 using namespace std;
-#define ll long long
-const int maxn=1000010;
-int n,a[maxn],b[maxn],s[maxn];
-ll ans;
-vector<int> v[maxn];
-void solve(int x)
+typedef long long ll;
+
+struct Rec
 {
-      int top=0;
-      queue<int> q;
-      q.push(x);
-      while(!q.empty())
+      int l, w;
+      char ch;
+      bool operator <(const Rec& rhs)const
       {
-            int r=q.front(); q.pop();
-            s[top++]=r;
-            for(int i=0; i<v[r].size(); i++) q.push(v[r][i]);
+            return l < rhs.l;
       }
-      while(top--)
-      {
-            vector<int> t;
-            int y=s[top];
-            for(int i=0; i<v[y].size(); i++) t.push_back(a[v[y][i]]);
-            sort(t.begin(),t.end());
-            int l=0;
-            for(int i=0; i<t.size(); i++) ans+=l,l+=t[i];
-            a[y]+=l;
-      }
-}
+      int sq(){return l*w;}
+};
+
+Rec rec[4];
+
 int main()
 {
-      scanf("%d",&n);
-      for(int i=0; i<n; i++)
+      while(scanf("%d%d%d%d%d%d", &rec[1].l, &rec[1].w, &rec[2].l, &rec[2].w, &rec[3].l, &rec[3].w) == 6)
       {
-            scanf("%d%d",a+i,b+i);
-            if(b[i]!=-1)
-                  v[b[i]].push_back(i);
-            else v[n].push_back(i);
+            for(int i = 1; i <= 3; i++)
+            {
+                  if(rec[i].l < rec[i].w)swap(rec[i].l, rec[i].w);
+                  rec[i].ch = 'A' - 1 + i;
+            }
+            sort(rec + 1, rec + 4);
+            int len = rec[3].l;
+            if((rec[3].l*rec[3].l) != (rec[1].sq() + rec[2].sq() + rec[3].sq()))
+            {
+                  printf("-1\n");
+                  continue;
+            }
+            printf("%d\n", len);
+            for(int i = 1; i <= rec[3].w; i++)
+            {
+                  for(int j = 1; j <= rec[3].l; j++)
+                  {
+                        printf("%c", rec[3].ch);
+                  }
+                  printf("\n");
+            }
+            if(rec[2].l!=len&&rec[3].w + rec[2].w != len) swap(rec[2].l, rec[2].w);
+            for(int i = 1; i <= rec[2].w; i++)
+            {
+                  for(int j = 1; j <= rec[2].l; j++)
+                  {
+                        printf("%c", rec[2].ch);
+                  }
+                  for(int j = 1; j <= len - rec[2].l; j++)
+                  {
+                        printf("%c", rec[1].ch);
+                  }
+                  printf("\n");
+            }
+            for(int i = 1; i <=len-rec[3].w- rec[2].w; i++)
+            {
+                  for(int j = 1; j <= len; j++)
+                  {
+                        printf("%c", rec[1].ch);
+                  }
+                  printf("\n");
+            }
       }
-      for(int i=0; i<v[n].size(); i++) solve(v[n][i]);
-      printf("%lld\n",ans);
       return 0;
 }

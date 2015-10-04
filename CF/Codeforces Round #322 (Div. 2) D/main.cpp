@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-10-02-20.44
+* Submission Date: 2015-10-03-22.20
 * Time: 0MS
 * Memory: 137KB
 */
@@ -23,60 +23,110 @@ using namespace std;
 typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
-
-const int maxn = 505;
-
-int n, m;
-bool lk[maxn][maxn];
-int mk[maxn];
-bool vis[maxn];
-
-bool dfs(int cur)
+const int MAXN=5005;
+int H[MAXN],to[MAXN*2],nx[MAXN*2],edge;
+void add(int u, int v)
 {
-      for(int i = 1; i <= n; ++i)
+      edge++;
+      to[edge]=v;
+      nx[edge]=H[u];
+      H[u]=edge;
+}
+int dp[MAXN][2][MAXN];
+int dp2[2][MAXN],sz[MAXN];
+int d[MAXN];
+void dfs(int cur ,int per)
+{
+      if(d[cur]==1)
       {
-            if(lk[cur][i] && !vis[i])
-            {
-                  vis[i] = true;
-                  if(mk[i] == 0 || dfs(mk[i]))
+            sz[cur]=1;
+            dp[cur][0][1]=dp[cur][1][1]=0;
+            return ;
+      }
+      dp[cur][0][0]=dp[cur][1][0]=0;
+      for(int i=H[cur]; i ; i=nx[i])
+      {
+            int tto = to[i];
+            if(tto==per)continue;
+            dfs(tto,cur);
+            for(int i=0; i<=sz[cur]; i++)
+                  for(int u=0; u<2; u++)
                   {
-                        mk[i] = cur;
-                        return true;
+                        if(dp[cur][u][i] == -1) continue;
+                        for(int j=0; j<=sz[tto]; j++)
+                              for(int v=0; v<2; v++)
+                              {
+                                    if(dp[tto][v][j]==-1)continue;
+                                    if(u==v)
+                                    {
+                                          if(dp2[u][i+j]==-1)
+                                          {
+                                                int k=dp[cur][u][i]+dp[tto][v][j];
+                                                dp2[u][i+j] = k;
+                                          }
+                                          else
+                                          {
+                                                int k=min(dp[cur][u][i]+dp[tto][v][j],dp2[u][i+j]);
+                                                dp2[u][i+j]=k;
+                                          }
+                                    }
+                                    else
+                                    {
+                                          int nu=sz[tto];
+                                          if(dp2[u][i+nu-j]==-1)
+                                          {
+                                                int k=dp[cur][u][i]+dp[tto][v][j]+1;
+                                                dp2[u][i+nu-j]=k;
+                                          }
+                                          else
+                                          {
+                                                int k=min(dp[cur][u][i]+dp[tto][v][j]+1,dp2[u][i+nu-j]);
+                                                dp2[u][i+nu-j]=k;
+                                          }
+                                    }
+                              }
                   }
-            }
+            sz[cur]+=sz[tto];
+            for(int i=0; i<=sz[cur]; i++)
+                  for(int j=0; j<2; j++)
+                  {
+                        dp[cur][j][i]=dp2[j][i];
+                        dp2[j][i]=-1;
+                  }
       }
-      return false;
 }
-
-int solve()
-{
-      memset(mk, 0, n+1);
-      int tmp = 0;
-      for(int i = 1; i <= n; ++i)
-      {
-            memset(vis, false, n+1);
-            if(dfs(i)) ++tmp;
-      }
-      return tmp/2;
-}
-
 int main()
 {
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      while(cin >> n >> m)
+      int n;
+      while(scanf("%d",&n)==1)
       {
-            for(int i = 1; i <= n; ++i)
+            memset(d,0,sizeof(d));
+            memset(dp,-1,sizeof(dp));
+            memset(sz,0,sizeof(sz));
+            memset(dp2,-1,sizeof(dp2));
+            memset(H,0,sizeof(H));
+            edge=0;
+            for(int i=1; i<n; i++)
             {
-                  memset(lk[i]+1, false, n);
+                  int a,b;
+                  scanf("%d%d",&a,&b);
+                  add(a,b);
+                  add(b,a);
+                  d[a]++; d[b]++;
             }
-            for(int i = 0; i < m; ++i)
+            if(n==2)
             {
-                  int u, v; cin >> u >> v;
-                  lk[u][v] = true;
-                  lk[v][u] = true;
+                  printf("%d\n",1); continue;
             }
-            cout << solve() << endl;
+            int root;
+            int cnt=0;
+            for(int i=1; i<=n; i++)
+            {
+                  if(d[i]==1)cnt++;
+                  else root=i;
+            }
+            dfs(root,-1);
+            printf("%d\n",min(dp[root][0][cnt/2],dp[root][1][cnt/2]));
       }
       return 0;
 }

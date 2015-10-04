@@ -1,61 +1,96 @@
-# include <bits/stdc++.h>
-#include<cstdio>
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-10-03-22.44
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define max(a,b) (a>b?a:b)
 using namespace std;
-typedef long long int lli;
+typedef long long(LL);
+typedef unsigned long long(ULL);
+const double eps(1e-8);
 
-const int maxn = 505;
-
-int n, m;
-bool lk[maxn][maxn];
-int mk[maxn];
-bool vis[maxn];
-
-bool dfs(int cur)
+struct node
 {
-      for(int i = 1; i <= n; ++i)
+      int len;
+      int id;
+}a[7];
+
+bool dfs2()
+{
+      int len1=0,len2=0;
+      bool v[7];
+      memset(v,0,sizeof v);
+      for(int i=1;i<=6;++i)
       {
-            if(lk[cur][i] && !vis[i])
+            for(int j=1;j<=6;++j)
             {
-                  vis[i] = true;
-                  if(mk[i] == 0 || dfs(mk[i]))
+                  if(a[i].id!=a[j].id)
                   {
-                        mk[i] = cur;
-                        return true;
+                        len1=a[i].len+a[j].len;
+                        v[i]=1,v[j]=1;
+                        int ml=-1;
+                        for(int k=1;k<=6;++k)
+                        {
+                              if(!v[k])
+                              {
+                                    if(a[k].len==len1)
+                                    {
+                                          fd=k;
+                                          break;
+                                    }
+                              }
+                        }
+                        if(fd==-1) return false;
+                        
                   }
             }
       }
-      return false;
 }
 
-int solve()
+bool dfs3()
 {
-      memset(mk, 0, n+1);
-      int tmp = 0;
-      for(int i = 1; i <= n; ++i)
-      {
-            memset(vis, false, n+1);
-            if(dfs(i)) ++tmp;
-      }
-      return tmp/2;
+
 }
 
 int main()
 {
       ios_base::sync_with_stdio(false);
       cin.tie(0);
-      while(cin >> n >> m)
+      int cnt=1;
+      for(int i=1;i<=6;i+=2)
       {
-            for(int i = 1; i <= n; ++i)
-            {
-                  memset(lk[i]+1, false, n);
-            }
-            for(int i = 0; i < m; ++i)
-            {
-                  int u, v; cin >> u >> v;
-                  lk[u][v] = true;
-                  lk[v][u] = true;
-            }
-            cout << solve() << endl;
+            scanf("%d %d",&a[i].len,a[i+1].len);
+            a[i].id=cnt;
+            a[i+1].id=cnt;
+            ++cnt;
       }
+      if(dfs2())
+      {
+
+      }
+      else if(dfs3())
+      {
+
+      }
+      else
+            printf("-1");
       return 0;
 }
+/*
+
+*/
