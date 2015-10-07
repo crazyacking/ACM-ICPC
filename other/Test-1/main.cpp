@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-10-03-22.50
+* Submission Date: 2015-10-06-18.26
 * Time: 0MS
 * Memory: 137KB
 */
@@ -20,61 +20,64 @@
 #include <cstring>
 #define max(a,b) (a>b?a:b)
 using namespace std;
+typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
-typedef long long ll;
 
-struct Rec
+
+struct TreeNode
 {
-      int l, w;
-      char ch;
-      bool operator <(const Rec& rhs)const
-      {
-            return l < rhs.l;
-      }
-      int sq(){return l*w;}
+      int val;
+      TreeNode *left;
+      TreeNode *right;
+      TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-Rec rec[4];
-
-int main()
+class Solution
 {
-      while(scanf("%d%d%d%d%d%d", &rec[1].l, &rec[1].w, &rec[2].l, &rec[2].w, &rec[3].l, &rec[3].w) == 6)
+public:
+
+
+      struct TreeNode* reConstructBinaryTree(vector<int> pre,vector<int> in)
       {
-            for(int i = 1; i <= 3; i++)
+            int si=pre.size();
+            bool v[si];
+            for(int i=0; i<si; ++i)
             {
-                  if(rec[i].l < rec[i].w)swap(rec[i].l, rec[i].w);
-                  rec[i].ch = 'A' - 1 + i;
-            }
-            sort(rec + 1, rec + 4);
-            int len = rec[3].l;
-            if((rec[3].l*rec[3].l) != (rec[1].sq() + rec[2].sq() + rec[3].sq()))
-            {
-                  printf("-1\n");
-                  continue;
-            }
-            printf("%d\n", len);
-            for(int i = 1; i <= rec[3].w; i++)
-            {
-                  for(int j = 1; j <= rec[3].l; j++)
-                        printf("%c", rec[3].ch);
-                  printf("\n");
-            }
-            if(rec[2].l!=len&&rec[3].w + rec[2].w != len) swap(rec[2].l, rec[2].w);
-            for(int i = 1; i <= rec[2].w; i++)
-            {
-                  for(int j = 1; j <= rec[2].l; j++)
-                        printf("%c", rec[2].ch);
-                  for(int j = 1; j <= len - rec[2].l; j++)
-                        printf("%c", rec[1].ch);
-                  printf("\n");
-            }
-            for(int i = 1; i <=len-rec[3].w- rec[2].w; i++)
-            {
-                  for(int j = 1; j <= len; j++)
-                        printf("%c", rec[1].ch);
-                  printf("\n");
+                  for(int j=0; j<si; ++j)
+                  {
+                        if(pre[i]==in[j])
+                        {
+                              v[j]=1;
+                        }
+                  }
             }
       }
+
+
+      bool buildBinaryTree(int indexOfPre,int indexOfIn)
+      {
+            if(indexOfIn<=0)
+            {
+                  return false;
+            }
+            if(indexOfIn>=si)
+            {
+                  return true;
+            }
+            for(int i=indexOfIn; i<si;++i)
+            {
+
+            }
+      }
+};
+int main()
+{
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      Solution a;
       return 0;
 }
+/*
+
+*/
