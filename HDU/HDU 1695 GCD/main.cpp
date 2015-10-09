@@ -24,7 +24,7 @@ typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
-const int NN=101000;
+const int NN=100010;
 bool v[NN];
 int p[NN];
 void makePrime()
@@ -39,52 +39,40 @@ void makePrime()
                   if(i%p[j]==0) { break; }
             }
       }
-      cout<<num<<endl;
 }
 
-
-vector<int> pf[NN];
-vector<pair<int,int> > pa[NN];
+struct node
+{
+      int fac;
+      bool ti;
+      node() {}
+      node(int a,bool b):fac(a),ti(b) {}
+};
+vector<node> pa[NN];
 
 void pre()
 {
-      int i,j,a;
+      int i,j,a,cnt,si;
       for(i=1; i<=100000; ++i)
       {
             a=i;
+            cnt=0;
             for(j=0; j<=9672; ++j)
             {
                   if(!(a%p[j]))
                   {
-                        pf[i].push_back(p[j]);
+                        pa[i].push_back(node(p[j],false));
+                        si=pa[i].size();
+                        for(int k=0; k<si-1; ++k)
+                        {
+                              pa[i].push_back(node(pa[i][si-1].fac*pa[i][k].fac,!pa[i][k].ti));
+                        }
                         while(!(a%p[j]))
                               a/=p[j];
                   }
-                  if(!a) break;
+                  if(p[j]>a || a<=0) break;
             }
       }
-      int si;
-      pa[1].push_back(make_pair(1,0));
-      for(int i=2; i<=100000; ++i)
-      {
-            for(auto p:pf[i])
-            {
-                  pa[i].push_back(make_pair(p,0));
-                  si=pa[i].size();
-                  for(int j=0; j<si-1; ++j)
-                        pa[i].push_back(make_pair(pa[i][si-1].first*pa[i][j].first,pa[i][j].second+1));
-            }
-      }
-      puts("-----------------------------------------------------------------");
-      for(int i=1; i<=3; ++i)
-      {
-            cout<<"i="<<i<<endl;
-            for(auto p:pa[i])
-            {
-                  cout<<p.first<<" "<<p.second<<endl;
-            }
-      }
-      puts("-----------------------------------------------------------------");
 }
 
 
@@ -100,22 +88,32 @@ int main()
       {
             int a,b,c,d,k,si;
             scanf("%d %d %d %d %d",&a,&b,&c,&d,&k);
+            if(k==0)
+            {
+                  printf("Case %d: 0\n",Cas);
+                  continue;
+            }
             a=b/k;
             b=d/k;
             if(a>b) swap(a,b);
             LL ans=b;
+            if(a==0) ans=0;
             for(int i=2; i<=a; ++i)
             {
                   si=pa[i].size();
                   for(int j=0; j<si; ++j)
                   {
-                        if(!(pa[i][j].second&1))
-                              ans+=((b-i+1)-b/pa[i][j].first);
+                        if(!(pa[i][j].ti))
+                        {
+                              ans+=((b-i+1)-b/pa[i][j].fac+(i-1)/pa[i][j].fac);
+                        }
                         else
-                              ans-=((b-i+1)-b/pa[i][j].first);
+                        {
+                              ans-=((b-i+1)-b/pa[i][j].fac+(i-1)/pa[i][j].fac);
+                        }
                   }
             }
-            printf("%lld\n",ans);
+            printf("Case %d: %I64d\n", Cas, ans);
       }
       return 0;
 }
