@@ -1,117 +1,53 @@
-/*
-* this code is made by crazyacking
-* Verdict: Accepted
-* Submission Date: 2015-10-10-20.11
-* Time: 0MS
-* Memory: 137KB
-*/
-#include <queue>
-#include <cstdio>
-#include <set>
-#include <string>
-#include <stack>
-#include <cmath>
-#include <climits>
-#include <map>
-#include <cstdlib>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cstring>
-#define max(a,b) (a>b?a:b)
+#include <bits/stdc++.h>
 using namespace std;
-typedef long long(LL);
-typedef unsigned long long(ULL);
-const double eps(1e-8);
+#define pb push_back
+#define pf push_front
+#define mp make_pair
+#define all(x) (x).begin(),(x).end()
+#define SZ(x) ((int)(x).size())
+#define LL long long
+#define se second
+const int N = 200005;
+const int Mod = ( int ) 1e9 + 7;
 
+int T1[N], T2[N], T3[N];
 int main()
-{
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      LL a4[30];
-      for(int i=1;i<=29;++i)
-      {
-            a4[i]=pow((LL)i,4LL);
-            printf("%2d : %5lld\n",i,a4[i]);
-      }
-      puts("");
-
-      puts("-----------------------------------------------------------------");
-      LL sum=0;
-      LL ss1[30];
-      puts("ss1");
-      for(int i=1;i<=29;++i)
-      {
-            sum+=a4[i];
-            ss1[i]=sum;
-            printf("%2d : %5lld\n",i,ss1[i]);
-      }
-
-      LL ss2[30];
-      puts("ss2");
-      for(int i=1;i<=28;++i)
-      {
-            ss2[i]=ss1[i+1]-ss1[i];
-            printf("%2d : %5lld\n",i,ss2[i]);
-      }
-
-      puts("");
-
-      puts("-----------------------------------------------------------------");
-
-      LL ss3[30];
-      for(int i=1;i<=27;++i)
-      {
-            ss3[i]=ss2[i+1]-ss2[i];
-            printf("%2d : %5lld\n",i,ss3[i]);
-      }
-
-      puts("");
-
-      puts("-----------------------------------------------------------------");
-
-      LL ss4[30];
-      for(int i=1;i<=26;++i)
-      {
-            ss4[i]=ss3[i+1]-ss3[i];
-            printf("%2d : %5lld\n",i,ss4[i]);
-      }
-
-      puts("");
-
-      puts("-----------------------------------------------------------------");
-
-      LL ss5[30];
-      for(int i=1;i<=25;++i)
-      {
-            ss5[i]=ss4[i+1]-ss4[i];
-            printf("%2d : %5lld\n",i,ss5[i]);
-      }
-      puts("");
-
-      puts("-----------------------------------------------------------------");
-
-      LL ss6[30];
-      for(int i=1;i<=24;++i)
-      {
-            ss6[i]=ss5[i+1]-ss5[i];
-            printf("%2d : %5lld\n",i,ss6[i]);
-      }
-      puts("");
-
-      puts("-----------------------------------------------------------------");
-
-//      LL ss7[30];
-//      for(int i=1;i<=23;++i)
-//      {
-//            ss7[i]=ss6[i+1]-ss6[i];
-//            printf("%2d : %5lld\n",i,ss7[i]);
-//      }
-//      puts("");
-//
-//      puts("-----------------------------------------------------------------");
-      return 0;
+{      
+    freopen( "lca.in", "r", stdin );
+    freopen( "lca.out ", "w", stdout );
+    int n, m;
+    while( scanf( "%d", &n ) == 1 && n ) {
+        for( int i = 1, x, y; i <= n; ++i ) {
+            scanf( "%d %d", &x, &y );
+            T1[i]=x!=0;
+        }
+        scanf( "%d", &m );
+        for( int i = 1, x, y; i <= m; ++i ) {
+            scanf( "%d %d", &x, &y );
+            T2[i]=x!=0;
+        }
+        n = min( n, m );
+        int k = 1;
+        for( int i = 0; i < n; ++i ) {
+            T3[i]=0;
+            if( T1[i] != T2[i] ) {
+                break;
+            }
+            if( T1[i] == T2[i] && T1[i] != 0 ) {
+                T3[i]=1;
+                k += 2;
+            }
+        }
+        printf( "%d\n", k );
+        int t=1;
+        for( int i = 1; i <= k; ++i ) {
+            if(T3[i]){
+                  printf( "%d %d\n", t+1, t+2 );
+                  t+=2;
+            }
+            else
+                  printf( "0 0\n" );
+        }
+    }
+    return 0;
 }
-/*
-
-*/
