@@ -33,7 +33,7 @@ bool isLeapYear(int y)
 }
 int getGap(int sy,int sm,int sd,int ey,int em,int ed,int flag)
 {
-//        cout<<sy<<" "<<sm<<" "<<sd<<" "<<ey<<" "<<em<<" "<<ed<<endl
+//        cout<<sy<<" "<<sm<<" "<<sd<<" "<<ey<<" "<<em<<" "<<ed<<endl;
         int day=0;
         //the day of year
         for(int i=sy+1;i<ey;++i)
