@@ -18,90 +18,113 @@
 #include <vector>
 #include <algorithm>
 #include <cstring>
-#define max(a,b) (a>b?a:b)
 using namespace std;
-typedef long long(LL);
-typedef unsigned long long(ULL);
-const double eps(1e-8);
-const int MAXN=1e6+10;
-
-struct node
+struct st
 {
-      int len,id,fa;
-      node() {}
-      node(int l,int i,int f):len(l),id(i),fa(f) {}
-      bool operator<(const node& a)const
-      {
-            return len<a.len || (len==a.len && id>a.id);
-      }
+      int r,c,s,d,t;
 };
-
-
-int cnt=-1;
-int l[MAXN];
-vector<LL> sum;
-multiset<node> ms;
-vector<int> gr[MAXN];
-vector<pair<int,int> > res; // (fa,len)
-
-void bfs(int x)
+int n;
+st cnt(st a)
 {
-      while(ms.size()>0)
+      if(a.d==0)
       {
-            node now=*ms.begin();
-            ms.erase(ms.begin());
-            res.push_back(make_pair(now.fa,now.len));
-            for(int i=0; i<gr[now.id].size(); ++i)
+            if(a.r-a.s<1)
             {
-                  int v=gr[now.id][i];
-                  ms.insert(node(l[v],v,res.size()-1));
+                  int t=a.s-(a.r-1);
+                  if(t/n%2==0)
+                        a.d=2;
             }
+            a.r-=a.s;
       }
+      else if(a.d==1)
+      {
+            if(a.c+a.s>n)
+            {
+                  int t=a.s-(n-a.c);
+                  if(t/n%2==0)
+                        a.d=3;
+            }
+            a.c+=a.s;
+      }
+
+      else if(a.d==2)
+      {
+            if(a.r+a.s>n)
+            {
+                  int t=a.s-(n-a.r);
+                  if(t/n%2==0)
+                        a.d=0;
+            }
+            a.r+=a.s;
+      }
+      else
+      {
+            if(a.c-a.s<1)
+            {
+                  int t=a.s-(a.c-1);
+                  if(t/n%2==0)
+                        a.d=1;
+            }
+            a.c-=a.s;
+      }
+      a.r=(a.r%(n-1)+n)%n+1;
+      a.c=(a.c%n+n)%n+1;
+      return a;
 }
-vector<int> ve;
+st cg(st a)
+{
+      a.d=((a.d-1)%4+4)%4;
+      return a;
+}
+void work(int tm,st a,st b)
+{
+      for(int i=1;i<=tm;i++)
+      {
+            printf("%d %d %d %d\n",a.r,a.c,b.r,b.c);
+            int ta=a.d,tb=b.d;
+            a=cnt(a);
+            b=cnt(b);
+            if(a.r==b.r&&a.c==b.c)
+            {
+                  a.d=tb;
+                  b.d=ta;
+                  continue;
+            }
+            if(i%a.t==0)
+                  a=cg(a);
+            if(i%b.t==0)
+                  b=cg(b);
+      }
+      printf("%d %d %d %d\n",a.r,a.c,b.r,b.c);
+}
 int main()
 {
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      int n;
-      scanf("%d",&n);
-      int len,f;
-      for(int i=0; i<n; ++i)
+      while(scanf("%d",&n)!=EOF)
       {
-            scanf("%d %d",&len,&f);
-            l[i]=len;
-            if(f!=-1)
-                  gr[f].push_back(i);
-            else ve.push_back(i);
+            char s[10];
+            st a,b;
+            a.r=a.c=1;
+            b.r=b.c=n;
+            scanf("%s%d%d",s,&a.s,&a.t);
+            if(s[0]=='N')
+                  a.d=0;
+            else if(s[0]=='E')
+                  a.d=1;
+            else if(s[0]=='S')
+                  a.d=2;
+            else
+                  a.d=3;
+            scanf("%s%d%d",s,&b.s,&b.t);
+            if(s[0]=='N')
+                  b.d=0;
+            else if(s[0]=='E')
+                  b.d=1;
+            else if(s[0]=='S')
+                  b.d=2;
+            else
+                  b.d=3;
+            int tm;
+            scanf("%d",&tm);
+            work(tm,a,b);
       }
-      if(ve.size()==0)
-      {
-            printf("0");
-            return 0;
-      }
-      long long sol=0;
-      for(int i=0;i<ve.size();++i)
-      {
-            ms.clear();
-            sum.clear();
-            ms.insert(node(l[ve[i]],ve[i],-1));
-            bfs(ve[i]);
-            LL ans=0;
-
-            sum.push_back(res[0].second);
-            for(int i=1; i<res.size(); ++i)
-            {
-                  sum.push_back(sum[i-1]+res[i].second);
-            }
-            for(int i=1; i<res.size(); ++i)
-            {
-                  ans+=(sum[i-1]-sum[res[i].first]);
-            }
-            sol+=ans;
-      }
-      printf("%lld\n",sol);
-      return 0;
 }
-/*
-
-*/

@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-10-14-09.07
+* Submission Date: 2015-10-16-20.29
 * Time: 0MS
 * Memory: 137KB
 */
@@ -24,3 +24,13 @@ typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
+int main()
+{
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+
+      return 0;
+}
+/*
+
+*/

@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-10-13-10.58
+* Submission Date: 2015-10-16-20.29
 * Time: 0MS
 * Memory: 137KB
 */
@@ -24,56 +24,11 @@ typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
-const int MAXN=1e5+10;
-LL d[MAXN],ans[MAXN];
-
-void pre()
-{
-      d[0]=1;
-      for(int i=1;i<MAXN;++i)
-      {
-            d[i]=1LL<<(min(i-1,63));
-      }
-}
 int main()
 {
-      pre();
-      LL n,k;
-      while(scanf("%I64d %I64d",&n,&k),n||k)
-      {
-            int pos=1,i;
-            puts("-----------------------------------------------------------------");
-
-            while(pos<=n)
-            {
-                  LL sum=0;
-                  for(i=pos;i<=n;++i)
-                  {
-                        sum+=(n-i)?1LL<<(n-i-1):1;
-//                        sum+=d[n-i];
-                        if(sum>=k)
-                        {
-//                              sum-=d[n-i];
-                              sum-=(n-i)?1LL<<(n-i-1):1;
-                              break;
-                        }
-                  }
-                  k-=sum;
-                  ans[pos]=i;
-                  for(int j=1;j<=i-pos;++j)
-                        ans[pos+j]=pos+j-1;
-                  printf("%d ",pos);
-                  pos=i+1;
-            }
-            puts("");
-            puts("-----------------------------------------------------------------");
-
-            for(int i=1;i<n;++i)
-            {
-                  printf("%I64d ",ans[i]);
-            }
-            printf("%I64d\n",ans[n]);
-      }
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      
       return 0;
 }
 /*

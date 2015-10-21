@@ -20,13 +20,26 @@
 #include <algorithm>
 #include <cstring>
 #define max(a,b) (a>b?a:b)
-#define PI (acos(-1.0))
+#define PI 3.1415926535898
 using namespace std;
 typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 const int MAXN=230;
 double v[MAXN];
+
+
+
+if(l>=l2&&l<=r2)
+{
+      flag=0;
+      break;
+}
+else if(l>=l1&&l<=r1)
+      sum++;
+}
+if(flag) ans=max(ans,sum);
+agl+=(pi/1000);
 
 
 
@@ -37,23 +50,21 @@ double h,l1,r1,l2,r2;
 int work(int cnt)
 {
       double th=cnt*gap;
-      double dis1,dis2,dis;
+      double dis;
       int ret=0;
-      int flag=1;
       for(int i=0; i<n; ++i)
       {
             double dis=v[i]*sin(th)*(sqrt(v[i]*v[i]*cos(th)*cos(th)+2*g*h)-v[i]*cos(th))/g;
-            
             if(dis>=l2 && dis<=r2)
             {
                   flag=0;
-                  break;
+                  continue;
             }
-            else if(dis>=l1 && dis<= r1)
-                  ret++;
+            if(flag)
+                  if((dis>=l1 && dis<=r1) && (!(dis>=l2 && dis<=r2)))
+                        ret++;
       }
-      if(flag) return ret;
-      else return -1;
+      return ret;
 }
 int main()
 {
@@ -62,12 +73,17 @@ int main()
       while(scanf("%d",&n),n)
       {
             scanf("%lf %lf %lf %lf %lf",&h,&l1,&r1,&l2,&r2);
+            if(l2<=l1 && r2>= r1)
+            {
+                  puts("0");
+                  continue;
+            }
+            
             for(int i=0; i<n; ++i)
                   scanf("%lf",&v[i]);
-
             double th=0.0;
             int ans=-1;
-
+            
             for(int i=1; i<1000; ++i)
             {
                   int tmp=work(i);
@@ -80,3 +96,7 @@ int main()
 /*
 
 */
+
+
+
+//      l=v[i]*sin(agl)*(sqrt(v[i]*v[i]*cos(agl)*cos(agl)+2*g*h)-v[i]*cos(agl))/g;
