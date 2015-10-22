@@ -1,4 +1,6 @@
 # depslib dependency file v1.0
-1445529514 source:d:\code_fantasy\acm-icpc\hdu\d\main.cpp
-	<bits/stdc++.h>
+1445531377 source:d:\code_fantasy\acm-icpc\hdu\d\main.cpp
+	<cstdio>
+	<sstream>
+	<iostream>
 
