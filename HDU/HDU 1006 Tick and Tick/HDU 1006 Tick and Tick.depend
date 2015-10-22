@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1445437576 source:d:\code_fantasy\acm-icpc\hdu\hdu 1006 tick and tick\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+

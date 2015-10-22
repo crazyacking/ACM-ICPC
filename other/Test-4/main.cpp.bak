@@ -1,82 +1,79 @@
-/*
-* this code is made by crazyacking
-* Verdict: Accepted
-* Submission Date: 2015-10-16-22.46
-* Time: 0MS
-* Memory: 137KB
-*/
-#include <queue>
 #include <cstdio>
-#include <set>
-#include <string>
-#include <stack>
-#include <cmath>
-#include <climits>
-#include <map>
-#include <cstdlib>
-#include <iostream>
-#include <bits/stdc++.h>
-#include <vector>
-#include <algorithm>
 #include <cstring>
-#define max(a,b) (a>b?a:b)
-#define PI (acos(-1.0))
+#include <cstdlib>
+#include <cmath>
+#include<bits/stdc++.h>
 using namespace std;
-typedef long long(LL);
-typedef unsigned long long(ULL);
-const double eps(1e-8);
-const int MAXN=230;
-double v[MAXN];
 
+const double s_h = 719. / 120, s_m = 59. / 10, m_h = 11. / 120;
+// 三根指针间的相对角速度
 
+const double tsh = 43200. / 719, tsm = 3600. / 59, tmh = 43200. / 11;
+// 将相对角速度变成周期。（即两针间需要多久出现夹角的循环）
 
-int n;
-const double g=9.8;
-const double gap=PI/1000;
-double h,l1,r1,l2,r2;
-int work(int cnt)
+inline double MAX( double a, double b, double c )
 {
-      double th=cnt*gap;
-      double dis1,dis2,dis;
-      int ret=0;
-      int flag=1;
-      for(int i=0; i<n; ++i)
-      {
-            double dis=v[i]*sin(th)*(sqrt(v[i]*v[i]*cos(th)*cos(th)+2*g*h)-v[i]*cos(th))/g;
-            
-            if(dis>=l2 && dis<=r2)
-            {
-                  flag=0;
-                  break;
-            }
-            else if(dis>=l1 && dis<= r1)
-                  ret++;
-      }
-      if(flag) return ret;
-      else return -1;
+    double max = a;
+    if( b > max )
+        max = b;
+    if( c > max )
+        max = c;
+    return max;
 }
+
+inline double MIN( double a, double b, double c )
+{
+    double min = a;
+    if( b < min )
+        min = b;
+    if( c < min )
+        min = c;
+    return min;
+}
+
 int main()
 {
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      while(scanf("%d",&n),n)
-      {
-            scanf("%lf %lf %lf %lf %lf",&h,&l1,&r1,&l2,&r2);
-            for(int i=0; i<n; ++i)
-                  scanf("%lf",&v[i]);
+      freopen("C:\\Users\\crazyacking\\Desktop\\in.txt","r",stdin);
+      //freopen("C:\\Users\\crazyacking\\Desktop\\out.txt","w",stdout);
 
-            double th=0.0;
-            int ans=-1;
+//      cout<<tsh<<endl;
+//      cout<<tmh<<endl;
+//      cout<<tsm<<endl;
+    double D;
+    while( scanf( "%lf", &D ), D != -1 )
+    {
+        double bsm, bsh, bmh, esm, esh, emh, begin, end, total = 0;
+        // 计算第一次满足条件的时间
+         bsm = D / s_m;
+        bsh = D / s_h;
+        bmh = D / m_h;
+        // 计算第一次不满足条件的时间
+         esm = ( 360 - D ) / s_m; // = tsm - bsm
+        esh = ( 360 - D ) / s_h; // = tsh - bsh
+        emh = ( 360 - D ) / m_h; // = tmh - bmh
 
-            for(int i=1; i<1000; ++i)
+        // 三重循环找出所有的时间总和，当然这三重循环的顺序是可以打乱的
+        for( double bt3 = bsh, et3 = esh; et3 <= 43200.000001; bt3 += tsh, et3 += tsh )
+        {
+            for( double bt2 = bmh, et2 = emh; et2 <= 43200.000001; bt2 += tmh, et2 += tmh )
             {
-                  int tmp=work(i);
-                  ans=max(ans,tmp);
+                if( et2 < bt3 )  // 这是为了提前判断是否有交集
+                       continue;
+                if( bt2 > et3 )
+                    break;
+                for( double bt1 = bsm, et1 = esm; et1 <= 43200.000001; bt1 += tsm, et1 += tsm )
+                {
+                    if( et1 < bt2 || et1 < bt3 )
+                        continue;
+                    if( bt1 > et2 || bt1 > et3 )
+                        break;
+                    begin = MAX( bt1, bt2, bt3 ); // 取它们的交集
+                       end = MIN( et1, et2, et3 );
+                    total += ( end - begin )>0.?end-begin:0.;
+                }
             }
-            printf("%d\n",ans);
-      }
-      return 0;
+        }
+        cout<<"total="<<total<<endl;
+//        printf( "%.3lf\n", total / 432 );
+    }
 }
-/*
-
-*/
