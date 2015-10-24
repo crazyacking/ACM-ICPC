@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-10-03-14.45
+* Submission Date: 2015-08-07-22.47
 * Time: 0MS
 * Memory: 137KB
 */
@@ -15,116 +15,86 @@
 #include <map>
 #include <cstdlib>
 #include <iostream>
+#include<bits/stdc++.h>
 #include <vector>
 #include <algorithm>
 #include <cstring>
+#define  LL long long
+#define  ULL unsigned long long
 using namespace std;
-struct st
-{
-      int r,c,s,d,t;
-};
-int n;
-st cnt(st a)
-{
-      if(a.d==0)
-      {
-            if(a.r-a.s<1)
-            {
-                  int t=a.s-(a.r-1);
-                  if(t/n%2==0)
-                        a.d=2;
-            }
-            a.r-=a.s;
-      }
-      else if(a.d==1)
-      {
-            if(a.c+a.s>n)
-            {
-                  int t=a.s-(n-a.c);
-                  if(t/n%2==0)
-                        a.d=3;
-            }
-            a.c+=a.s;
-      }
 
-      else if(a.d==2)
-      {
-            if(a.r+a.s>n)
-            {
-                  int t=a.s-(n-a.r);
-                  if(t/n%2==0)
-                        a.d=0;
-            }
-            a.r+=a.s;
-      }
-      else
-      {
-            if(a.c-a.s<1)
-            {
-                  int t=a.s-(a.c-1);
-                  if(t/n%2==0)
-                        a.d=1;
-            }
-            a.c-=a.s;
-      }
-      a.r=(a.r%(n-1)+n)%n+1;
-      a.c=(a.c%n+n)%n+1;
-      return a;
-}
-st cg(st a)
+const int MAXN=1010;
+char s1[MAXN],s2[MAXN],ans[MAXN];
+int dp[MAXN][MAXN];
+char pa[MAXN][MAXN];
+
+void solve()
 {
-      a.d=((a.d-1)%4+4)%4;
-      return a;
-}
-void work(int tm,st a,st b)
-{
-      for(int i=1;i<=tm;i++)
+      int cnt=0;
+      memset(dp,0,sizeof dp);
+      memset(pa,0,sizeof pa);
+      int l1=strlen(s1),l2=strlen(s2);
+      for(int i=0;i<l1;++i)
       {
-            printf("%d %d %d %d\n",a.r,a.c,b.r,b.c);
-            int ta=a.d,tb=b.d;
-            a=cnt(a);
-            b=cnt(b);
-            if(a.r==b.r&&a.c==b.c)
-            {
-                  a.d=tb;
-                  b.d=ta;
-                  continue;
-            }
-            if(i%a.t==0)
-                  a=cg(a);
-            if(i%b.t==0)
-                  b=cg(b);
+
+            if(s1[0]==s2[i])
+                  dp[i][0]=1;
+            else
+                  dp[i][0]=0;
       }
-      printf("%d %d %d %d\n",a.r,a.c,b.r,b.c);
+      for(int i=0;i<l2;++i)
+      {
+            if(s1[i]==s2[0])
+                  dp[0][i]=1;
+            else
+                  dp[0][i]=0;
+      }
+      int enx=0,eny=0;
+      for(int i=1;i<l1;++i)
+      {
+            for(int j=1;j<l2;++j)
+            {
+                  if(s1[i]==s2[j])
+                  {
+                        dp[i][j]=dp[i-1][j-1]+1;
+                        pa[i][j]='*';
+                  }
+                  else
+                  {
+
+                        dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+                        if(dp[i-1][j]>=dp[i][j-1]) pa[i][j]='s';
+                        else pa[i][j]='z';
+                  }
+            }
+      }
+      enx=l1-1,eny=l2-1;
+      while(pa[enx][eny]!='\0')
+      {
+            if(pa[enx][eny]=='*')
+            {
+                  enx--;eny--;
+                  ans[cnt++]=s1[enx+1];
+            }
+            else if(pa[enx][eny]=='s') enx--;
+            else if(pa[enx][eny]=='z') eny--;
+      }
+      ans[cnt]='\0';
+      strrev(ans);
+      puts(ans);
 }
+
 int main()
 {
-      while(scanf("%d",&n)!=EOF)
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      s1[0]='$';s2[0]='$';
+      while(~scanf("%s%s",s1+1,s2+1))
       {
-            char s[10];
-            st a,b;
-            a.r=a.c=1;
-            b.r=b.c=n;
-            scanf("%s%d%d",s,&a.s,&a.t);
-            if(s[0]=='N')
-                  a.d=0;
-            else if(s[0]=='E')
-                  a.d=1;
-            else if(s[0]=='S')
-                  a.d=2;
-            else
-                  a.d=3;
-            scanf("%s%d%d",s,&b.s,&b.t);
-            if(s[0]=='N')
-                  b.d=0;
-            else if(s[0]=='E')
-                  b.d=1;
-            else if(s[0]=='S')
-                  b.d=2;
-            else
-                  b.d=3;
-            int tm;
-            scanf("%d",&tm);
-            work(tm,a,b);
+            solve();
       }
+      return 0;
 }
+/*
+
+*/
