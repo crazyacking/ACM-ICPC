@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-10-24-09.47
+* Submission Date: 2015-10-26-20.36
 * Time: 0MS
 * Memory: 137KB
 */
@@ -24,32 +24,49 @@ typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
-int n;
-const int N=1010;
-int v[N],w[N];
-int dp[N][N];
+const int MAXN=100005;
+int r[MAXN],o[MAXN];
+
+struct node
+{
+      int r,o,g;
+      node(){}
+      node(int r,int o,int g):r(r),o(o),g(g){}
+      bool operator<(const node& a)const
+      {
+            return b<a.b;
+      }
+};
+node no[MAXN];
 int main()
 {
+      freopen("C:\\Users\\crazyacking\\Desktop\\in.txt","r",stdin);
+      //freopen("C:\\Users\\crazyacking\\Desktop\\out.txt","w",stdout);
+
       ios_base::sync_with_stdio(false);
       cin.tie(0);
-      while(~scanf("%d",&n))
+      int n;
+      while(cin>>n)
       {
-            for(int i=0;i<n;++i)
-                  scanf("%d",&v[i]);
-            for(int i=0;i<n;++i)
-                  scanf("%d",&w[i]);
-            
-            //
+            int R,O;
             for(int i=0;i<n;++i)
             {
-                  
-                  int e=shen yu;
-                  for(int j=0;j<=e;++j)
-                  {
-                        
-                  }
+                  cin>>R>>O;
+                  no[i]=node(R,O,R-O);
             }
-            
+            sort(no,no+n);
+            int ans=0;
+            int now=0;
+            for(int i=0;i<n;++i)
+            {
+                  if(now<no[i].r)
+                  {
+                        now+=(no[i].r-now);
+                  }
+                  now-=no[i].o;
+                  ans=max(ans,now);
+            }
+            printf("%d\n",ans);
       }
       return 0;
 }

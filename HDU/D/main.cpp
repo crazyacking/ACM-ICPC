@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-10-24-09.47
+* Submission Date: 2015-10-26-21.35
 * Time: 0MS
 * Memory: 137KB
 */
@@ -24,35 +24,35 @@ typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
-int n;
-const int N=1010;
-int v[N],w[N];
-int dp[N][N];
+const int MAXN=100010;
+long long r[MAXN],o[MAXN],b[MAXN],a[MAXN];
+bool cmp(long long a,long long b)
+{
+    return a>b;
+}
 int main()
 {
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      while(~scanf("%d",&n))
-      {
-            for(int i=0;i<n;++i)
-                  scanf("%d",&v[i]);
-            for(int i=0;i<n;++i)
-                  scanf("%d",&w[i]);
-
-            //
-            for(int i=0;i<n;++i)
+    int n;
+    while(cin>>n)
+    {
+        for(int i=0;i<n;i++)
+            scanf("%lld%lld",&r[i],&o[i]);
+            for(int i=0;i<n;i++)
             {
-
-                  int e=shen yu;
-                  for(int j=0;j<=e;++j)
-                  {
-
-                  }
+                a[i]=r[i];
+                b[i]=r[i]-o[i];
             }
-
-      }
-      return 0;
+            sort(b,b+n,cmp);
+            long long mx=0x3fff;
+            long long ans=0;
+            for(int i=0;i<n;i++)
+            {
+                ans-=a[i];
+                if(ans<mx)
+                  mx=ans;
+                  ans+=b[i];
+            }
+            cout<<(-mx)<<endl;
+    }
+    return 0;
 }
-/*
-
-*/
