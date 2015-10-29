@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-10-26-21.35
+* Submission Date: 2015-10-27-08.23
 * Time: 0MS
 * Memory: 137KB
 */
@@ -24,35 +24,42 @@ typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
-const int MAXN=100010;
-long long r[MAXN],o[MAXN],b[MAXN],a[MAXN];
-bool cmp(long long a,long long b)
-{
-    return a>b;
-}
+const int MAXN=50010;
+int a[MAXN<<1];
+int n;
 int main()
 {
-    int n;
-    while(cin>>n)
-    {
-        for(int i=0;i<n;i++)
-            scanf("%lld%lld",&r[i],&o[i]);
-            for(int i=0;i<n;i++)
+//      freopen("C:\\Users\\crazyacking\\Desktop\\in.txt","r",stdin);
+      //freopen("C:\\Users\\crazyacking\\Desktop\\out.txt","w",stdout);
+
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      while(~scanf("%d",&n))
+      {
+            LL sum=0;
+            for(int i=0; i<n; ++i)
             {
-                a[i]=r[i];
-                b[i]=r[i]-o[i];
+                  scanf("%d",&a[i]);
+                  sum+=a[i];
             }
-            sort(b,b+n,cmp);
-            long long mx=0x3fff;
-            long long ans=0;
-            for(int i=0;i<n;i++)
+            LL ans1=0,sum1=0;
+            LL ans2=0,sum2=0;
+            for(int i=0;i<n;++i)
             {
-                ans-=a[i];
-                if(ans<mx)
-                  mx=ans;
-                  ans+=b[i];
+                  sum1+=a[i];
+                  if(sum1<0)
+                        sum1=0;
+                  ans1=max(ans1,sum1);
+
+                  sum2+=a[i];
+                  if(sum2>0)
+                        sum2=0;
+                  ans2=min(ans2,sum2);
             }
-            cout<<(-mx)<<endl;
-    }
-    return 0;
+            printf("%I64d\n",(LL)(max(ans1,sum-ans2)));
+      }
+      return 0;
 }
+/*
+
+*/

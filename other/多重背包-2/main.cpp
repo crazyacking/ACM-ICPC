@@ -1,7 +1,7 @@
 /*
 * this code is made by crazyacking
 * Verdict: Accepted
-* Submission Date: 2015-10-27-08.23
+* Submission Date: 2015-10-29-09.57
 * Time: 0MS
 * Memory: 137KB
 */
@@ -24,34 +24,34 @@ typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
-const int MAXN=50010;
-int a[MAXN<<1];
+const int MAXN=510;
+const int MAXM=10010;
+int dp[MAXN][MAXM];
 int n;
+int value[MAXN],weight[i];
 int main()
 {
-      freopen("C:\\Users\\crazyacking\\Desktop\\in.txt","r",stdin);
-      //freopen("C:\\Users\\crazyacking\\Desktop\\out.txt","w",stdout);
-
       ios_base::sync_with_stdio(false);
       cin.tie(0);
-      while(~scanf("%d",&n))
+      int t;
+      cin>>t;
+      while(t--)
       {
-            LL sum=0;
-            for(int i=0; i<n; ++i)
+            int nValue,nValue1,nValue2;
+            cin>>nValue1>>nValue2;
+            nValue=nValue2-nValue1;
+            cin>>n;
+            for(int i=1;i<=n;++i)
             {
-                  scanf("%d",&a[i]);
-                  sum+=a[i];
+                  cin>>value[i]>>weight[i];
             }
-            LL ans1=0,sum1=0;
-            LL ans2=
-            for(int i=0;i<n;++i)
+            memset(dp[0],INT_MAX,sizeof dp[0]);
+            dp[0][0]=0;
+            for(int i=1;i<=n;++i)
             {
-                  sum1+=a[i];
-                  if(sum1<0)
-                        sum1=0;
-                  ans1=max(ans1,sum1);
+
             }
-            
+
       }
       return 0;
 }
