@@ -1,50 +1,11 @@
-/*
-* this code is made by crazyacking
-* Verdict: Accepted
-* Submission Date: 2015-10-29-09.57
-* Time: 0MS
-* Memory: 137KB
-*/
-#include <queue>
-#include <cstdio>
-#include <set>
-#include <string>
-#include <stack>
-#include <cmath>
-#include <climits>
-#include <map>
-#include <cstdlib>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cstring>
-#define max(a,b) (a>b?a:b)
-using namespace std;
-typedef long long(LL);
-typedef unsigned long long(ULL);
-const double eps(1e-8);
-
-const int MAXN=510;
-const int MAXM=10010;
-int dp[MAXN][MAXM];
-int n;
-int main()
+for(int i=0; i<=m; ++i)
+      dp[i]=INF;
+dp[0]=0;
+for(int i=0; i<n; ++i)
 {
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      int t;
-      cin>>t;
-      while(t--)
+      for(int j=w[i]; j<=m; ++j)
       {
-            int nValue,nValue1,nValue2;
-            cin>>nValue1>>nValue2;
-            nValue=nValue2-nValue1;
-            cin>>n;
-            memset
-            
+            if(dp[j]>dp[j-w[i]]+v[i])
+                  dp[j]=dp[j-w[i]]+v[i];
       }
-      return 0;
 }
-/*
-
-*/
