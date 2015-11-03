@@ -1,9 +1,9 @@
+
 /*
-* this code is made by crazyacking
-* Verdict: Accepted
-* Submission Date: $now
-* Time: 0MS
-* Memory: 137KB
+* -----------------------------------------------------------------
+* Copyright (c) 2015 crazyacking All rights reserved.
+* -----------------------------------------------------------------
+*       Author: crazyacking
 */
 #include <queue>
 #include <cstdio>
@@ -24,4 +24,19 @@ typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
-|
+
+int main()
+{
+	ios_base::sync_with_stdio(false);
+	cin.tie(0);
+
+	return 0;
+}
+/*
+
+*/
+
+
+
+
+
