@@ -1,0 +1,7 @@
+﻿  main.cpp
+d:\code_fantasy\acm-icpc\cf\codeforces round 327 (div. 1) c\main.cpp(82): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+d:\code_fantasy\acm-icpc\cf\codeforces round 327 (div. 1) c\main.cpp(37): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1270): note: 参见“scanf”的声明
+d:\code_fantasy\acm-icpc\cf\codeforces round 327 (div. 1) c\main.cpp(40): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1270): note: 参见“scanf”的声明
+  Codeforces Round 327 (Div. 1) C.vcxproj -> D:\Code_Fantasy\ACM-ICPC\CF\Codeforces Round 327 (Div. 1) C\Debug\Codeforces Round 327 (Div. 1) C.exe
