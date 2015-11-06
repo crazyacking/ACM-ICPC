@@ -43,8 +43,14 @@ Temporary Items
 .apdisk
 
 bin/
+.vs/
+Debug/
 obj/
 .bak
 .cbp
 .depend
 .layout
+.sdf
+.sln
+.vcxproj
+.filters
