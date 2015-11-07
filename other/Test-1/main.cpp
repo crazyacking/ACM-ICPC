@@ -1,76 +1,41 @@
-/*
-简单DP
-由于数据规模过大不能直接用LCS的算法
-需要间接的转化成LIS用nlog（n）算法解决
-方法是记录b数列中数字在a中出现的位置求一个LIS就可以了
-
-*/
-#include<iostream>
-#include<string>
-#include<cstring>
-#include<algorithm>
 #include<cstdio>
-#include<map>
+#include<cstring>
+#include<iostream>
+#define MAXN 105
 using namespace std;
-
-#define MAXN 250
-
-
-int n,n1,n2;
-int b[MAXN*MAXN+5],tp,f[MAXN*MAXN+5];
-map<int ,int> mii;
-
-int binSea(int x,int len)
-{
-      int left=0,right=len,cnt=0;
-      while(left<=right)
-      {
-            int mid=(left+right)>>1;
-            if(x>f[mid])
-            {
-                  cnt=mid;
-                  left=mid+1;
-            }
-            else right=mid-1;
-      }
-      return cnt;
-}
+int n,sum[MAXN],dp[MAXN][MAXN];
 int main()
 {
-      int cs;
-      scanf("%d",&cs);
-      for(int ts=1; ts<=cs; ts++)
+      sum[0]=0;
+      while(~scanf("%d",&n),n)
       {
-            scanf("%d%d%d",&n,&n1,&n2);
-            mii.clear();
-            for(int i=1; i<=n1+1; i++)
+            int tmp;
+            for(int i=1; i<=n; ++i)
             {
-                  int s;
-                  scanf("%d",&s);
-                  mii[s]=i;
+                  scanf("%d",&tmp);
+                  dp[i][i]=tmp;
+                  sum[i]=sum[i-1]+tmp;
             }
-            tp=0;
-            for(int i=1; i<=n2+1; i++)
+            for(int k=1; k<n; ++k) // 区间长度
             {
-                  int s;
-                  scanf("%d",&s);
-                  if(mii.count(s)!=0) b[tp++]=mii[s];
-            }
-
-            int ans=0,tmp;
-            f[0]=-1;
-            for(int i=0; i<tp; i++)
-            {
-                  tmp=(binSea(b[i],ans)+1);
-                  if(tmp>ans)
+                  for(int i=1; i+k<=n; ++i) // 开始位置
                   {
-                        f[tmp]=b[i];
-                        ans=tmp;
+                        dp[i][i+k]=sum[i+k]-sum[i-1]; // 即：sum(i,i+k)
+                        for(int p=i; p<i+k; ++p)
+                              dp[i][i+k]=max(sum[i+k]-sum[i-1]-dp[p+1][i+k],dp[i][i+k]);
+                        for(int p=i+k; p>i; --p)
+                              dp[i][i+k]=max(sum[i+k]-sum[i-1]-dp[i][p-1],dp[i][i+k]);
                   }
-                  else if(f[tmp]>b[i])
-                        f[tmp]=b[i];
             }
-            printf("Case %d: %d\n",ts,ans);
+            for(int i=0;i<n;++i)
+            {
+                  for(int j=0;j<n;++j)
+                  {
+                        printf("%d ",dp[i][j]);
+                  }
+                  puts("");
+            }
+            printf("%d\n",dp[1][n]-(sum[n]-dp[1][n]));
       }
       return 0;
 }

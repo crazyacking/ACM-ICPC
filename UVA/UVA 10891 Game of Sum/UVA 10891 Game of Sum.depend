@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1446878130 source:d:\code_fantasy\acm-icpc\uva\uva 10891 game of sum\main.cpp
+	<iostream>
+	<cstdio>
+	<cstring>
+
