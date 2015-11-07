@@ -1,213 +1,76 @@
-#pragma comment(linker, "/STACK:640000000")
+/*
+简单DP
+由于数据规模过大不能直接用LCS的算法
+需要间接的转化成LIS用nlog（n）算法解决
+方法是记录b数列中数字在a中出现的位置求一个LIS就可以了
+
+*/
 #include<iostream>
-#include<cstdio>
-#include<cassert>
-#include<cstring>
-#include<ctime>
-#include<cstdlib>
-#include<cmath>
 #include<string>
-#include<sstream>
-#include<map>
-#include<set>
-#include<queue>
-#include<stack>
-#include<vector>
-#include<bitset>
+#include<cstring>
 #include<algorithm>
-
-#define pb push_back
-#define ppb pop_back
-#define mp make_pair
-#define all(x) (x).begin(),(x).end()
-#define sz(x) (int)(x).size()
-#define ll long long
-#define bit __builtin_popcountll
-#define sqr(x) (x) * (x)
-#define forit(it,S) for(__typeof((S).begin()) it = (S).begin(); it != (S).end(); it++)
-
+#include<cstdio>
+#include<map>
 using namespace std;
 
-typedef pair<int, int> pii;
+#define MAXN 250
 
-const double eps = 1e-9;
-const double pi = acos(-1.0);
 
-const int maxv = (int)1e7 + 10;
-const int maxn = 750;
+int n,n1,n2;
+int b[MAXN*MAXN+5],tp,f[MAXN*MAXN+5];
+map<int ,int> mii;
 
-char str[maxv];
-int term[maxv];
-int to[maxv][2];
-int link[maxv],slink[maxv];
-
-int n;
-int mt[maxn];
-bool used[maxn];
-bool take[maxn];
-bool match[maxn];
-string s[maxn];
-int len[maxn];
-int fre = 1;
-bool g[maxn][maxn];
-
-bool dfs(int v)
+int binSea(int x,int len)
 {
-      if(used[v]) return false;
-      used[v] = true;
-      for(int i = 0; i < n; i++) if(g[v][i])
-            {
-                  if(mt[i] == -1 || dfs(mt[i]))
-                  {
-                        mt[i] = v;
-                        return true;
-                  }
-            }
-      return false;
-}
-
-void go(int v)
-{
-      if(used[v]) return;
-      used[v] = true;
-      for(int i = 0; i < n; i++) if(g[v][i])
-            {
-                  take[i] = true;
-                  go(mt[i]);
-            }
-}
-
-void add(string &s, int id)
-{
-      int n = sz(s);
-      int cur = 0;
-      for(int i = 0; i < n; i++)
+      int left=0,right=len,cnt=0;
+      while(left<=right)
       {
-            if(to[cur][s[i]] == -1)
+            int mid=(left+right)>>1;
+            if(x>f[mid])
             {
-                  to[cur][s[i]] = fre++;
+                  cnt=mid;
+                  left=mid+1;
             }
-            cur = to[cur][s[i]];
+            else right=mid-1;
       }
-      term[cur] = id;
+      return cnt;
 }
-
-void build()
-{
-      queue<int> q;
-      q.push(0);
-      while(!q.empty())
-      {
-            int v = q.front(); q.pop();
-            for(int i = 0; i < 2; i++) if(to[v][i] != -1)
-                  {
-                        q.push(to[v][i]);
-                        if(v == 0) continue;
-                        int u = link[v];
-                        while(u && to[u][i] == -1) u = link[u];
-                        if(to[u][i] != -1) u = to[u][i];
-                        link[to[v][i]] = u;
-                        if(term[link[to[v][i]]] != -1)
-                        {
-                              slink[to[v][i]] = link[to[v][i]];
-                        }
-                        else
-                        {
-                              slink[to[v][i]] = slink[link[to[v][i]]];
-                        }
-                  }
-      }
-}
-
 int main()
 {
-#ifdef LOCAL
-      freopen("input.txt","r",stdin);
-      freopen("output.txt","w",stdout);
-#endif
-
-      cin >> n;
-
-      memset(term,-1,sizeof(term));
-      memset(to,-1,sizeof(to));
-      for(int i = 0; i < n; i++)
+      int cs;
+      scanf("%d",&cs);
+      for(int ts=1; ts<=cs; ts++)
       {
-            scanf("%s",str);
-            s[i] = str;
-            len[i] = sz(s[i]);
-            for(int j = 0; j < len[i]; j++)
+            scanf("%d%d%d",&n,&n1,&n2);
+            mii.clear();
+            for(int i=1; i<=n1+1; i++)
             {
-                  s[i][j] -= 'a';
+                  int s;
+                  scanf("%d",&s);
+                  mii[s]=i;
             }
-            add(s[i],i);
-      }
-
-      build();
-
-      for(int i = 0; i < n; i++)
-      {
-            int cur = 0;
-            for(int j = 0; j < len[i]; j++)
+            tp=0;
+            for(int i=1; i<=n2+1; i++)
             {
-                  cur = to[cur][s[i][j]];
-                  int v = slink[cur];
-                  if(v) g[i][term[v]] = true;
-                  if(term[cur] != -1) g[i][term[cur]] = true;
+                  int s;
+                  scanf("%d",&s);
+                  if(mii.count(s)!=0) b[tp++]=mii[s];
             }
-      }
 
-      for(int k = 0; k < n; k++)
-      {
-            for(int i = 0; i < n; i++)
+            int ans=0,tmp;
+            f[0]=-1;
+            for(int i=0; i<tp; i++)
             {
-                  for(int j = 0; j < n; j++)
+                  tmp=(binSea(b[i],ans)+1);
+                  if(tmp>ans)
                   {
-                        g[i][j] |= g[i][k] & g[k][j];
+                        f[tmp]=b[i];
+                        ans=tmp;
                   }
+                  else if(f[tmp]>b[i])
+                        f[tmp]=b[i];
             }
+            printf("Case %d: %d\n",ts,ans);
       }
-      for(int i = 0; i < n; i++)
-      {
-            g[i][i] = false;
-      }
-
-      memset(mt,-1,sizeof(mt));
-
-      for(int i = 0; i < n; i++)
-      {
-            memset(used,false,sizeof(used));
-            match[i] = dfs(i);
-      }
-
-      memset(used,false,sizeof(used));
-      for(int i = 0; i < n; i++) if(!match[i])
-            {
-                  go(i);
-            }
-      memset(used,false,sizeof(used));
-      for(int i = 0; i < n; i++) if(mt[i] != -1)
-            {
-                  if(take[i])
-                  {
-                        used[i] = true;
-                  }
-                  else
-                  {
-                        used[mt[i]] = true;
-                  }
-            }
-
-      vector<int> ans;
-
-      for(int i = 0; i < n; i++) if(!used[i])
-            {
-                  ans.pb(i);
-            }
-      cout << sz(ans) << endl;
-      for(int i = 0; i < sz(ans); i++)
-      {
-            cout << ans[i] + 1 << " ";
-      }
-
       return 0;
 }
