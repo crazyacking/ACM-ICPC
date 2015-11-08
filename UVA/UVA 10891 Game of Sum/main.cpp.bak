@@ -1,61 +1,62 @@
-#include <iostream>
-#include <stdio.h>
-#include <cmath>
-#include <algorithm>
-#include <iomanip>
-#include <cstdlib>
-#include <string>
-#include <string.h>
-#include <vector>
+/*
+* -----------------------------------------------------------------
+* Copyright (c) 2015 crazyacking All rights reserved.
+* -----------------------------------------------------------------
+*       Author: crazyacking
+*       Verdict: Accepted
+*       Submission Date: 2015-11-08-14.29
+*/
 #include <queue>
-#include <stack>
-#include <map>
-#include <assert.h>
+#include <cstdio>
 #include <set>
-#include <ctype.h>
-#define ll long long
-#define max3(a,b,c) max(a,max(b,c))
-
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define max(a,b) (a>b?a:b)
 using namespace std;
+typedef long long(LL);
+typedef unsigned long long(ULL);
+const double eps(1e-8);
 
-double dp[110][110];
-
+bool isPrimeYear(int year)
+{
+      return (year%4==0 && year%100!=0) || (year%400==0);
+}
 int main()
 {
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
       int t;
       cin>>t;
-      int cas=0;
       while(t--)
       {
-            cas++;
-            int a,b;
-            char c;
-            double p;
-            cin>>a>>c>>b;
-            p=(double)a/b;
-            int n;
-            cin>>n;
-            //init
-            for(int i=0; i<=n; i++)
-                  for(int j=0; j<=n; j++)dp[i][j]=0.0;
-                  
-            dp[1][0]=1.0-p;
-            for(int i=2; i<=n; i++)
+            int year,month,day;
+            cin>>year>>month>>day;
+            if(month==2 && day==29)
             {
-                  for(int j=0; j<=n; j++)
+                  puts("-1");
+                  continue;
+            }
+            int ans=18*365;
+            for(int i=year;i<=year+18;++i)
+            {
+                  if(i==year)
                   {
-                        dp[i][j]+=dp[i-1][j]*(1.0-p);
-                        if((j+1)*b>a*i)break;
-                        dp[i][j+1]=dp[i-1][j]*p;
+                        
                   }
+                  else if(i==year+18)
             }
-            
-            double plose=0.0;
-            for(int i=0; i<=n; i++)
-            {
-                  plose+=dp[n][i];
-            }
-            printf("Case #%d: %d\n",cas,(int)(1.0/plose));
+            printf("%d\n",ans);
       }
       return 0;
 }
+/*
+
+*/
