@@ -1,41 +1,29 @@
-#include<cstdio>
-#include<cstring>
-#include<iostream>
-#define MAXN 105
-using namespace std;
-int n,sum[MAXN],dp[MAXN][MAXN];
-int main()
-{
-      sum[0]=0;
-      while(~scanf("%d",&n),n)
-      {
-            int tmp;
-            for(int i=1; i<=n; ++i)
-            {
-                  scanf("%d",&tmp);
-                  dp[i][i]=tmp;
-                  sum[i]=sum[i-1]+tmp;
-            }
-            for(int k=1; k<n; ++k) // 区间长度
-            {
-                  for(int i=1; i+k<=n; ++i) // 开始位置
-                  {
-                        dp[i][i+k]=sum[i+k]-sum[i-1]; // 即：sum(i,i+k)
-                        for(int p=i; p<i+k; ++p)
-                              dp[i][i+k]=max(sum[i+k]-sum[i-1]-dp[p+1][i+k],dp[i][i+k]);
-                        for(int p=i+k; p>i; --p)
-                              dp[i][i+k]=max(sum[i+k]-sum[i-1]-dp[i][p-1],dp[i][i+k]);
-                  }
-            }
-            for(int i=0;i<n;++i)
-            {
-                  for(int j=0;j<n;++j)
-                  {
-                        printf("%d ",dp[i][j]);
-                  }
-                  puts("");
-            }
-            printf("%d\n",dp[1][n]-(sum[n]-dp[1][n]));
-      }
-      return 0;
-}
+WIN结构化异常
+对使用WIN32平台的人来说，对WIN的结构化异常应该要有所了解的。WINDOWS的结构化异常是操作系统的一部分，而C++异常只是C++的一部分，当我们用C++编写代码的时候，我们选择C++的标准异常（也可以用MS VC的异常），编译器会自动的把我们的C++标准异常转化成SEH异常。
+微软的Visual C++也支持C + +的异常处理，并且在内部实现上利用了已经引入到编译程序和Windows操作系统的结构化异常处理的功能。
+SEH实际包含两个主要功能：结束处理（termination handling）和异常处理（exceptionhandling）.
+在MS VC的FAQ中有关于SEH的部分介绍，这里摘超其中的一句：
+“在VC5中，增加了新的/EH编译选项用于控制C++异常处理。C++同步异常处理(/EH)使得编译器能生成更少的代码，/EH也是VC的缺省模型。”
+一定要记得在背后的事情：在使用SEH的时候，编译程序和操作系统直接参与了程序代码的执行。
+Win32异常事件的理解
+我写的另一篇文章：内存处理和DLL技术也涉及到了SEH中的异常处理。
+Exception（异常处理） 分成软件和硬件exception2种.如：一个无效的参数或者被0除都会引起软件exception，而访问一个尚未commit的页会引起硬件exception.
+发生异常的时候，执行流程终止，同时控制权转交给操作系统，OS会用上下文（CONTEXT）结构把当前的进程状态保存下来，然后就开始search 一个能处理exception的组件，search order如下：
+1. 首先检查是否有一个调试程序与发生exception的进程联系在一起，推算这个调试程序是否有能力处理
+2. 如上面不能完成，操作系统就在发生exception event的线程中search exception event handler
+3. search与进程关联在一起的调试程序
+4. 系统执行自己的exception event handler code and  terminate process
+结束处理程序
+利用SEH，你可以完全不用考虑代码里是不是有错误，这样就把主要的工作同错误处理分离开来.
+这样的分离，可以使你集中精力处理眼前的工作，而将可能发生的错误放在后面处理.
+微软在Windows中引入SEH的主要动机是为了便于操作系统本身的开发.
+操作系统的开发人员使用SEH，使得系统更加强壮.我们也可以使用SEH，使我们的自己的程序更加强壮.
+使用SEH所造成的负担主要由编译程序来承担，而不是由操作系统承担.
+当异常块（exception block）出现时，编译程序要生成特殊的代码.
+编译程序必须产生一些表（table）来支持处理SEH的数据结构.
+编译程序还必须提供回调（callback）函数，操作系统可以调用这些函数，保证异常块被处理.
+编译程序还要负责准备栈结构和其他内部信息，供操作系统使用和参考.
+在编译程序中增加SEH支持不是一件容易的事.
+不同的编译程序厂商会以不同的方式实现SEH，这一点并不让人感到奇怪.
+幸亏我们可以不必考虑编译程序的实现细节，而只使用编译程序的SEH功能.
+（其实大多数编译程序厂商都采用微软建议的语法）
