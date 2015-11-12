@@ -38,8 +38,9 @@ struct Node
       int data;
       Node* left_son;
       Node* right_son;
+      int layer;
       Node() {}
-      Node(int x,Node* lson,Node* rson):data(x),left_son(lson),right_son(rson) {}
+      Node(int x,Node* lson,Node* rson,int layer):data(x),left_son(lson),right_son(rson),layer(layer){}
 };
 
 template<class T>
@@ -148,6 +149,87 @@ bool Binary_Tree<T>::Change_Node_LRson(int x)
       Change_Node.right_son=Change_Node.left_son;
       Change_Node.left_son=tmp;
       return true;
+}
+
+template<class T>
+void Binary_Tree<T>::Double_Order_Visit()
+{
+      // use stack on STL
+      stack<T> stk;
+      // Notice: Don't reverse it!
+      if((*root).right_son)
+      {
+            stk.push(*((*root).right_son));
+            // print result
+      }
+      if((*root).left_son)
+      {
+            stk.push(*((*root).left_son));
+            // print result
+      }
+      Node Now_Node;
+      while(!stk.empty())
+      {
+            Now_Node=stk.top();
+            if(Now_Node.right_son)
+            {
+                  stk.push(*Now_Node.right_son);
+                  // print result
+            }
+            if(Now_Node.left_son)
+            {
+                  stk.push(*Now_Node.left_son);
+                  // print result
+            }
+      }
+}
+
+template<class T>
+int Binary_Tree<T>::Calc_Max_Width()
+{
+      queue<T> Q;
+      if((*root).left_son)
+      {
+            (*(*root).left_son).layer=2;
+            Q.push(*(*root).left_son);
+
+      }
+      if((*root).right_son)
+      {
+            (*(*root).right_son).layer=2;
+            Q.push(*(*root).right_son);
+      }
+      int Max_Width=0;
+      int tmp_cnt=0;
+      int Now_Layer=2;
+      while(!Q.empty())
+      {
+            Node Now_Node=Q.front();
+            Q.pop();
+            if(Now_Layer==Now_Node.layer)
+            {
+                  ++tmp_cnt;
+            }
+            else
+            {
+                  Max_Width=max(Max_Width,tmp_cnt);
+                  tmp_cnt=0;
+                  Now_Layer=Now_Node.layer;
+            }
+            if(Now_Node.left_son)
+            {
+                  Now_Node=Now_Node.left_son;
+                  Now_Node.layer=Now_Layer+1;
+                  Q.push(Now_Node);
+            }
+            if(Now_Node.right_son)
+            {
+                  Now_Node=Now_Node.right_son;
+                  Now_Node.layer=Now_Layer+1;
+                  Q.push(Now_Node);
+            }
+      }
+
 }
 
 
