@@ -40,7 +40,7 @@ int prevv[50200], preve[50200];
 void addEdge(int from, int to, int cap, int cost)
 {
       G[from].push_back((edge) {to, cap, cost, G[to].size()});
-      G[to].push_back((edge) {from, 0, -cost, G[from].size() - 1});
+      G[to].push_back((edge) {from, 0, -cost, G[from].size() - 1}) ;
 }
 
 int minCostFlow(int s, int t, int f)
