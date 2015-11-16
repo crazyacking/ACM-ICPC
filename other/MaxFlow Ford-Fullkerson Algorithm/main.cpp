@@ -24,7 +24,7 @@ using namespace std;
 typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
-const int INF=1000000;
+const int INF=INT_MAX;
 const int MAXN=1000;
 
 struct ArcType
@@ -33,58 +33,56 @@ struct ArcType
 };
 ArcType Edge[MAXN][MAXN];
 int n,m;// n个点，m条边
-int flag[MAXN];// -1:未标号   0:已标号，但未检查相邻结点   1：已标号，且已访问相邻结点
-int Prev[MAXN];//上一个顶点
-int zeng[MAXN];//增量
-
+int Flag[MAXN];// -1:未标号   0:已标号，但未检查相邻结点   1：已标号，且已访问相邻结点
+int Prev[MAXN];// 上一个顶点
+int Incr[MAXN];// 增量
 
 void ford_fulkerson()
 {
       while(1)
       {
-            memset(flag,0xff,sizeof flag);
+            //按字节置为-1，计算机中负数是用补码来存储的，即：反码+1
+            memset(Flag,0xff,sizeof Flag);
             memset(Prev,0xff,sizeof Prev);
+            memset(Incr,0xff,sizeof Incr);
+            Incr[0]=INF; // S点可以流出无限多的流量
+            Flag[0]=0;
+            Prev[0]=0;
             queue<int> Q;
             Q.push(0);
-            flag[0]=0;
-            zeng[0]=INF; // S点可以流出无限多的流量
-            while(!Q.empty())
+            while(!Q.empty() && Flag[n-1]==-1)
             {
                   int now=Q.front();
                   Q.pop();
                   for(int i=0; i<n; ++i)
                   {
-                        if(flag[i]==-1) // 未标号
+                        if(Flag[i]==-1) // 未标号
                         {
-                              if(Edge[now][i].f<Edge[now][i].c) // 正向流未满
+                              if(Edge[now][i].c<INF && Edge[now][i].f<Edge[now][i].c) // 正向流未满
                               {
                                     Prev[i]=now;
-                                    flag[i]=0;
-                                    zeng[i]=min(zeng[now],Edge[now][i].c-Edge[now][i].f);
+                                    Flag[i]=0;
+                                    Incr[i]=min(Incr[now],Edge[now][i].c-Edge[now][i].f);
                                     Q.push(i);
                               }
-                              if(Edge[i][now].f>0) // 反向流大于0
+                              else if(Edge[i][now].c<INF && Edge[i][now].f>0) // 反向流大于0
                               {
                                     Prev[i]=-now;
-                                    flag[i]=0;
-                                    zeng[i]=min(zeng[now],Edge[i][now].f);
+                                    Flag[i]=0;
+                                    Incr[i]=min(Incr[now],Edge[i][now].f);
                                     Q.push(i);
                               }
                         }
                   }
-                  flag[now]=1;
+                  Flag[now]=1;
             } // end of while
-            puts("-----------------------------------------------------------------");
 
-            if(flag[n-1]==-1 || zeng[n-1]==0) // 汇点未获得标号，或者汇点的增量为0
-            {
-                  puts("-------**********----------------------------------------------------------");
-
+            if(Flag[n-1]==-1 || Incr[n-1]==0) // 汇点未获得标号，或者汇点的增量为0
                   break;
-            }
+
             // 开始调整流量
             int k1=n-1,k2=abs(Prev[k1]);
-            int a=zeng[k1];
+            int a=Incr[k1];
             while(1)
             {
                   if(Edge[k2][k1].f<INF)
@@ -94,7 +92,7 @@ void ford_fulkerson()
                   if(k2==0)
                         break;
                   k1=k2;
-                  k2=abs(Prev[k1]);
+                  k2=abs(Prev[k2]);
             }// end of while
       }
       // output
@@ -103,7 +101,7 @@ void ford_fulkerson()
       {
             for(int j=0; j<n; ++j)
             {
-                  if(i==0 && Edge[i][j].f<INF) // 最大流也就是源点流出的流量
+                  if(i==0 && Edge[i][j].f<INF)
                         maxFlow+=Edge[i][j].f;
                   if(Edge[i][j].f<INF)
                         printf("%2d ->%2d:%2d\n",i,j,Edge[i][j].f);
@@ -121,7 +119,7 @@ int main()
       {
             for(int i=0; i<MAXN; ++i)
                   for(int j=0; j<MAXN; ++j)
-                        Edge[i][j].c=-1,Edge[i][j].f=INF;
+                        Edge[i][j].c=Edge[i][j].f=INF;
             int u,v,c,f;
             for(int i=0; i<m; ++i)
             {

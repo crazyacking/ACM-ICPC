@@ -4,7 +4,7 @@
 * -----------------------------------------------------------------
 *       Author: crazyacking
 *       Verdict: Accepted
-*       Submission Date: 2015-11-16-08.56
+*       Submission Date: 2015-11-16-21.19
 */
 #include <queue>
 #include <cstdio>
@@ -29,9 +29,14 @@ int main()
 {
       ios_base::sync_with_stdio(false);
       cin.tie(0);
-      int a[4];
-      memset(a,0xff,sizeof a);
-      cout<<a[0]<<endl;
+      multiset<int> ms;
+      ms.insert(-1);
+      ms.insert(-2);
+      ms.insert(-3);
+      for(auto p:ms)
+      {
+            cout<<p<<endl;
+      }
       return 0;
 }
 /*
