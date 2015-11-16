@@ -1,139 +1,157 @@
-/*
-* -----------------------------------------------------------------
-* Copyright (c) 2015 crazyacking All rights reserved.
-* -----------------------------------------------------------------
-*       Author: crazyacking
-*       Verdict: Accepted
-*       Submission Date: 2015-11-12-12.36
-*/
-#include <queue>
-#include <cstdio>
-#include <set>
-#include <string>
-#include <stack>
-#include <cmath>
-#include <climits>
-#include <map>
-#include <cstdlib>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cstring>
-#define max(a,b) (a>b?a:b)
-using namespace std;
-typedef long long(LL);
-typedef unsigned long long(ULL);
-const double eps(1e-8);
+#include<stdio.h>
+//#include<malloc.h>
+#include<windows.h>
+#include<stdlib.h>
+typedef int DataType;
 
-template<class T>
-struct LinkNode
+typedef struct Node
 {
-      T data;
-      LinkNode *link;
-      LinkNode<T>(T x):data(0),link(NULL){}
+      int data;
+      struct Node *next;
+} QNode;
+/*typedef struct{
+      QNode *rear;
+}LQueue;*/
+struct Node *rear=NULL;
 
-};
-template<class T>
-class LinkedQueue // 函数、变量的定义和声明
-{
-public:
-      LinkedQueue():rear(NULL),top(NULL) {}
-      ~LinkedQueue() {makeEmpty();}
-      bool EnQueue(const T& x);
-      bool DeQueue(T& x);
-      bool getFront(T& x)const;
-      void makeEmpty();
-      bool IsEmpty()const {return(top==rear)?true:false;}
-      int getSize()const;
-      friend ostream& operator<<(ostream& os,LinkedQueue<T>& Q);
-protected:
-      LinkNode<T> *top, *rear;
-};
 
-template<class T>
-void LinkedQueue<T>::makeEmpty()  //置空队列
+QNode *Init_LQueue(/*LQueue *q*/);
+QNode *In_LQueue(struct Node *rear,int x);
+void Empty_LQueue(struct Node *rear);
+QNode *Out_LQueue(struct Node *rear);
+
+int main()
 {
-      LinkNode<T> *p;
-      while(top!=NULL)
+      int i,x;
+      while(1)
       {
-            p=top;
-            top=top->link;
-            delete p;
+            printf("\n\n\n                           输  入  你   的  选  择:");
+            printf("\n\n\n                 【0】置空【1】判空【2】入队【3】出队【4】浏览元素\n\n");
+            printf("输入你的选择：");
+            scanf("%d",&i);
+            switch(i)
+            {
+            case 0:
+                  Init_LQueue(/*LQueue *q*/);
+                  break;
+            case 1:
+                  Empty_LQueue(rear);
+                  break;
+
+            case 2:
+                  printf("输入要入队的元素x");
+                  scanf("%d",&x);
+                  rear=In_LQueue(rear,x);
+                  break;
+
+            case 3:
+                  rear=Out_LQueue(rear);
+                  break;
+            }
       }
-};
 
-template<class T>
-bool LinkedQueue<T>::EnQueue(const T& x) //进队
+}
+
+
+QNode *Init_LQueue(/*LQueue *q*/)
 {
-      if(top==NULL)
+      QNode *q=(QNode *)malloc(sizeof(QNode));
+      q->data=0;
+      rear=q;
+      rear->next=rear;
+      return rear;
+}
+
+void Empty_LQueue(struct Node *rear)
+{
+      if(rear->next==rear)
+            printf("队列为空");
+      else
+            printf("队列不为空");
+}
+
+QNode *In_LQueue(QNode *rear,int x)
+{
+      QNode *p= (QNode *)malloc(sizeof(QNode));
+      p->data=x;
+//    p->next=NULL;
+//    rear->next=p;
+//    rear=p;
+
+
+      p->next=rear->next;
+      rear->next=p;
+      rear=p;
+      return rear;
+}
+
+
+QNode *Out_LQueue(struct Node *rear)
+{
+      QNode *p,*q;
+      if(rear->next==rear)
       {
-            top=rear=new LinkNode<T>(x);//空队列时，新结点成为队列的第一个结点，既是对头也是队尾
-            if(top==NULL) return false;
+            printf("\n\n   队列目前没有元素");
+            return rear;
       }
       else
       {
-            rear->link=new LinkNode<T>(x);//非空时在链尾追加新的结点并更新队尾指针
-            if(rear->link==NULL) return false;
-            rear=rear->link;
+            {
+                  q=rear->next;//头结点
+                  p=q->next; //第一个节点
+            }
+            if(p==rear)
+            {
+                  printf("出队元素是：%d",p->data);
+                  rear=q;
+                  rear->next=rear;
+
+                  if(rear->next==rear)
+                  {
+                        printf("p->data=%d",p->data);
+                        printf("rear->data=%d",rear->data);
+                  }
+            }
+            else
+            {
+                  printf("出队元素是：%d",p->data);
+                  q->next=p->next;
+            }
       }
-      return true;
-};
-
-template<class T>
-bool LinkedQueue<T>::DeQueue(T& x)  // 出队
-{
-      if(IsEmpty()==true) return false;
-      LinkNode<T> *p=top;
-      x=top->data;
-      top=top->link;
-      delete p;
-      return true;
-};
-
-template<class T>
-bool LinkedQueue<T>::getFront(T& x)const // 取队首元素
-{
-      if(IsEmpty()==true) return false;
-      x=top->data;
-      return true;
-};
-
-template<class T>
-int LinkedQueue<T>::getSize()const // 返回大小
-{
-      LinkNode<T> *p=top;
-      int k=0;
-      while(p!=NULL)
-      {
-            p=p->link;
-            k++;
-      }
-      return k;
-};
-
-template<class T>
-ostream& operator<<(ostream& os,LinkedQueue<T>& Q)  // 重载输出
-{
-      os<<"队列中的元素个数有"<<Q.getSize()<<endl;
-      LinkNode<T> *p=Q.top;
-      int i=0;
-      while(p!=NULL)
-      {
-            os<<++i<<":"<<p->data<<endl;
-            p=p->link;
-      }
-      return os;
+      return rear;
 }
-int main()
-{
-      ios_base::sync_with_stdio(false);
-      LinkedQueue<int> Q;
-      Q.makeEmpty();
-      Q.EnQueue(5);
-      cout<<Q<<endl;
-      cin.tie(0);
-      return 0;
-}
-/*
 
-*/
+//
+//
+//int main()
+//{
+//      int a;
+//      Node *q;
+//      DataType x;
+//      while(1)
+//      {
+//            scanf("%d",&a);
+//            switch(a)
+//            {
+//            case 1:
+//                  Init_LQueue();
+//                  break;
+//            case 2:
+//                  Empty_LQueue(q);
+//                  break;
+//            case 3:
+//                  printf("输入要入队的元素x");
+//                  scanf("%d",&x);
+//                  In_LQueue(q,x);
+//                  break;
+//            case 4:
+//                  Out_LQueue(rear);
+//                  break;
+//            }
+//      }
+//      return 0;
+//}
+//
+
+
+
