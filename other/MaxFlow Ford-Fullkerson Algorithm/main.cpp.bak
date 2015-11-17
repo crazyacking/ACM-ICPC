@@ -41,12 +41,13 @@ void ford_fulkerson()
 {
       while(1)
       {
-            memset(Flag,0xff,sizeof Flag); //按字节置为-1
+            //按字节置为-1，计算机中负数是用补码来存储的，即：反码+1
+            memset(Flag,0xff,sizeof Flag);
             memset(Prev,0xff,sizeof Prev);
             memset(Incr,0xff,sizeof Incr);
+            Incr[0]=INF; // S点可以流出无限多的流量
             Flag[0]=0;
             Prev[0]=0;
-            Incr[0]=INF; // S点可以流出无限多的流量
             queue<int> Q;
             Q.push(0);
             while(!Q.empty() && Flag[n-1]==-1)
@@ -79,7 +80,6 @@ void ford_fulkerson()
             if(Flag[n-1]==-1 || Incr[n-1]==0) // 汇点未获得标号，或者汇点的增量为0
                   break;
 
-            // 开始调整流量
             int k1=n-1,k2=abs(Prev[k1]);
             int a=Incr[k1];
             while(1)
@@ -89,7 +89,7 @@ void ford_fulkerson()
                   else
                         Edge[k1][k2].f-=a;
                   if(k2==0)
-                        break;
+                  break;
                   k1=k2;
                   k2=abs(Prev[k2]);
             }// end of while

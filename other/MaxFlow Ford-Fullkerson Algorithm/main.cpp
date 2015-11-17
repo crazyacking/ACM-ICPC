@@ -80,7 +80,6 @@ void ford_fulkerson()
             if(Flag[n-1]==-1 || Incr[n-1]==0) // 汇点未获得标号，或者汇点的增量为0
                   break;
 
-            // 开始调整流量
             int k1=n-1,k2=abs(Prev[k1]);
             int a=Incr[k1];
             while(1)
@@ -90,7 +89,7 @@ void ford_fulkerson()
                   else
                         Edge[k1][k2].f-=a;
                   if(k2==0)
-                        break;
+                  break;
                   k1=k2;
                   k2=abs(Prev[k2]);
             }// end of while
