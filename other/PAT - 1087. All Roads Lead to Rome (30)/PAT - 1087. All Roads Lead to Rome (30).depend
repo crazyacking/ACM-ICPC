@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1447912007 source:d:\code_fantasy\acm-icpc\other\pat - 1087. all roads lead to rome (30)\main.cpp
+	<stdio.h>
+	<map>
+	<string>
+	<string.h>
+	<vector>
+
