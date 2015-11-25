@@ -76,10 +76,10 @@ void ford_fulkerson()
                   }
                   Flag[now]=1;
             } // end of while
-
+            
             if(Flag[n-1]==-1 || Incr[n-1]==0) // 汇点未获得标号，或者汇点的增量为0
                   break;
-
+                  
             int k1=n-1,k2=abs(Prev[k1]);
             int a=Incr[k1];
             while(1)
@@ -89,7 +89,7 @@ void ford_fulkerson()
                   else
                         Edge[k1][k2].f-=a;
                   if(k2==0)
-                  break;
+                        break;
                   k1=k2;
                   k2=abs(Prev[k2]);
             }// end of while
@@ -113,7 +113,7 @@ int main()
       FILE* fp=freopen("C:\\Users\\crazyacking\\Desktop\\in.txt","r",stdin);
       if(fp==NULL)
             puts("open file error");
-
+            
       while(cin>>n>>m)
       {
             for(int i=0; i<MAXN; ++i)
@@ -129,6 +129,33 @@ int main()
             ford_fulkerson();
       }
       return 0;
+}
+/*
+
+*/
+
+
+int main()
+{
+      ios_base::sync_with_stdio(false);
+      cin.tie(0);
+      FILE* fp=freopen("C://User//crazyaking//Desktop//in.txt",stdin);
+      if(fp==NULL)
+            puts("open file error");
+      while(cin>>n)
+      {
+            for(int i=0; i<MAXN; ++i)
+                  for(int j=0; j<MAXN; ++j)
+                        Edge[i][j].c=Edge[i][j].f=INF;
+            int u,,v,c,f;
+            for(int i=0;i<m;++i)
+            {
+                  cin>>u>>v>>c>>f;
+                  Edge[u][v].c=c;
+                  Edge[u][v].f=f;
+            }
+            
+      return (0);
 }
 /*
 

@@ -35,7 +35,7 @@ int main()
             for(LL i=0;i<n;++i)
                   scanf("%I64d",&b[i]);
             LL now=b[0];
-            LL step=b[0];
+            LL step=abs(b[0]);
             for(LL i=1;i<n;++i)
             {
                   if(now!=b[i])
