@@ -184,6 +184,75 @@
 //
 //*/
 
+//
+///*
+//* -----------------------------------------------------------------
+//* Copyright (c) 2015 crazyacking All rights reserved.
+//* -----------------------------------------------------------------
+//*       Author: crazyacking
+//*       Verdict: Accepted
+//*       Submission Date: 2015-11-26-11.32
+//*/
+//#include <queue>
+//#include <cstdio>
+//#include <set>
+//#include <string>
+//#include <stack>
+//#include <cmath>
+//#include <climits>
+//#include <map>
+//#include <cstdlib>
+//#include <iostream>
+//#include <vector>
+//#include <algorithm>
+//#include <cstring>
+//#define max(a,b) (a>b?a:b)
+//using namespace std;
+//typedef long long(LL);
+//typedef unsigned long long(ULL);
+//const double eps(1e-8);
+//
+//template<class T>
+//class MyClass
+//{
+//public:
+//      MyClass();
+//      ~MyClass();
+//      template<class X> // member template
+//      void assign(const MyClass<X>& x) // allow different template types
+//      {
+//            value = x.getValu();
+//      }
+//      T getValue() const
+//      {
+//            return value;
+//      }
+//      // ...
+//protected:
+//private:
+//      T value;
+//};
+//
+//void fun()
+//{
+//      MyClass<double> d;
+//      MyClass<int> i;
+//
+//      d.assign(d); // OK
+//      i.assign(i); // OK (int is assigned to double)
+//}
+//
+//int main()
+//{
+//      ios_base::sync_with_stdio(false);
+//      cin.tie(0);
+//
+//      return 0;
+//}
+///*
+//
+//*/
+
 
 /*
 * -----------------------------------------------------------------
@@ -212,41 +281,12 @@ typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
-template<class T>
-class MyClass
-{
-public:
-      MyClass();
-      ~MyClass();
-      template<class X> // member template
-      void assign(const MyClass<X>& x) // allow different template types
-      {
-            value = x.getValu();
-      }
-      T getValue() const
-      {
-            return value;
-      }
-      // ...
-protected:
-private:
-      T value;
-};
-
-void fun()
-{
-      MyClass<double> d;
-      MyClass<int> i;
-
-      d.assign(d); // OK
-      i.assign(i); // OK (int is assigned to double)
-}
 
 int main()
 {
       ios_base::sync_with_stdio(false);
       cin.tie(0);
-
+      
       return 0;
 }
 /*
