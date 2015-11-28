@@ -46,7 +46,7 @@ int main()
             }
             printf("%I64d\n",step);
       }
-      return 0;
+      return (0);
 }
 /*
 
