@@ -23,6 +23,7 @@ using namespace std;
 typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
+
 const LL MAXN=200010;
 LL b[MAXN];
 int main()
