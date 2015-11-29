@@ -3,8 +3,7 @@
 * Copyright (c) 2015 crazyacking All rights reserved.
 * -----------------------------------------------------------------
 *       Author: crazyacking
-*       Verdict: Accepted
-*       Submission Date: 2015-11-20-15.36
+*       Submission Date: 2015/3/25
 */
 #include <queue>
 #include <cstdio>
@@ -24,7 +23,6 @@ using namespace std;
 typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
-
 const LL MAXN=200010;
 LL b[MAXN];
 int main()
