@@ -1,7 +1,0 @@
-# depslib dependency file v1.0
-1437804515 source:d:\code_fantasy\acm-icpc\cf\2015 acm amman collegiate programming contest a\main.cpp
-	<iostream>
-	<string>
-	<vector>
-	<cstdio>
-
