@@ -1,69 +1,47 @@
-/*
-* -----------------------------------------------------------------
-* Copyright (c) 2015 crazyacking All rights reserved.
-* -----------------------------------------------------------------
-*       Author: crazyacking
-*       Verdict: Accepted
-*       Submission Date: 2015-11-24-20.08
-*/
-#include <queue>
-#include <cstdio>
-#include <set>
-#include <string>
-#include <stack>
-#include <cmath>
-#include <climits>
-#include <map>
-#include <cstdlib>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cstring>
-#define max(a,b) (a>b?a:b)
+#include<bits/stdc++.h>
 using namespace std;
-typedef long long(LL);
-typedef unsigned long long(ULL);
-const double eps(1e-8);
+int n;
+vector<int>pr,in;
 
-class Snarl_jsb
+void reBuild(int a,int b,int n,bool flag)
 {
-public:
-      Snarl_jsb()
-      {
-            puts("This is wai bu lei");
-      }
-      ~Snarl_jsb()
-      {
-            puts("This is wai bu lei de xi gou han shu");
-      }
+    if(n==1) // leaf node
+    {
+        cout<<pr[a]<<" ";
+        return ;
+    }
+    else if(n<=0) // hasn't node
+        return ;
+    int i;
+    for(i=0; pr[a]!=in[b+i]; ++i);
+    reBuild(a+1,b,i,0);
+    reBuild(a+1+i,b+i+1,n-i-1,0);
+    if(flag) // root node
+        cout<<pr[a];
+    else // not root node
+        cout<<pr[a]<<" ";
+}
 
-      class crazyacking
-      {
-      public:
-            crazyacking()
-            {
-                  puts("This nei bu lei");
-            }
-            ~crazyacking()
-            {
-                  puts("This is nei bu lei de xi gou han shu");
-            }
-
-      protected:
-      private:
-      };
-protected:
-private:
-};
 int main()
 {
-      ios_base::sync_with_stdio(false);
-      cin.tie(0);
-      Snarl_jsb snarl_jsb;
-      Snarl_jsb:: crazyacking crazy;
-
-      return 0;
+    while(cin>>n)
+    {
+        pr.clear();
+        in.clear();
+        for(int i=0; i<n; ++i)
+        {
+            int tmp;
+            cin>>tmp;
+            pr.push_back(tmp);
+        }
+        for(int i=0; i<n; ++i)
+        {
+            int tmp;
+            cin>>tmp;
+            in.push_back(tmp);
+        }
+        reBuild(0,0,n,true);
+        cout<<endl;
+    }
+    return 0;
 }
-/*
-
-*/

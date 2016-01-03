@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1451718274 source:h:\code_fantasy\acm-icpc\other\nowcoder\二维数组中的查找\main.cpp
+	<iostream>
+	<cstdio>
+	<bits/stdc++.h>
+
