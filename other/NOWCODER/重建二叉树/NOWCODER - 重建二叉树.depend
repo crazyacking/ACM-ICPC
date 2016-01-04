@@ -1,4 +1,16 @@
 # depslib dependency file v1.0
-1451744325 source:h:\code_fantasy\acm-icpc\other\nowcoder\重建二叉树\main.cpp
-	<bits/stdc++.h>
+1451913900 source:h:\code_fantasy\acm-icpc\other\nowcoder\重建二叉树\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
 

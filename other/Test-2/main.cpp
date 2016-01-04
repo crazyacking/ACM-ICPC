@@ -1,157 +1,95 @@
-#include<stdio.h>
-//#include<malloc.h>
-#include<windows.h>
-#include<stdlib.h>
-typedef int DataType;
+/**
+ * -----------------------------------------------------------------
+ * Copyright (c) 2016 crazyacking.All rights reserved.
+ * -----------------------------------------------------------------
+ *       Author: crazyacking
+ *       Date  : 2016-01-03-22.42
+ */
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+using namespace std;
+typedef long long(LL);
+typedef unsigned long long(ULL);
+const double eps(1e-8);
 
-typedef struct Node
+struct TreeNode
 {
-      int data;
-      struct Node *next;
-} QNode;
-/*typedef struct{
-      QNode *rear;
-}LQueue;*/
-struct Node *rear=NULL;
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+vector<int> pr;
+vector<int> in;
 
+class Solution
+{
+public:
+    struct TreeNode* reConstructBinaryTree(vector<int> pr,vector<int> in)
+    {
+        if(pr.size() == 0 || in.size() == 0)
+            return NULL;
+        int root = pr[0];
+        TreeNode* node = new TreeNode(root);
+        vector<int> prLeft, prRight, inLeft, inRight;
 
-QNode *Init_LQueue(/*LQueue *q*/);
-QNode *In_LQueue(struct Node *rear,int x);
-void Empty_LQueue(struct Node *rear);
-QNode *Out_LQueue(struct Node *rear);
+        int i=0;
+        for(;in[i]!=root;++i);
+        for(int j=0;j!=i;++j)
+            inLeft.push_back(in[j]);
+        for(int j=i+1;j<in.size();++j)
+            inRight.push_back(in[j]);
+
+        for(int j=1;j<i+1;++j)
+            prLeft.push_back(pr[j]);
+        for(int j=i+1;j<pr.size();++j)
+            prRight.push_back(pr[j]);
+
+        node->left = reConstructBinaryTree(prLeft,inLeft);
+        node->right = reConstructBinaryTree(prRight,inRight);
+        return node;
+    }
+};
+
+void print_BFS(TreeNode* root)
+{
+      queue<TreeNode*> q;
+      q.push(root);
+      while(!q.empty())
+      {
+            TreeNode *now=q.front();
+            q.pop();
+            cout<<(now->val)<<" ";
+            if(now->left) q.push(now->left);
+            if(now->right) q.push(now->right);
+      }
+}
 
 int main()
 {
-      int i,x;
-      while(1)
+      // test demo
+      int a[]={1,2,4,7,3,5,6,8};
+      int b[]={4,7,2,1,5,3,8,6};
+      pr.clear();
+      in.clear();
+      for(int i=0;i<8;++i)
       {
-            printf("\n\n\n                           输  入  你   的  选  择:");
-            printf("\n\n\n                 【0】置空【1】判空【2】入队【3】出队【4】浏览元素\n\n");
-            printf("输入你的选择：");
-            scanf("%d",&i);
-            switch(i)
-            {
-            case 0:
-                  Init_LQueue(/*LQueue *q*/);
-                  break;
-            case 1:
-                  Empty_LQueue(rear);
-                  break;
-
-            case 2:
-                  printf("输入要入队的元素x");
-                  scanf("%d",&x);
-                  rear=In_LQueue(rear,x);
-                  break;
-
-            case 3:
-                  rear=Out_LQueue(rear);
-                  break;
-            }
+            pr.push_back(a[i]);
+            in.push_back(b[i]);
       }
-
+      Solution s;
+      TreeNode *root=s.reConstructBinaryTree(pr,in);
+      print_BFS(root);
+      return 0;
 }
-
-
-QNode *Init_LQueue(/*LQueue *q*/)
-{
-      QNode *q=(QNode *)malloc(sizeof(QNode));
-      q->data=0;
-      rear=q;
-      rear->next=rear;
-      return rear;
-}
-
-void Empty_LQueue(struct Node *rear)
-{
-      if(rear->next==rear)
-            printf("队列为空");
-      else
-            printf("队列不为空");
-}
-
-QNode *In_LQueue(QNode *rear,int x)
-{
-      QNode *p= (QNode *)malloc(sizeof(QNode));
-      p->data=x;
-//    p->next=NULL;
-//    rear->next=p;
-//    rear=p;
-
-
-      p->next=rear->next;
-      rear->next=p;
-      rear=p;
-      return rear;
-}
-
-
-QNode *Out_LQueue(struct Node *rear)
-{
-      QNode *p,*q;
-      if(rear->next==rear)
-      {
-            printf("\n\n   队列目前没有元素");
-            return rear;
-      }
-      else
-      {
-            {
-                  q=rear->next;//头结点
-                  p=q->next; //第一个节点
-            }
-            if(p==rear)
-            {
-                  printf("出队元素是：%d",p->data);
-                  rear=q;
-                  rear->next=rear;
-
-                  if(rear->next==rear)
-                  {
-                        printf("p->data=%d",p->data);
-                        printf("rear->data=%d",rear->data);
-                  }
-            }
-            else
-            {
-                  printf("出队元素是：%d",p->data);
-                  q->next=p->next;
-            }
-      }
-      return rear;
-}
-
-//
-//
-//int main()
-//{
-//      int a;
-//      Node *q;
-//      DataType x;
-//      while(1)
-//      {
-//            scanf("%d",&a);
-//            switch(a)
-//            {
-//            case 1:
-//                  Init_LQueue();
-//                  break;
-//            case 2:
-//                  Empty_LQueue(q);
-//                  break;
-//            case 3:
-//                  printf("输入要入队的元素x");
-//                  scanf("%d",&x);
-//                  In_LQueue(q,x);
-//                  break;
-//            case 4:
-//                  Out_LQueue(rear);
-//                  break;
-//            }
-//      }
-//      return 0;
-//}
-//
-
-
-
