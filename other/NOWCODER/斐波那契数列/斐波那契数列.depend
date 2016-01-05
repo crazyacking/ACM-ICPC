@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1451923176 source:h:\code_fantasy\acm-icpc\other\nowcoder\ì³²¨ÄÇÆõÊýÁÐ\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+

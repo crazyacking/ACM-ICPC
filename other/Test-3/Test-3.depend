@@ -14,6 +14,18 @@
 	<algorithm>
 	<cstring>
 
-1451740901 source:h:\code_fantasy\acm-icpc\other\test-3\main.cpp
-	<bits/stdc++.h>
+1451917778 source:h:\code_fantasy\acm-icpc\other\test-3\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
 
