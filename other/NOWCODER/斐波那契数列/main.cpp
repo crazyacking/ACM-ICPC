@@ -26,7 +26,7 @@ const double eps(1e-8);
 class Solution {
 public:
     int jumpFloor(int number) {
-        x
+
     }
 };
 int main()
