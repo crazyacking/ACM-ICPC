@@ -61,6 +61,9 @@ int main()
             a.push_back(tmp);
         }
         wiggleSort(a);
+        for(auto p:a)
+            cout<<p<<" ";
+        cout<<endl;
     }
     return 0;
 }

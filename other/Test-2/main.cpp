@@ -1,60 +1,25 @@
-/**
- * -----------------------------------------------------------------
- * Copyright (c) 2016 crazyacking.All rights reserved.
- * -----------------------------------------------------------------
- *       Author: crazyacking
- *       Date  : 2016-01-06-19.00
- */
-#include <queue>
-#include <cstdio>
-#include <set>
-#include <string>
-#include <stack>
-#include <cmath>
-#include <climits>
-#include <map>
-#include <cstdlib>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cstring>
-using namespace std;
-typedef long long(LL);
-typedef unsigned long long(ULL);
-const double eps(1e-8);
-
-
 class Solution
 {
 public:
     void wiggleSort(vector<int>& nums)
     {
-          if(nums.size()<2) return ;
-          for(int i=1;i<nums.size();++i)
-          {
-                if(( (i%2==1) && (nums[i]<nums[i-1]) )||( (i%2==0) && (nums[i]>nums[i-1]) ))
-                  swap(nums[i],nums[i-1]);
-          }
+        int n = nums.size();
+        auto midptr = nums.begin() + n / 2;
+        nth_element(nums.begin(), midptr, nums.end());
+
+        int mid = *midptr;
+
+#define A(i) nums[(1+2*(i)) % (n|1)]
+        // Dutch_National_Flag_Problem
+        int i = 0, j = 0, k = n - 1;
+        while (j <= k)
+        {
+            if (A(j) > mid)
+                swap(A(i++),A(j++));
+            else if (A(j) < mid)
+                swap(A(j), A(k--));
+            else
+                j++;
+        }
     }
 };
-
-int main()
-{
-      int n;
-      while(cin>>n)
-      {
-            vector<int> ve;
-            for(int i=0;i<n;++i)
-            {
-                  int tmp;
-                  cin>>tmp;
-                  ve.push_back(tmp);
-            }
-            Solution so;
-            so.wiggleSort(ve);
-            for(auto p:ve)
-                  cout<<p<<" ";
-            cout<<endl;
-      }
-    return 0;
-}
