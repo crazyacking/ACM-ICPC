@@ -31,7 +31,7 @@ struct N
 } a[MAXN];
 int b[MAXN];
 
-int cmp(N& a,N& b)
+int cmp(N a,N b)
 {
     return a.x<b.x;
 }
