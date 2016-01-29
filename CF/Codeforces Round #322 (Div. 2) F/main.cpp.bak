@@ -135,3 +135,414 @@ int main()
 4
 6
 */
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-10-03-22.20
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define max(a,b) (a>b?a:b)
+using namespace std;
+typedef long long(LL);
+typedef unsigned long long(ULL);
+const double eps(1e-8);
+const int MAXN=5005;
+int H[MAXN],to[MAXN*2],nx[MAXN*2],edge;
+void add(int u, int v)
+{
+     edge++;
+     to[edge]=v;
+     nx[edge]=H[u];
+     H[u]=edge;
+}
+int dp[MAXN][2][MAXN];
+int dp2[2][MAXN],sz[MAXN];
+int d[MAXN];
+void dfs(int cur ,int per)
+{
+      if(d[cur]==1){
+         sz[cur]=1;
+         dp[cur][0][1]=dp[cur][1][1]=0;
+         return ;
+      }
+      dp[cur][0][0]=dp[cur][1][0]=0;
+      for(int i=H[cur]; i ; i=nx[i])
+        {
+              int tto = to[i];
+              if(tto==per)continue;
+               dfs(tto,cur);
+             for(int i=0; i<=sz[cur]; i++)
+                 for(int u=0; u<2; u++)
+                  {
+                      if( dp[cur][u][i] == -1 ) continue;
+
+                      for(int j=0; j<=sz[tto]; j++)
+                      for(int v=0; v<2; v++)
+                        {
+                            if(dp[tto][v][j]==-1)continue;
+                            if(u==v)
+                            {
+                                if(dp2[u][i+j]==-1)
+                                {
+                                     int k=dp[cur][u][i]+dp[tto][v][j];
+                                    dp2[u][i+j] = k;
+
+                                }else {
+                                      int k=min(dp[cur][u][i]+dp[tto][v][j],dp2[u][i+j]);
+                                    dp2[u][i+j]=k;
+
+                                }
+                            }else
+                            {
+                                int nu=sz[tto];
+                                if(dp2[u][i+nu-j]==-1)
+                                   {
+                                       int k=dp[cur][u][i]+dp[tto][v][j]+1;
+                                       dp2[u][i+nu-j]=k;
+                                   }
+                                else
+                                    {
+                                    int k=min(dp[cur][u][i]+dp[tto][v][j]+1,dp2[u][i+nu-j]);
+                                    dp2[u][i+nu-j]=k;
+
+                                    }
+                            }
+                        }
+                  }
+             sz[cur]+=sz[tto];
+             for(int i=0; i<=sz[cur]; i++)
+                for(int j=0; j<2; j++)
+                {
+                      dp[cur][j][i]=dp2[j][i];
+                      dp2[j][i]=-1;
+                }
+        }
+}
+int main()
+{
+    int n;
+    while(scanf("%d",&n)==1)
+        {
+             memset(d,0,sizeof(d));
+             memset(dp,-1,sizeof(dp));
+             memset(sz,0,sizeof(sz));
+             memset(dp2,-1,sizeof(dp2));
+             memset(H,0,sizeof(H));
+             edge=0;
+            for(int i=1; i<n; i++)
+                {
+                    int a,b;
+                    scanf("%d%d",&a,&b);
+                    add(a,b);
+                    add(b,a);
+                    d[a]++;d[b]++;
+                }
+            if(n==2){
+                printf("%d\n",1); continue;
+            }
+            int root;
+            int cnt=0;
+            for(int i=1; i<=n; i++){
+                if(d[i]==1)cnt++;
+                else root=i;
+            }
+            dfs(root,-1);
+            printf("%d\n",min(dp[root][0][cnt/2],dp[root][1][cnt/2]));
+        }
+    return 0;
+}
+/*
+1 2
+5
+3
+4
+6
+*/
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-10-03-22.20
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define max(a,b) (a>b?a:b)
+using namespace std;
+typedef long long(LL);
+typedef unsigned long long(ULL);
+const double eps(1e-8);
+const int MAXN=5005;
+int H[MAXN],to[MAXN*2],nx[MAXN*2],edge;
+void add(int u, int v)
+{
+     edge++;
+     to[edge]=v;
+     nx[edge]=H[u];
+     H[u]=edge;
+}
+int dp[MAXN][2][MAXN];
+int dp2[2][MAXN],sz[MAXN];
+int d[MAXN];
+void dfs(int cur ,int per)
+{
+      if(d[cur]==1){
+         sz[cur]=1;
+         dp[cur][0][1]=dp[cur][1][1]=0;
+         return ;
+      }
+      dp[cur][0][0]=dp[cur][1][0]=0;
+      for(int i=H[cur]; i ; i=nx[i])
+        {
+              int tto = to[i];
+              if(tto==per)continue;
+               dfs(tto,cur);
+             for(int i=0; i<=sz[cur]; i++)
+                 for(int u=0; u<2; u++)
+                  {
+                      if( dp[cur][u][i] == -1 ) continue;
+
+                      for(int j=0; j<=sz[tto]; j++)
+                      for(int v=0; v<2; v++)
+                        {
+                            if(dp[tto][v][j]==-1)continue;
+                            if(u==v)
+                            {
+                                if(dp2[u][i+j]==-1)
+                                {
+                                     int k=dp[cur][u][i]+dp[tto][v][j];
+                                    dp2[u][i+j] = k;
+
+                                }else {
+                                      int k=min(dp[cur][u][i]+dp[tto][v][j],dp2[u][i+j]);
+                                    dp2[u][i+j]=k;
+
+                                }
+                            }else
+                            {
+                                int nu=sz[tto];
+                                if(dp2[u][i+nu-j]==-1)
+                                   {
+                                       int k=dp[cur][u][i]+dp[tto][v][j]+1;
+                                       dp2[u][i+nu-j]=k;
+                                   }
+                                else
+                                    {
+                                    int k=min(dp[cur][u][i]+dp[tto][v][j]+1,dp2[u][i+nu-j]);
+                                    dp2[u][i+nu-j]=k;
+
+                                    }
+                            }
+                        }
+                  }
+             sz[cur]+=sz[tto];
+             for(int i=0; i<=sz[cur]; i++)
+                for(int j=0; j<2; j++)
+                {
+                      dp[cur][j][i]=dp2[j][i];
+                      dp2[j][i]=-1;
+                }
+        }
+}
+int main()
+{
+    int n;
+    while(scanf("%d",&n)==1)
+        {
+             memset(d,0,sizeof(d));
+             memset(dp,-1,sizeof(dp));
+             memset(sz,0,sizeof(sz));
+             memset(dp2,-1,sizeof(dp2));
+             memset(H,0,sizeof(H));
+             edge=0;
+            for(int i=1; i<n; i++)
+                {
+                    int a,b;
+                    scanf("%d%d",&a,&b);
+                    add(a,b);
+                    add(b,a);
+                    d[a]++;d[b]++;
+                }
+            if(n==2){
+                printf("%d\n",1); continue;
+            }
+            int root;
+            int cnt=0;
+            for(int i=1; i<=n; i++){
+                if(d[i]==1)cnt++;
+                else root=i;
+            }
+            dfs(root,-1);
+            printf("%d\n",min(dp[root][0][cnt/2],dp[root][1][cnt/2]));
+        }
+    return 0;
+}
+/*
+1 2
+5
+3
+4
+6
+*/
+/*
+* this code is made by crazyacking
+* Verdict: Accepted
+* Submission Date: 2015-10-03-22.20
+* Time: 0MS
+* Memory: 137KB
+*/
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#define max(a,b) (a>b?a:b)
+using namespace std;
+typedef long long(LL);
+typedef unsigned long long(ULL);
+const double eps(1e-8);
+const int MAXN=5005;
+int H[MAXN],to[MAXN*2],nx[MAXN*2],edge;
+void add(int u, int v)
+{
+     edge++;
+     to[edge]=v;
+     nx[edge]=H[u];
+     H[u]=edge;
+}
+int dp[MAXN][2][MAXN];
+int dp2[2][MAXN],sz[MAXN];
+int d[MAXN];
+void dfs(int cur ,int per)
+{
+      if(d[cur]==1){
+         sz[cur]=1;
+         dp[cur][0][1]=dp[cur][1][1]=0;
+         return ;
+      }
+      dp[cur][0][0]=dp[cur][1][0]=0;
+      for(int i=H[cur]; i ; i=nx[i])
+        {
+              int tto = to[i];
+              if(tto==per)continue;
+               dfs(tto,cur);
+             for(int i=0; i<=sz[cur]; i++)
+                 for(int u=0; u<2; u++)
+                  {
+                      if( dp[cur][u][i] == -1 ) continue;
+
+                      for(int j=0; j<=sz[tto]; j++)
+                      for(int v=0; v<2; v++)
+                        {
+                            if(dp[tto][v][j]==-1)continue;
+                            if(u==v)
+                            {
+                                if(dp2[u][i+j]==-1)
+                                {
+                                     int k=dp[cur][u][i]+dp[tto][v][j];
+                                    dp2[u][i+j] = k;
+
+                                }else {
+                                      int k=min(dp[cur][u][i]+dp[tto][v][j],dp2[u][i+j]);
+                                    dp2[u][i+j]=k;
+
+                                }
+                            }else
+                            {
+                                int nu=sz[tto];
+                                if(dp2[u][i+nu-j]==-1)
+                                   {
+                                       int k=dp[cur][u][i]+dp[tto][v][j]+1;
+                                       dp2[u][i+nu-j]=k;
+                                   }
+                                else
+                                    {
+                                    int k=min(dp[cur][u][i]+dp[tto][v][j]+1,dp2[u][i+nu-j]);
+                                    dp2[u][i+nu-j]=k;
+
+                                    }
+                            }
+                        }
+                  }
+             sz[cur]+=sz[tto];
+             for(int i=0; i<=sz[cur]; i++)
+                for(int j=0; j<2; j++)
+                {
+                      dp[cur][j][i]=dp2[j][i];
+                      dp2[j][i]=-1;
+                }
+        }
+}
+int main()
+{
+    int n;
+    while(scanf("%d",&n)==1)
+        {
+             memset(d,0,sizeof(d));
+             memset(dp,-1,sizeof(dp));
+             memset(sz,0,sizeof(sz));
+             memset(dp2,-1,sizeof(dp2));
+             memset(H,0,sizeof(H));
+             edge=0;
+            for(int i=1; i<n; i++)
+                {
+                    int a,b;
+                    scanf("%d%d",&a,&b);
+                    add(a,b);
+                    add(b,a);
+                    d[a]++;d[b]++;
+                }
+            if(n==2){
+                printf("%d\n",1); continue;
+            }
+            int root;
+            int cnt=0;
+            for(int i=1; i<=n; i++){
+                if(d[i]==1)cnt++;
+                else root=i;
+            }
+            dfs(root,-1);
+            printf("%d\n",min(dp[root][0][cnt/2],dp[root][1][cnt/2]));
+        }
+    return 0;
+}
+/*
+1 2
+5
+3
+4
+6
+*/
