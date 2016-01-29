@@ -3,6 +3,7 @@
  * Copyright (c) 2016 crazyacking.All rights reserved.
  * -----------------------------------------------------------------
  *       Author: crazyacking
+ *       Date  : 2016-01-18-12.01
  */
 #include <queue>
 #include <cstdio>
@@ -22,61 +23,15 @@ typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
-const int MAXN=1000010;
-char s1[MAXN],s2[MAXN],tmp[MAXN];
 int main()
 {
-      while(~scanf("%s %s",s1,s2))
+      freopen("H:\\test.txt","r",stdin);
+      char a[10];
+      while(gets(a))
       {
-            memset(tmp,'\0',sizeof tmp);
-            int l1=strlen(s1);
-            int l2=strlen(s2);
-            if(l1==l2)
-            {
-                  int ret=strcmp(s1,s2);
-                  if(ret<0)
-                        printf("<");
-                  else if(ret==0)
-                        printf("=");
-                  else
-                        printf(">");
-            }
-            else if(l1<l2)
-            {
-                  int cnt=l2-1;
-                  for(int i=l1-1;i>=0;--i)
-                  {
-                        tmp[cnt]=s1[i];
-                        cnt--;
-                  }
-                  for(int i=cnt;i>=0;--i)
-                        tmp[i]='0';
-//                  puts(tmp);
-                  int ret=strcmp(tmp,s2);
-                  if(ret<0)
-                        printf("<");
-                  else if(ret==0)
-                        printf("=");
-                  else
-                        printf(">");
-            }
-            else
-            {
-                  int cnt=l1-1;
-                  tmp[l1]='\0';
-                  for(int i=l2-1;i>=0;)
-                        tmp[cnt--]=s2[i--];
-                  for(int i=cnt;i>=0;--i)
-                        tmp[i]='0';
-//                  puts(tmp);
-                  int ret=strcmp(s1,tmp);
-                  if(ret<0)
-                        printf("<");
-                  else if(ret==0)
-                        printf("=");
-                  else
-                        printf(">");
-            }
+            int len=strlen(a);
+            printf("{%d,%d},\n",a[0],a[1]);
+
       }
       return 0;
 }

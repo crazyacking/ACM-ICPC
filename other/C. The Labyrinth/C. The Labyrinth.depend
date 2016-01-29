@@ -1,16 +1,4 @@
 # depslib dependency file v1.0
-1452530246 source:h:\code_fantasy\acm-icpc\other\c. the labyrinth\main.cpp
-	<queue>
-	<cstdio>
-	<set>
-	<string>
-	<stack>
-	<cmath>
-	<climits>
-	<map>
-	<cstdlib>
-	<iostream>
-	<vector>
-	<algorithm>
-	<cstring>
+1453127099 source:h:\code_fantasy\acm-icpc\other\c. the labyrinth\main.cpp
+	<bits/stdc++.h>
 
