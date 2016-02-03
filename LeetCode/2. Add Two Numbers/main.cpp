@@ -108,26 +108,6 @@ public:
 };
 
 
-void debug(ListNode* head1,ListNode* head2)
-{
-    puts("===============================Program Run Here !=============================");
-
-    while(head1)
-    {
-        cout<<head1->val<<endl;
-        head1=head1->next;
-    }
-    puts("===============================Program Run Here !=============================");
-    while(head2)
-    {
-        cout<<head2->val<<endl;
-        head2=head2->next;
-    }
-    puts("===============================Program Run Here !=============================");
-
-}
-
-
 int main()
 {
     int n1,n2;
@@ -166,7 +146,6 @@ int main()
             }
         }
 
-//        debug(head1,head2);
         Solution solution;
         ListNode* ans=solution.addTwoNumbers(head1,head2);
         puts("----------------------");

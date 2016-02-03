@@ -3,7 +3,7 @@
  * Copyright (c) 2016 crazyacking.All rights reserved.
  * -----------------------------------------------------------------
  *       Author: crazyacking
- *       Date  : 2016-02-03-13.16
+ *       Date  : 2016-02-03-12.07
  */
 #include <queue>
 #include <cstdio>
@@ -23,7 +23,7 @@ typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
-
+/*Solution 1*/
 class Solution
 {
     //求A和B数组的第k大数
@@ -37,7 +37,7 @@ class Solution
             return min(A[0], B[0]);
         int pa = min(k/2, m);
         int pb = k - pa;
-        (A[pa-1] < B[pb-1])
+        if(A[pa-1] < B[pb-1])
         {
             return getMedian(A+pa, m-pa, B, n, k-pa);
         }
@@ -82,6 +82,49 @@ public:
         return ret;
     }
 };
+
+/*Solution 2*/
+/*
+class Solution
+{
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2)
+    {
+        auto it1=nums1.begin();
+        auto it2=nums2.begin();
+        vector<int> a;
+        while(it1!=nums1.end() || it2!=nums2.end())
+        {
+            if(it1==nums1.end() && it2!=nums2.end())
+            {
+                a.push_back((*it2));
+                it2++;
+            }
+            else if(it1!=nums1.end() && it2==nums2.end())
+            {
+                a.push_back(*it1);
+                it1++;
+            }
+            else if(it1!=nums1.end() && it2!=nums2.end())
+            {
+                if((*it1)<(*it2))
+                {
+                    a.push_back(*it1);
+                    it1++;
+                }
+                else
+                {
+                    a.push_back(*it2);
+                    it2++;
+                }
+            }
+        }
+        int len=a.size();
+        double ans=(len%2)?(double)a[len/2]:(double)(a[len/2-1]+a[len/2])/2.;
+        return ans;
+    }
+};
+*/
 
 int main()
 {
