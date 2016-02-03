@@ -37,7 +37,7 @@ int main()
     {
         Solution solution;
         int answer=solution.lengthOfLongestSubstring(s);
-        cout<<"============answer============="<<endl;
+        cout<<"===========answer============"<<endl;
         cout<<answer<<endl;
     }
     return 0;
