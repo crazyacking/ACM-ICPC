@@ -3,7 +3,7 @@
  * Copyright (c) 2016 crazyacking.All rights reserved.
  * -----------------------------------------------------------------
  *       Author: crazyacking
- *       Date  : 2016-01-08-10.51
+ *       Date  : 2016-02-03-13.16
  */
 #include <queue>
 #include <cstdio>
@@ -23,104 +23,86 @@ typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
-long long a, b, c;
-long long x1, x2, y1, y2;
-long long x, y;
 
-long long exgcd(long long a, long long b)
+class Solution
 {
-    if(b == 0)
+    //求A和B数组的第k大数
+    int getMedian(int A[], int m, int B[], int n,int k)
     {
-        x = 1;
-        y = 0;
-        return a;
-    }
-    else
-    {
-        long long t = exgcd(b, a%b), s = x;
-        x = y;
-        y = s-(a/b)*y;
-        return t;
-    }
-}
-
-long long solve()
-{
-    scanf("%lld %lld %lld", &a, &b, &c);
-    scanf("%lld %lld %lld %lld", &x1, &x2, &y1, &y2);
-    c = -c;
-
-    if(a == 0 && b == 0 && c != 0)
-    {
+        if(m>n)
+            return getMedian(B,n,A,m,k); //默认A为短数组
+        if(m==0)
+            return B[k-1];
+        if(k==1)
+            return min(A[0], B[0]);
+        int pa = min(k/2, m);
+        int pb = k - pa;
+        (A[pa-1] < B[pb-1])
+        {
+            return getMedian(A+pa, m-pa, B, n, k-pa);
+        }
+        else if(A[pa-1] > B[pb-1])
+        {
+            return getMedian(A, m, B+pb, n-pb, k-pb);
+        }
+        else
+        {
+            return A[pa-1];
+        }
         return 0;
     }
-    if(a == 0 && b == 0 && c == 0)
+public:
+    double work(int A[], int m, int B[], int n)
     {
-        return (x2-x1+1)*(y2-y1+1);
-    }
-
-    if(a == 0)
-    {
-        long long sign = 0;
-        if(y1 <= c/b && y2 >= c/b && c%b == 0)
+        if((m+n)%2 == 0)
         {
-            sign = 1;
+            return (getMedian(A, m,B, n, (m+n)/2) + getMedian(A, m,B, n, (m+n)/2+1)) /2.;
         }
-        return (x2-x1+1)*sign;
-    }
-    if(b == 0)
-    {
-        long long sign = 0;
-        if(x1 <= c/a && x2 >= c/a && c%a == 0)
+        else
         {
-            sign = 1;
+            return getMedian(A, m,B, n, (m+n)/2+1);
         }
-        return (y2-y1+1)*sign;
     }
-
-    long long gcd = exgcd(a, b);
-    long long ans = 0;
-
-    if(c%gcd != 0)
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2)
     {
-        return 0;
+        int A[10000],B[10000];
+        int idx=0;
+        for(auto p:nums1)
+        {
+            A[idx++]=p;
+        }
+        idx=0;
+        for(auto p:nums2)
+        {
+            B[idx++]=p;
+        }
+        int m=nums1.size();
+        int n=nums2.size();
+        double ret=work(A,m,B,n);
+        return ret;
     }
+};
 
-    /* 求交集 */
-    x = x*(c/gcd);
-    y = y*(c/gcd);
-    // 减小步长
-    a /= gcd;
-    b /= gcd;
-    long long lx = (x1-x>0&&(x1-x)%b!=0)?
-                   ((x1-x)/b+1):
-                   ((x1-x)/b);
-    long long rx = (x2-x<0&&(x2-x)%b!=0)?
-                   ((x2-x)/b-1):
-                   ((x2-x)/b);
-    long long ly = (y-y2>0&&(y-y2)%a!=0)?
-                   ((y-y2)/a+1):
-                   ((y-y2)/a);
-    long long ry = (y-y1<0&&(y-y1)%a!=0)?
-                   ((y-y1)/a-1):
-                   ((y-y1)/a);
-    if(lx > rx)
-    {
-        swap(lx, rx);
-    }
-    if(ly > ry)
-    {
-        swap(ly, ry);
-    }
-    if(rx >= ly && ry >= lx)
-    {
-        ans = min(rx,ry)-max(lx,ly)+1;
-    }
-    return ans;
-}
-
-int main(int argc, char **argv)
+int main()
 {
-    printf("%lld", solve());
-    return 0;
+      int n,m,temp;
+      while(cin>>n>>m)
+      {
+          vector<int> a,b;
+          for(int i=0;i<n;++i)
+          {
+              cin>>temp;
+              a.push_back(temp);
+          }
+          for(int i=0;i<m;++i)
+          {
+              cin>>temp;
+              b.push_back(temp);
+          }
+          Solution solution;
+          double ans=solution.findMedianSortedArrays(a,b);
+          cout<<"===========ans==========="<<endl;
+          cout<<ans<<endl;
+      }
+      return 0;
 }

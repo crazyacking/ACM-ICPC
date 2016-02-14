@@ -1,4 +1,21 @@
 # depslib dependency file v1.0
+<<<<<<< HEAD
 1454482867 source:/home/crazyacking/Code_Fantasy/ACM-ICPC/LeetCode/3. Longest Substring Without Repeating Characters/main.cpp
 	<bits/stdc++.h>
+=======
+1454123238 source:h:\code_fantasy\acm-icpc\leetcode\3. longest substring without repeating characters\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+>>>>>>> 89207da204b8acc59fd38dc4662ad168082fb381
 
