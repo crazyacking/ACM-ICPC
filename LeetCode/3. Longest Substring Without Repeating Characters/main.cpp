@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
  * -----------------------------------------------------------------
  * Copyright (c) 2016 crazyacking.All rights reserved.
@@ -22,12 +23,17 @@ using namespace std;
 typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
+=======
+#include<bits/stdc++.h>
+using namespace std;
+>>>>>>> 5446e1b223acc359e01baf5cfca966d1fe6a298c
 
 class Solution
 {
 public:
     int lengthOfLongestSubstring(string s)
     {
+<<<<<<< HEAD
         int pos[500];
         int maxAns=0;
         bool has[500];
@@ -55,6 +61,29 @@ public:
             }
         }
         return maxAns;
+=======
+        int ans=0;
+        int len=s.length();
+        int currentLength=0;
+        int recentCycleIndex=0;
+        map<char,int> mp;
+        for(int i=0; i<len; ++i)
+        {
+            if(mp.find(s[i])==mp.end())
+                currentLength++;
+            else
+            {
+                if(mp[s[i]]<=recentCycleIndex)
+                    currentLength=i-recentCycleIndex;
+                else
+                    currentLength=i-mp[s[i]];
+                recentCycleIndex=max(recentCycleIndex,mp[s[i]]);
+            }
+            mp[s[i]]=i;
+            ans=max(ans,currentLength);
+        }
+        return ans;
+>>>>>>> 5446e1b223acc359e01baf5cfca966d1fe6a298c
     }
 };
 
@@ -63,9 +92,16 @@ int main()
     string s;
     while(cin>>s)
     {
+<<<<<<< HEAD
         cout<<"length is "<<s.length()<<endl;
         Solution solution;
         cout<<solution.lengthOfLongestSubstring(s)<<endl;
+=======
+        Solution solution;
+        int answer=solution.lengthOfLongestSubstring(s);
+        cout<<"===========answer============"<<endl;
+        cout<<answer<<endl;
+>>>>>>> 5446e1b223acc359e01baf5cfca966d1fe6a298c
     }
     return 0;
 }
