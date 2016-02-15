@@ -4,10 +4,17 @@
 	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 <<<<<<< HEAD
+<<<<<<< HEAD
 			<Cursor1 position="624" topLine="29" />
 =======
 			<Cursor1 position="601" topLine="18" />
 >>>>>>> 5446e1b223acc359e01baf5cfca966d1fe6a298c
+=======
+			<Cursor1 position="913" topLine="13" />
+=======
+			<Cursor1 position="624" topLine="29" />
+>>>>>>> 89207da204b8acc59fd38dc4662ad168082fb381
+>>>>>>> 37714f7b0992c5a9ab165acb59b4170e0f0287fe
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

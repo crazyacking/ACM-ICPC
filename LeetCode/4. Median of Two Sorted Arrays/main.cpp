@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+#include<bits/stdc++.h>
+using namespace std;
+
+=======
 /**
  * -----------------------------------------------------------------
  * Copyright (c) 2016 crazyacking.All rights reserved.
@@ -85,6 +90,7 @@ public:
 
 /*Solution 2*/
 /*
+>>>>>>> 89207da204b8acc59fd38dc4662ad168082fb381
 class Solution
 {
 public:
@@ -93,6 +99,10 @@ public:
         auto it1=nums1.begin();
         auto it2=nums2.begin();
         vector<int> a;
+<<<<<<< HEAD
+        // merge
+=======
+>>>>>>> 89207da204b8acc59fd38dc4662ad168082fb381
         while(it1!=nums1.end() || it2!=nums2.end())
         {
             if(it1==nums1.end() && it2!=nums2.end())
@@ -124,6 +134,30 @@ public:
         return ans;
     }
 };
+<<<<<<< HEAD
+
+int main()
+{
+    Solution solution;
+    int n,m,tp;
+    while(cin>>n>>m)
+    {
+        vector<int> a,b;
+        for(int i=0;i<n;++i)
+        {
+            cin>>tp;
+            a.push_back(tp);
+        }
+        for(int i=0;i<m;++i)
+        {
+            cin>>tp;
+            b.push_back(tp);
+        }
+//        solution.findMedianSortedArrays(a,b);
+        cout<<solution.findMedianSortedArrays(a,b)<<endl;
+    }
+    return 0;
+=======
 */
 
 int main()
@@ -148,4 +182,5 @@ int main()
           cout<<ans<<endl;
       }
       return 0;
+>>>>>>> 89207da204b8acc59fd38dc4662ad168082fb381
 }
