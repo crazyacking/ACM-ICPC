@@ -29,47 +29,39 @@ public:
     vector<vector<int> > threeSum(vector<int>& nums)
     {
         int si=nums.size();
-        set<int> se;
-        for(auto p:nums)
-            se.insert(p);
-        int t1,t2;
         vector<vector<int> > ret;
-        for(int i=0;i<si;++i)
+        sort(nums.begin(),nums.end());
+        int target,sum,low,high;
+        for(int i=0;i<si;i++)
         {
-            for(int j=i+1;j<si;++j)
+            target=-nums[i];
+            low=i+1;
+            high=si-1;
+            // not exist two active integet's sum greater than target
+            if(target<0)
+                break;
+
+            while(low<high)
             {
-                se.erase(nums[i]);
-                se.erase(nums[j]);
-                if(se.find(-1*(nums[i]+nums[j]))!=se.end())
+                sum=nums[low]+nums[high];
+                if(sum<target)
+                    ++low;
+                else if(sum>target)
+                    --high;
+                else
                 {
-                    vector<int> tv;
-                    tv.push_back(nums[i]);
-                    tv.push_back(nums[j]);
-                    tv.push_back(-1*(nums[i]+nums[j]));
-                    sort(tv.begin(),tv.end());
-                    ret.push_back(tv);
+                    vector<int> triple(3,0);
+                    triple[0]=nums[i];
+                    triple[1]=nums[low];
+                    triple[2]=nums[high];
+                    ret.push_back(triple);
+                    while(low<high && triple[1]==nums[low]) ++low;
+                    while(low<high && triple[2]==nums[high]) --high;
                 }
-                se.insert(nums[i]);
-                se.insert(nums[j]);
             }
+            while(i+1 < nums.size() && nums[i+1] == nums[i])
+                ++i;
         }
-        cout<<"size1:"<<ret.size()<<endl;
-        sort(ret.begin(),ret.end());
-        unique(ret.begin(),ret.end());
-        vector<vector<int> > ::iterator it1,it2;
-
-        cout<<"size2:"<<ret.size()<<endl;
-        puts("===============begin================Program Run Here !=============================");
-        for(auto p1:ret)
-        {
-            for(auto p2:p1)
-            {
-                cout<<p2<<" ";
-            }
-            cout<<endl;
-        }
-        puts("================end===============Program Run Here !=============================");
-
         return ret;
     }
 };
@@ -92,12 +84,9 @@ int main()
         for(auto p1:ans)
         {
             for(auto p2:p1)
-            {
                 cout<<p2<<" ";
-            }
             cout<<endl;
         }
-        cout<<"End."<<endl;
     }
     return 0;
 }
