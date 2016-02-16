@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1455617456 source:h:\code_fantasy\acm-icpc\leetcode\15. 3sum\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+

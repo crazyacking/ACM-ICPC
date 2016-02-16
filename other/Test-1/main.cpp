@@ -3,7 +3,7 @@
  * Copyright (c) 2016 crazyacking.All rights reserved.
  * -----------------------------------------------------------------
  *       Author: crazyacking
- *       Date  : 2016-02-16-10.53
+ *       Date  : 2016-02-16-17.33
  */
 #include <queue>
 #include <cstdio>
@@ -25,21 +25,9 @@ const double eps(1e-8);
 
 int main()
 {
-      int n;
-      while(cin>>n)
-      {
-          vector<int> ve;
-          for(int i=0;i<n;++i)
-          {
-              int tmp;
-              cin>>tmp;
-              ve.push_back(tmp);
-          }
-          cout<<*ve.rbegin()5<<endl;
-          for(auto p:ve)
-          {
-              cout<<p<<endl;
-          }
-      }
+      vector<vector<int> > ve;
+      ve.push_back(vector<int>());
+      ve.push_back(vector<int>());
+      cout<<ve.size()<<endl;
       return 0;
 }
