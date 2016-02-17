@@ -33,28 +33,47 @@ public:
         {
             if(p=='(' || p=='{' || p=='[')
                 sta.push(p);
-            //
             else if(p==')')
             {
+                if(sta.empty()) return false;
                 char tp=sta.top();
                 sta.pop();
+                if(tp!='(')
+                    return false;
             }
             else if(p=='}')
             {
-
+                if(sta.empty()) return false;
+                char tp=sta.top();
+                sta.pop();
+                if(tp!='{')
+                    return false;
             }
             else
             {
-
+                if(sta.empty()) return false;
+                char tp=sta.top();
+                sta.pop();
+                if(tp!='[')
+                    return false;
             }
-
         }
+        if(sta.empty())
+            return true;
+        else return false;
     }
 };
 
 int main()
 {
-
+    Solution solution;
+    string s;
+    while(cin>>s)
+    {
+        if(solution.isValid(s))
+            cout<<"Yes."<<endl;
+        else cout<<"No."<<endl;
+    }
     return 0;
 }
 /*
