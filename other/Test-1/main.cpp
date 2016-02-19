@@ -1,37 +1,11 @@
-/**
- * -----------------------------------------------------------------
- * Copyright (c) 2016 crazyacking.All rights reserved.
- * -----------------------------------------------------------------
- *       Author: crazyacking
- *       Date  : 2016-02-17-10.21
- */
-#include <queue>
-#include <cstdio>
-#include <set>
-#include <string>
-#include <stack>
-#include <cmath>
-#include <climits>
-#include <map>
-#include <cstdlib>
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cstring>
-using namespace std;
-typedef long long(LL);
-typedef unsigned long long(ULL);
-const double eps(1e-8);
-
+#include<stdio.h>
+#include<string.h>
 int main()
 {
-    string tmp;
-    tmp.push_back('f');
-    cout<<tmp<<endl;
-    tmp.clear();
-    cout<<tmp<<endl;
+    // 也可以改成 char str[] = "http://see.xidian.edu.cn/cpp/u/xitong/";
+    char *str = "http://see.xidian.edu.cn/cpp/u/xitong/";
+    char *substr = "see";
+    char *s = strstr(str, substr);
+    printf("%s\n", s);
     return 0;
 }
-/*
-
-*/

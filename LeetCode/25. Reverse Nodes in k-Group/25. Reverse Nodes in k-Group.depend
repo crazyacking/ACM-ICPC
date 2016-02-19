@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1447772570 source:d:\code_fantasy\acm-icpc\other\test-1\main.cpp
+1455853394 source:h:\code_fantasy\acm-icpc\leetcode\25. reverse nodes in k-group\main.cpp
 	<queue>
 	<cstdio>
 	<set>
@@ -13,8 +13,4 @@
 	<vector>
 	<algorithm>
 	<cstring>
-
-1455871766 source:h:\code_fantasy\acm-icpc\other\test-1\main.cpp
-	<stdio.h>
-	<string.h>
 
