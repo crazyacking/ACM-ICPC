@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1455848476 source:h:\code_fantasy\acm-icpc\leetcode\23. merge k sorted lists\main.cpp
+1455850600 source:h:\code_fantasy\acm-icpc\leetcode\24. swap nodes in pairs\main.cpp
 	<queue>
 	<cstdio>
 	<set>
