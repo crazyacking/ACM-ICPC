@@ -1,9 +1,14 @@
-#include <iostream>
-
-using namespace std;
-
-int main()
+class Solution
 {
-    cout << "Hello world!" << endl;
-    return 0;
-}
+public:
+    void nextPermutation(vector<int>& nums)
+    {
+        if(next_permutation(nums.begin(),nums.end()))
+            return;
+        else
+        {
+            sort(nums.begin(),nums.end());
+            return;
+        }
+    }
+};

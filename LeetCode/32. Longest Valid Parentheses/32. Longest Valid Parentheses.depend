@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1455947895 source:h:\code_fantasy\acm-icpc\leetcode\32. longest valid parentheses\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+
