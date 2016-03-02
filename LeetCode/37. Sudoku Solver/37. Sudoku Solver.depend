@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1456837135 source:h:\code_fantasy\acm-icpc\leetcode\32. longest valid parentheses\main.cpp
+1456923594 source:h:\code_fantasy\acm-icpc\leetcode\37. sudoku solver\main.cpp
 	<queue>
 	<cstdio>
 	<set>
@@ -13,4 +13,5 @@
 	<vector>
 	<algorithm>
 	<cstring>
+	<bits/stdc++.h>
 
