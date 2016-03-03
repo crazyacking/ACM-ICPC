@@ -31,119 +31,53 @@ public:
     void solveSudoku(vector<vector<char>>& board)
     {
         recursiveSolve(board);
-        checkResult(board);
     }
 
-    //=====================
     bool recursiveSolve(vector<vector<char>>& board)
     {
-        unordered_map<char,bool> rowMap;
-        unordered_map<char,bool> colMap;
-        unordered_map<char,bool> blockMap;
-        int row=board.size();
-        int col=board[0].size();
-        int r1=0,c1=0;
-        bool isFinished=true;
-        for(r1=0;r1<row;++r1)
+        for(int i=0; i<9; ++i)
         {
-            for(c1=0;c1<col;++c1)
+            for(int j=0; j<9; ++j)
             {
-                if(board[r1][c1]=='.')
+                if(board[i][j]=='.')
                 {
-                    isFinished=false;
-                    break;
-                }
-            }
-            if(!isFinished)
-                break;
-        }
-        Sleep(150);
-        cout<<"point="<<r1<<" "<<c1<<endl;
-
-        if(isFinished)
-        {
-            puts("===============================Program Run Here !=============================");
-            return true;
-        }
-
-        for(int i=0;i<9;++i)
-        {
-            if(board[r1][i]!='.')
-            {
-                if(rowMap.count(board[r1][i])>0)
+                    for(int k=1; k<=9; ++k)
+                    {
+                        board[i][j]=static_cast<char>(k+'0');
+                        if(isValid(board,i,j) && recursiveSolve(board))
+                            return true;
+                        board[i][j]='.';
+                    }
                     return false;
-                rowMap[board[r1][i]]=true;
-            }
-            if(board[i][c1]!='.')
-            {
-                if(colMap.count(board[i][c1])>0)
-                    return false;
-                colMap[board[i][c1]]=true;
-            }
-        }
-
-        int staRow=r1/3*3;
-        int staCol=c1/3*3;
-//        cout<<staRow<<" "<<staCol<<endl;
-        for(int i=staRow;i<staRow+3;++i)
-        {
-            for(int j=staCol;j<staCol+3;++j)
-            {
-                if(board[i][j]!='.')
-                {
-                    if(blockMap.count(board[i][j])>0)
-                        return false;
-                    blockMap[board[i][j]]=true;
                 }
             }
         }
-
-
-        for(int num=1;num<=9;++num)
-        {
-            char ch=static_cast<char>(num+'0');
-            if(rowMap.count(ch)==0 && colMap.count(ch)==0 && blockMap.count(ch)==0)
-            {
-                board[r1][c1]=ch;
-                if(recursiveSolve(board))
-                {
-                    puts("===hehe============");
-                    break;
-                }
-                board[r1][c1]='.';
-            }
-        }
-
-
-        if(isFinished)
-            return true;
-        else
-            return false;
+        return true;
     }
 
-    void checkResult(vector<vector<char>>& board)
+    bool isValid(const vector<vector<char>>& board,const int r1,const int c1)const
     {
-        puts("======================================================");
-        for(auto p1:board)
+        for(int i=0; i<9; ++i)
         {
-            for(auto p2:p1)
-                cout<<p2<<" ";
-            cout<<endl;
+            if(i!=r1 && board[i][c1]==board[r1][c1])
+                return false;
+            if(i!=c1 && board[r1][i]==board[r1][c1])
+                return false;
         }
-        puts("======================================================");
+        int rowBegin=r1/3*3;
+        int colBegin=c1/3*3;
+        for(int i=rowBegin; i<rowBegin+3; ++i)
+        {
+            for(int j=colBegin; j<colBegin+3; ++j)
+            {
+                if(i!=r1 && j!=c1 && board[i][j]==board[r1][c1])
+                    return false;
+            }
+        }
+        return true;
     }
-
 };
 
-void output(vector<vector<char>>& ve)
-{
-    for(auto p1:ve)
-    {
-        for(auto p2:p1)
-            cout<<p2<<" ";
-        cout<<endl;
-    }
-}
 
 int main()
 {
@@ -154,11 +88,10 @@ int main()
     while(cin>>s)
     {
         vector<char> tempVe;
-        for(int i=0;i<s.length();++i)
+        for(int i=0; i<s.length(); ++i)
             tempVe.push_back(s[i]);
         ve.push_back(tempVe);
     }
-    output(ve);
     solution.solveSudoku(ve);
     return 0;
 }
