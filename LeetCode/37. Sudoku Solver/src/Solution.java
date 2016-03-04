@@ -6,66 +6,48 @@ import java.util.Scanner;
  */
 public class Solution {
     public void solveSudoku(char[][] board) {
-        recursiveSoluve(board);
+        if(board == null || board.length == 0)
+            return;
+        solve(board);
     }
 
-    public boolean recursiveSoluve(char[][] board)
-    {
-        for(int i=0;i<9;++i)
-        {
-            for(int j=0;j<9;++j)
-            {
-                if(board[i][j]=='.')
-                {
-                    for(char c='1';c<='9';++c)
-                    {
-                        board[i][j]=c;
-                        if(isValid(board,i,j) && recursiveSoluve(board))
-                            return true;
-                        board[i][j]='.';
+    public boolean solve(char[][] board){
+        for(int i = 0; i < board.length; i++){
+            for(int j = 0; j < board[0].length; j++){
+                if(board[i][j] == '.'){
+                    for(char c = '1'; c <= '9'; c++){//trial. Try 1 through 9 for each cell
+                        if(isValid(board, i, j, c)){
+                            board[i][j] = c; //Put c for this cell
+
+                            if(solve(board))
+                                return true; //If it's the solution return true
+                            else
+                                board[i][j] = '.'; //Otherwise go back
+                        }
                     }
+                    return false;
                 }
             }
-            return false;
         }
         return true;
     }
 
-    public boolean isValid(char[][] board,int r1,int c1)
-    {
-        for(int i=0;i<9;++i)
-        {
-            if(i!=r1 && board[i][c1]==board[r1][c1])
+    public boolean isValid(char[][] board, int i, int j, char c){
+        //Check colum
+        for(int row = 0; row < 9; row++)
+            if(board[row][j] == c)
                 return false;
-            if(i!=c1 && board[r1][i]==board[r1][c1])
+
+        //Check row
+        for(int col = 0; col < 9; col++)
+            if(board[i][col] == c)
                 return false;
-        }
-        int rowBegin=r1/3*3;
-        int colBegin=c1/3*3;
-        for(int i=rowBegin;i<rowBegin+3;++i)
-        {
-            for(int j=colBegin;j<colBegin+3;++j)
-            {
-                if(i!=r1 && j!=c1 && board[i][j]==board[r1][c1])
+
+        //Check 3 x 3 block
+        for(int row = (i / 3) * 3; row < (i / 3) * 3 + 3; row++)
+            for(int col = (j / 3) * 3; col < (j / 3) * 3 + 3; col++)
+                if(board[row][col] == c)
                     return false;
-            }
-        }
         return true;
     }
-    public static void main()
-    {
-        Scanner cin=new Scanner(new BufferedInputStream(System.in));
-        Solution solution=new Solution();
-        char[][] ve;
-        for(int i=0;i<9;++i)
-        {
-            for(int j=0;j<9;++j)
-            {
-                ve=new char[][];
-                ve[i]=new char[9];
-                ve[i][j]=cin.next();
-            }
-        }
-        solution.solveSudoku(ve);
-    }
-}
+};
