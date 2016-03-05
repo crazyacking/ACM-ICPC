@@ -27,13 +27,17 @@ const double eps(1e-8);
 vector<double> divide_table;
 void wechat_money_divide(double money,int n)
 {
-    money*=100;
+    double sum=0;
+    divide_table.clear();
     for(int i=0;i<n;++i)
     {
-        int rest_people=n-i-1;
-        int max_money=money-10*rest_people; // 剩下的人至少保证每人1分钱
-        double ave=max_money/rest_people;
+        int rd=rand()%10000;
+        sum+=rd;
+        divide_table.push_back(rd);
     }
+    money-=n*0.01;
+    for(int i=0;i<n;++i)
+        divide_table[i]=(money*(divide_table[i]/sum)+0.01);
 }
 
 int main()
