@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1457171693 source:h:\code_fantasy\acm-icpc\leetcode\38. count and say\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+	<bits/stdc++.h>
+

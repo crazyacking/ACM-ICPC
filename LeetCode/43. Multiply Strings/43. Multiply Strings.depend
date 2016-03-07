@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1457261729 source:h:\code_fantasy\acm-icpc\leetcode\43. multiply strings\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<windows.h>
+	<cstring>
+
