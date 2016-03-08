@@ -28,13 +28,45 @@ class Solution
 public:
     bool isMatch(string s, string p)
     {
-
+        int star_=-1,ts;
+        int ss(0),pp(0);
+        while(ss<s.length())
+        {
+            if(s[ss]==p[pp] || p[pp]=='?')
+            {
+                ++ss,++pp;
+                continue;
+            }
+            if(p[pp]=='*')
+            {
+                star_=pp++,ts=ss;
+                continue;
+            }
+            if(star_!=-1)
+            {
+                pp=star_+1,ss=++ts;
+                continue;
+            }
+            return false;
+        }
+        while(p[pp]=='*')
+            ++pp;
+        return (pp==p.length());
     }
 };
 
 int main()
 {
-
+    string s1,s2;
+    while(cin>>s1>>s2)
+    {
+        Solution solution;
+        bool res=solution.isMatch(s1,s2);
+        if(res)
+            cout<<"True"<<endl;
+        else
+            cout<<"False"<<endl;
+    }
     return 0;
 }
 /*

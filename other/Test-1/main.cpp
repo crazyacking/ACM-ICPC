@@ -1,38 +1,65 @@
-#include <iostream>
+#include<iostream>
+#include<cmath>
+#include<cstdio>
+#include<cstring>
+#include<algorithm>
+#define MAX 1010
 using namespace std;
-//最长上升子序列
-int find(int *a,int len,int n)//修改后的二分查找，若返回值为x，则a[x]>=n
+int parents[110];
+typedef struct node
 {
-    int left=0,right=len,mid=(left+right)/2;
-    while(left<=right)
-    {
-        if(n>a[mid]) left=mid+1;
-        else if(n<a[mid]) right=mid-1;
-        else return mid;
-        mid=(left+right)/2;
-    }
-    return left;
+    int a,b;
+    int c;
+} NODE;
+NODE edges[6000];
+bool cmp(NODE x,NODE y)
+{
+    if(x.c<y.c)
+        return 1;
+    return 0;
 }
 
-int main(void)
+int find(int x)
 {
-    int n,a[100],b[100],c[100],i,j,len;//新开一变量len,用来储存每次循环结束后c中已经求出值的元素的最大下标
-    while(cin>>n)
+    return x!=parents[x]?parents[x]=find(parents[x]):x;
+}
+
+int kruskal(int m)
+{
+    int i,mincost=0,x,y;
+    for(i=0; i<m; i++)
+    {
+        x=edges[i].a;
+        y=edges[i].b;
+        x=find(x);
+        y=find(y);
+        if(x!=y)
+        {
+            parents[x]=y;
+            mincost+=edges[i].c;
+        }
+    }
+    return mincost;
+}
+int main()
+{
+    int n,m,i,mincost=0;
+    while(scanf("%d %d",&n,&m)!=EOF&&n!=0)
     {
         for(i=0; i<n; i++)
-            cin>>a[i];
-        b[0]=1;
-        c[0]=-1;
-        c[1]=a[0];
-        len=1;//此时只有c[1]求出来，最长递增子序列的长度为1.
-        for(i=1; i<n; i++)
+            scanf("%d %d %d",&edges[i].a,&edges[i].b,&edges[i].c);
+        for(i=0; i<m; i++)
+            parents[i]=i;
+        sort(edges,edges+n,cmp);
+        mincost=kruskal(n);
+        int count=0;
+        for(i=0; i<m; i++)
         {
-            j=find(c,len,a[i]);
-            c[j]=a[i];
-            if(j>len)//要更新len,另外补充一点：由二分查找可知j只可能比len大1
-                len=j;//更新len
+            if(parents[i]==i)
+                count++;
         }
-        cout<<len<<endl;
+        if(count>1) puts("?");
+        else printf("%d\n",mincost);
     }
     return 0;
 }
