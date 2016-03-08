@@ -23,13 +23,14 @@ typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
+
 class Solution
 {
 public:
     int searchInsert(vector<int>& nums, int target)
     {
         int len=nums.size();
-        if(len==0 || target<=nums[0])
+        if(!len || target<=nums[0])
             return 0;
         if(target>nums[len-1])
             return len;
@@ -52,8 +53,10 @@ public:
             else
                 return mid;
         }
+        return 0;
     }
 };
+
 
 int main()
 {

@@ -1,54 +1,38 @@
-/**
- * -----------------------------------------------------------------
- * Copyright (c) 2016 crazyacking.All rights reserved.
- * -----------------------------------------------------------------
- *       Author: crazyacking
- *       Date  : 2016-03-06-18.36
- */
-#include <queue>
-#include <cstdio>
-#include <set>
-#include <string>
-#include <stack>
-#include <cmath>
-#include <climits>
-#include <map>
-#include <cstdlib>
 #include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cstring>
 using namespace std;
-typedef long long(LL);
-typedef unsigned long long(ULL);
-const double eps(1e-8);
-
-void str_num_multi(string str,int num,string& res)
+//最长上升子序列
+int find(int *a,int len,int n)//修改后的二分查找，若返回值为x，则a[x]>=n
 {
-    cout<<str<<endl;
-    cout<<num<<endl;
-    int carry=0;
-    for(int i=0; i<str.length(); ++i)
+    int left=0,right=len,mid=(left+right)/2;
+    while(left<=right)
     {
-        int now=num*(str[i]-'0')+carry;
-        carry=now/10;
-        now%=10;
-        res.push_back(char(now+'0'));
+        if(n>a[mid]) left=mid+1;
+        else if(n<a[mid]) right=mid-1;
+        else return mid;
+        mid=(left+right)/2;
     }
-    if(carry)
-        res.push_back(char(carry+'0'));
+    return left;
 }
 
-int main()
+int main(void)
 {
-    string str;
-    int num;
-    string res;
-    cin>>str>>num;
-    str_num_multi(str,num,res);
-    cout<<res<<endl;
+    int n,a[100],b[100],c[100],i,j,len;//新开一变量len,用来储存每次循环结束后c中已经求出值的元素的最大下标
+    while(cin>>n)
+    {
+        for(i=0; i<n; i++)
+            cin>>a[i];
+        b[0]=1;
+        c[0]=-1;
+        c[1]=a[0];
+        len=1;//此时只有c[1]求出来，最长递增子序列的长度为1.
+        for(i=1; i<n; i++)
+        {
+            j=find(c,len,a[i]);
+            c[j]=a[i];
+            if(j>len)//要更新len,另外补充一点：由二分查找可知j只可能比len大1
+                len=j;//更新len
+        }
+        cout<<len<<endl;
+    }
     return 0;
 }
-/*
-
-*/
