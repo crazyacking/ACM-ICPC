@@ -3,7 +3,7 @@
  * Copyright (c) 2016 crazyacking.All rights reserved.
  * -----------------------------------------------------------------
  *       Author: crazyacking
- *       Date  : 2016-03-05-10.39
+ *       Date  : 2016-03-09-11.08
  */
 #include <queue>
 #include <cstdio>
@@ -18,44 +18,94 @@
 #include <vector>
 #include <algorithm>
 #include <cstring>
-#include <bits/stdc++.h>
 using namespace std;
 typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
-vector<double> divide_table;
-void wechat_money_divide(double money,int n)
+const int MAXN=10010;
+
+class Solution
 {
-    money*=100;
-    for(int i=0;i<n;++i)
+public:
+    int find(int x)
     {
-        int rest_people=n-i-1;
-        int max_money=money-10*rest_people; // 剩下的人至少保证每人1分钱
-        double ave=max_money/rest_people;
+        return x!=parents[x]?parents[x]=find(parents[x]):x;
     }
-}
+
+    void init()
+    {
+        for(int i=0; i<MAXN; ++i)
+        {
+            parents[i]=i;
+            isLeaf[i]=true;
+        }
+    }
+
+    void create_relationship(int a,int b,int c)
+    {
+        isLeaf[a]=false;
+        parents[find(b)]=a;
+        parents[find(c)]=a;
+    }
+
+    void judge()
+    {
+        int x;
+        for(int i=0; i<MAXN; ++i)
+        {
+            x=find(i);
+            isLeaf[x]=false;
+        }
+    }
+
+    void query(int m)
+    {
+        for(int i=0; i<MAXN; ++i)
+        {
+            if(parents[i]==m && isLeaf[i])
+            {
+                cout<<i<<" ";
+            }
+        }
+        cout<<endl;
+        cout<<"-------------------"<<endl;
+    }
+
+private:
+    int parents[MAXN];
+    bool isLeaf[MAXN];
+
+};
 
 int main()
 {
-    srand((unsigned)time(NULL));
-    double money;
     int n;
-    while(cin>>money>>n)
+    Solution solution;
+    while(cin>>n)
     {
-        wechat_money_divide(money,n);
-        cout<<"---------------"<<endl;
-        double sum=0.;
-        for(auto p:divide_table)
+        solution.init();
+        int a,b,c; // 假设只有两个数依赖于a (多个数的话使用vector存储)
+        for(int i=0; i<n; ++i)
         {
-            printf("%.2f\n",p);
-            sum+=p;
+            cin>>a>>b>>c;
+            solution.create_relationship(a,b,c);
         }
-        cout<<"sum="<<sum<<endl;
-        cout<<"---------------"<<endl;
+        solution.judge();
+        int m;
+        cin>>m;
+        solution.query(m);
     }
     return 0;
 }
+
 /*
+测试数据：
+4
+1  2 3
+2  4 5
+3  6 7
+4  8 10
+1
 
 */
