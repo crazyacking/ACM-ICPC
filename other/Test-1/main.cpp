@@ -67,7 +67,7 @@ private:
 int main()
 {
     int n;
-    while(cin>>n) // 多组测试数据
+    while(cin>>n)
     {
         Solution solution;
         while(n--)
@@ -94,5 +94,4 @@ int main()
 4 2  5 6
 7 2  8 9
 1
-
 */
