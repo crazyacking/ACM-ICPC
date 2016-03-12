@@ -3,7 +3,7 @@
  * Copyright (c) 2016 crazyacking.All rights reserved.
  * -----------------------------------------------------------------
  *       Author: crazyacking
- *       Date  : 2016-03-09-13.57
+ *       Date  : 2016-03-11-16.35
  */
 #include <queue>
 #include <cstdio>
@@ -18,80 +18,22 @@
 #include <vector>
 #include <algorithm>
 #include <cstring>
-#include <bits/stdc++.h>
 using namespace std;
 typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
-class Solution
-{
-public:
-    Solution()
-    {
-        graph.clear();
-    }
-
-    void add_edge(int k,vector<int> nums)
-    {
-        graph[k]=nums;
-    }
-
-    void bfs_search(int key)
-    {
-        set<int> result; // 存储答案
-        unordered_set<int> que; // 使用unordered_set来作为bfs队列，可以起到去重的作用，减少搜索量
-        que.insert(key);
-        while(que.size()>0)
-        {
-            int top=*que.begin();
-            que.erase(top);
-            if(!graph.count(top)) //  top没有子节点了，为叶子节点
-            {
-                result.insert(top);
-                continue;
-            }
-            for(auto p:graph[top])
-                que.insert(p);
-        }
-
-        for(auto ptr:result)
-            cout<<ptr<<" ";
-        cout<<endl;
-        cout<<"---------------------"<<endl;
-    }
-private:
-    map<int,vector<int>> graph; //存储有向图
-};
-
 int main()
 {
-    int n;
-    while(cin>>n)
+    int64_t x1,y1,x2,y2,r;
+    while(cin>>r>>x1>>y1>>x2>>y2)
     {
-        Solution solution;
-        while(n--)
-        {
-            int k,m;
-            cin>>k>>m; // 本条依赖记录中，有m个数依赖于k
-            vector<int> nums(m);
-            for(int i=0;i<m;++i)
-                cin>>nums[i];
-            solution.add_edge(k,nums);
-        }
-        int key;
-        cin>>key; // 要查询依赖的数
-        solution.bfs_search(key);
+        long double dis=sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
+        long double a=dis/(2.*r);;;
+        cout<<ceil(a)<<endl;
     }
     return 0;
 }
 /*
 
-测试数据：
-4
-1 2  2 3
-2 2  3 4
-4 2  5 6
-7 2  8 9
-1
 */
