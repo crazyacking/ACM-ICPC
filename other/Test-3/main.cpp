@@ -70,8 +70,6 @@ public:
                 cout<<i<<" ";
             }
         }
-        cout<<endl;
-        cout<<"-------------------"<<endl;
     }
 
 private:
