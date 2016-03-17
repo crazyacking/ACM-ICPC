@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1458091285 source:h:\code_fantasy\acm-icpc\leetcode\207. course schedule\main.cpp
+1458108169 source:h:\code_fantasy\acm-icpc\leetcode\207. course schedule\main.cpp
 	<queue>
 	<cstdio>
 	<set>
@@ -10,8 +10,8 @@
 	<map>
 	<cstdlib>
 	<iostream>
+	<bits/stdc++.h>
 	<vector>
 	<algorithm>
-	<bits/stdc++.h>
 	<cstring>
 
