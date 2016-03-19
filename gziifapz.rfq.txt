@@ -1,5 +1,4 @@
-﻿ Changes to be committed:
-	modified:   other/Test-1/Test-1.depend
+﻿	modified:   other/Test-1/Test-1.depend
 	modified:   other/Test-1/Test-1.layout
 	modified:   other/Test-1/main.cpp
 	modified:   other/Test-2/main.cpp
