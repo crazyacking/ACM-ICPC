@@ -54,3 +54,10 @@ obj/
 .sln
 .vcxproj
 .filters
+
+.exe
+.dev
+.layout
+.win
+.o
+.project

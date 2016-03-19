@@ -1,26 +1,60 @@
-template<typename K, typename Pair, typename Hashtable>
-typename map_base<K, Pair, extract1st<Pair>, true, Hashtable>::mapped_type&
-map_base<K, Pair, extract1st<Pair>, true, Hashtable>::
-operator[](const K& k)
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution
 {
-    Hashtable* h = static_cast<Hashtable*>(this);
-    typename Hashtable::hash_code_t code = h->m_hash_code(k);
-    std::size_t n = h->bucket_index(k, code, h->bucket_count());
+public:
+    vector<vector<string> > solveNQueens(int n)
+    {
+        vector<vector<string> > res;
+        vector<string> matrix(n);
+        string str(n,'.');
+        for(int i=0;i<n;++i)
+            matrix[i]=str;
 
-    typename Hashtable::node* p = h->m_find_node(h->m_buckets[n], k, code);
-    if (!p)
-        return h->m_insert_bucket(std::make_pair(k, mapped_type()),
-                                  n, code)->second;
-    return (p->m_v).second;
+        solve(matrix,res,n,0,0);
+        output(res);
+        return res;
+    }
+
+    void solve(vector<string>& matrix,vector<vector<string> >& res,int& n,int row,int col)
+    {
+        if(row=n-1 && col==n-1)
+        {
+            res.push_back(matrix);
+            return ;
+        }
+
+        for(int i=row;i<n;++i)
+        {
+            for(int j=col;j<n;++j)
+            {
+                 matrix[i][j]='Q';
+            }
+        }
+
+    }
+
+    void output(vector<vector<string>> res)
+    {
+        for(auto p1:res)
+        {
+            for(auto p2:p1)
+            {
+                 cout<<p2<<endl;
+            }
+            cout<<" ----------------------------"<<endl;
+        }
+    }
+};
+
+int main()
+{
+    int n;
+    while(cin>>n)
+    {
+        Solution solution;
+        solution.solveNQueens(n);
+    }
+    return 0;
 }
-
-
-explicit
-unordered_map(size_type n = 10,
-              const hasher& hf = hasher(),
-              const key_equal& eql = key_equal(),
-              const allocator_type& a = allocator_type())
-    : Base(n, hf, Internal::mod_range_hashing(),
-           Internal::default_ranged_hash(),
-           eql, Internal::extract1st<std::pair<const Key, T> >(), a)
-{ }
