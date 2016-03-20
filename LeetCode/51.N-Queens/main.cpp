@@ -10,7 +10,7 @@ public:
         vector<string> matrix(n);
         string str(n,'.');
         for(int i=0;i<n;++i)
-            matrix[i]=str;
+           matrix[i]=str;
         solve(matrix,res,n,0);
         output(res);
         return res;
@@ -26,14 +26,14 @@ public:
         for(int i=pos;i<n*n;++i)
         {
              matrix[i/n][i%n]='Q';
-             if(is_ok(matrix,i))
+             if(is_ok(matrix,i,n))
                 solve(matrix,res,n,pos+1);
              matrix[i/n][i%n]='.';
         }
     }
 
 
-    bool is_ok(auto& matrix,int pos)
+    bool is_ok(auto& matrix,int pos,int n)
     {
          int row=pos/n,col=pos%n;
          // heng
