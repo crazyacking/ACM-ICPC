@@ -1,16 +1,40 @@
-#include <bits/stdc++.h>
+/**
+ * -----------------------------------------------------------------
+ * Copyright (c) 2016 crazyacking.All rights reserved.
+ * -----------------------------------------------------------------
+ *       Author: crazyacking
+ *       Date  : 2016-03-20-16.35
+ */
+#include <queue>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <stack>
+#include <cmath>
+#include <climits>
+#include <map>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
 using namespace std;
+typedef long long(LL);
+typedef unsigned long long(ULL);
+const double eps(1e-8);
+
 
 class Solution
 {
 public:
     vector<vector<string>> solveNQueens(int n)
     {
+        __init(n);
         vector<vector<string>> res;
         dfs(0,n,mat,res,0);
         return res;
     }
-    void dfs(int num,int n,auto &mat,auto &res,int queen)
+    void dfs(int num,int n,vector<string> &mat,vector<vector<string>> &res,int queen)
     {
         if(num==n*n)
         {
@@ -27,15 +51,9 @@ public:
         }
         mat[row][col]='.';
         dfs(num+1,n,mat,res,queen);
-//        dfs(num+1,n,mat,res);
-//        else
-//        {
-//            mat[row][col]='.';
-//            dfs(num+1,n,mat,res);
-//        }
     }
 
-    bool check(auto mat,int row,int col,int n)
+    bool check(vector<string> &mat,int row,int col,int n)
     {
         for(int i=0;i<n;++i)
         {
@@ -62,7 +80,7 @@ public:
         }
         return true;
     }
-    Solution(int n)
+    void __init(int n)
     {
         string res(n,'.');
         mat=*(new vector<string>(n,res));
@@ -76,15 +94,14 @@ int main()
     int n;
     while(cin>>n)
     {
-        Solution solution(n);
-        auto res=solution.solveNQueens(n);
-        for(auto p1:res)
+        Solution solution;
+        vector<vector<string>> res=solution.solveNQueens(n);
+        for(vector<vector<string>>::iterator it1=res.begin();it1!=res.end();++it1)
         {
-            for(auto p2:p1)
-                cout<<p2<<endl;
+            for(vector<string>::iterator it2=(*it1).begin();it2!=(*it1).end();++it2)
+                cout<<*it2<<endl;
             cout<<"------------------------------"<<endl;
         }
-        cout<<"------------------------------"<<endl;
     }
     return 0;
 }
