@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1457147933 source:h:\code_fantasy\acm-icpc\other\wechat_money_package_divide\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+	<bits/stdc++.h>
+

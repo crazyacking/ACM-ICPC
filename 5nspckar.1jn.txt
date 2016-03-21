@@ -1,10 +1,4 @@
-﻿
-Please enter the commit message for your changes. Lines starting
-with '#' will be ignored, and an empty message aborts the commit.
-On branch master
-Your branch is up-to-date with 'origin/master'.
-
-Changes to be committed:
+﻿Changes to be committed:
 	modified:   LeetCode/15. 3Sum/15. 3Sum.layout
 	new file:   LeetCode/16. 3Sum Closest/16. 3Sum Closest.cbp
 	new file:   LeetCode/16. 3Sum Closest/16. 3Sum Closest.depend

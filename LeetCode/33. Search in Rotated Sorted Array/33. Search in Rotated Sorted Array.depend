@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1456840395 source:h:\code_fantasy\acm-icpc\leetcode\33. search in rotated sorted array\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+

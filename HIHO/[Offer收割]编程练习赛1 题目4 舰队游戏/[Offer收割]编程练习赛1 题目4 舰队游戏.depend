@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1457251029 source:h:\code_fantasy\acm-icpc\hiho\[offer收割]编程练习赛1 题目4 舰队游戏\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+

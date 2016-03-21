@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1457359215 source:h:\code_fantasy\acm-icpc\leetcode\69. sqrt(x)\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+
