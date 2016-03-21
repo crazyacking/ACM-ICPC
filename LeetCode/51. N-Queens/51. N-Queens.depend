@@ -1,4 +1,7 @@
 # depslib dependency file v1.0
-1458458180 source:h:\code_fantasy\acm-icpc\leetcode\51. n-queens\main.cpp
+1458498455 source:h:\code_fantasy\acm-icpc\leetcode\51. n-queens\main.cpp
+	<bits/stdc++.h>
+
+1458498455 source:h:\code_fantasy\acm-icpc\leetcode\51. n-queens\main2.cpp
 	<bits/stdc++.h>
 
