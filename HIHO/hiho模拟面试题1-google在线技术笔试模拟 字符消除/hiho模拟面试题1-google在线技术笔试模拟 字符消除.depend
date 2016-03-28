@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1459057516 source:h:\code_fantasy\acm-icpc\hiho\hiho模拟面试题1-google在线技术笔试模拟 字符消除\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+

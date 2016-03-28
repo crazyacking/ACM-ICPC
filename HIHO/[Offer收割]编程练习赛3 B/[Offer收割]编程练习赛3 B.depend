@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1459061133 source:h:\code_fantasy\acm-icpc\hiho\[offer ’∏Ó]±‡≥Ã¡∑œ∞»¸3 b\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+
