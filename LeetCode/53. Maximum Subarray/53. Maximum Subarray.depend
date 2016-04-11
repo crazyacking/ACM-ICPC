@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1458530617 source:f:\test_code\53. maximum subarray\main.cpp
+	<queue>
+	<cstdio>
+	<set>
+	<string>
+	<stack>
+	<cmath>
+	<climits>
+	<map>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstring>
+
