@@ -85,4 +85,8 @@ int main()
       return 0;
 }
 /*
+3
+gfkc
+skks
+jjdjdn
 */
