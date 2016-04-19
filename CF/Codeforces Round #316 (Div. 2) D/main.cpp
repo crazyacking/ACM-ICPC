@@ -85,4 +85,16 @@ int main()
       return 0;
 }
 /*
+3
+gfkc
+skks
+jjdjdn
+4
+djjsjn
+jxjsj@d
+jsjejSjsjwjssj
+skksksjsdjdjjddjjdjdjd
+2
+jdjsjsn
+snjsjsuejwjsjs
 */
