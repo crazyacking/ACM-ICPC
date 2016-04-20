@@ -22,12 +22,21 @@ vector<int> merge(vector<int> &vl, vector<int> &vr)
 
 vector<int> merge_sort(vector<int> &nums, int l, int r)
 {
+	vector<int> vl,vr;
 	if (l < r)
 	{
-		int mid = (l + r) /2;
-		vector<int> vl = merge_sort(nums, l, mid);
-		vector<int> vr = merge_sort(nums, mid + 1, r);
+		int mid = (l + r) >> 1;
+		vl = merge_sort(nums, l, mid);
+		vr = merge_sort(nums, mid + 1, r);
 		return merge(vl, vr);
+	}
+	else
+	{
+		vector<int> ve(r-l+1);
+		int cnt=0;
+		for(int i=l;i<=r;++i)
+			ve[cnt++]=nums[i];
+		return ve;
 	}
 }
 
@@ -41,7 +50,7 @@ int main(int argc, char const *argv[])
 		{
 			cin >> nums[i];
 		}
-		merge_sort(nums, 0, n - 1);
+		nums=merge_sort(nums, 0, n - 1);
 		for (int i = 0; i < nums.size(); ++i)
 		{
 			cout << nums[i] << " ";

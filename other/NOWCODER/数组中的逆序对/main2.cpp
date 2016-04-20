@@ -2,46 +2,44 @@
 using namespace std;
 
 
-void merge(vector<int> &nums, int l, int mid, int r)
+vector<int> merge(vector<int> vl, vector<int> vr)
 {
-	vector<int> tmp_arr(r - l + 1);
-	int i = l, j = mid + 1, cnt = 0;
-	while (i <= mid && j <= r)
+	int n1 = vl.size(), n2 = vr.size();
+	vector<int> res(n1 + n2);
+	int i = 0, j = 0, cnt = 0;
+	while (i < n1 && j < n2)
 	{
-		if (nums[i] < nums[j])
-			tmp_arr[cnt++] = nums[i++];
+		if (vl[i] < vr[j])
+			res[cnt++] = vl[i++];
 		else
-			tmp_arr[cnt++] = nums[j++];
+			res[cnt++] = vr[j++];
 	}
-	while (i <= mid)
-	{
-		tmp_arr[cnt++] = nums[i++];
-	}
-	while (j <= r)
-	{
-		tmp_arr[cnt++] = nums[j++];
-	}
-	for (int i = 0; i < r - l + 1; ++i)
-	{
-		nums[i] = tmp_arr[i];
-	}
+	while (i < n1)
+		res[cnt++] = vl[i++];
+	while (j < n2)
+		res[cnt++] = vr[j++];
+	return res;
 }
 
 
 int main(int argc, char const *argv[])
 {
-	int n;
-	while(cin>>n)
+	int n,m;
+	while(cin>>n>>m)
 	{
-		vector<int> nums(n);
+		vector<int> v1(n);
+		vector<int> v2(m);
 		for(int i=0;i<n;++i)
 		{
-			cin>>nums[i];
+			cin>>v1[i];
 		}
-		int mid=(0+n-1)>>1;
-		merge(nums,0,mid,n-1);
-		for(int i=0;i<n;++i)
-			cout<<nums[i]<<" ";
+		for(int i=0;i<m;++i)
+		{
+			cin>>v2[i];
+		}
+		vector<int> res=merge(v1,v2);
+		for(int i=0;i<res.size();++i)
+			cout<<res[i]<<" ";
 		cout<<endl;
 	}
 	return 0;
