@@ -16,7 +16,7 @@ class Solution
 public:
 	vector<vector<int> > FindPath(TreeNode* root, int expectNumber)
 	{
-		vector<vector<int> > res;
+		vector<vector<int> > res(0);
 		if(!root) return res;
 		vector<int> nums;
 		nums.push_back(root->val);
@@ -27,7 +27,7 @@ public:
 
 	void dfs(TreeNode *cur_node, int expectNumber, vector<int> &nums, int sum, vector<vector<int> > &res)
 	{
-		if (sum == expectNumber)
+		if (sum == expectNumber && (!cur_node->left && !cur_node->right))
 			res.push_back(nums);
 		if (cur_node->left)
 		{
@@ -37,7 +37,7 @@ public:
 		}
 		if (cur_node->right)
 		{
-			nums.push_back(cur_node->left->val);
+			nums.push_back(cur_node->right->val);
 			dfs(cur_node->right, expectNumber, nums, sum + cur_node->right->val, res);
 			nums.pop_back();
 		}
@@ -56,10 +56,12 @@ int main(int argc, char const *argv[])
 	{
 
 		vector<vector<int> > res=solution.FindPath(root,expectNumber);
-		for(auto p:res)
+		for(vector<vector<int> > ::iterator it1=res.begin();it1!=res.end();++it1)
 		{
-			for(auto p1:p)
-				cout<<p1<<" ";
+			for(vector<int>::iterator it2=(*it1).begin();it2!=(*it1).end();++it2)
+			{
+				cout<<(*it2)<<" ";
+			}
 			cout<<endl;
 		}
 		cout<<"---------End.-----------"<<endl;
