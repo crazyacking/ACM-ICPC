@@ -213,7 +213,7 @@ int solve(int n)
                         see[i] = 1;
             }
       }
-      FOR(i, 0, n)
+      FOR(i, 0, n);
       ans += see[i] == 1 ? 1 : 0;
       return ans;
 }
