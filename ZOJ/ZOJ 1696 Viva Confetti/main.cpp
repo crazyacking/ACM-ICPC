@@ -51,7 +51,7 @@ double disp2p(point a,point b) //  a b 两点之间的距离
 // 叉积 (三点)
 double crossProduct(point a,point b,point c)//向量 ac 在 ab 的方向 顺时针是正
 {
-      return (c.x - a.x)*(b.y - a.y) - (b.x - a.x)*(c.y - a.y);
+      return (c.x - a.x)*(b.y - a.y) - (b.x - a.x)*(c.y - a.y);;
 }
 struct circle
 {
