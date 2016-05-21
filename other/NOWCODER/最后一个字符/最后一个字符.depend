@@ -1,4 +1,7 @@
 # depslib dependency file v1.0
-1463397803 source:h:\code_fantasy\acm-icpc\other\nowcoder\最后一个字符\main.cpp
+1463400240 source:h:\code_fantasy\acm-icpc\other\nowcoder\最后一个字符\main.cpp
 	<bits/stdc++.h>
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
 
