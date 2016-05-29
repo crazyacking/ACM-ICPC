@@ -2,7 +2,7 @@
 * this code is made by crazyacking
 * Verdict: Accepted
 * Submission Date: 2015-08-08-22.53
-* Time: 0MS
+* Time: 45MS
 * Memory: 137KB
 */
 #include <queue>
@@ -51,7 +51,7 @@ double disp2p(point a,point b) //  a b 两点之间的距离
 // 叉积 (三点)
 double crossProduct(point a,point b,point c)//向量 ac 在 ab 的方向 顺时针是正
 {
-      return (c.x - a.x)*(b.y - a.y) - (b.x - a.x)*(c.y - a.y);
+      return (c.x - a.x)*(b.y - a.y) - (b.x - a.x)*(c.y - a.y);;
 }
 struct circle
 {
@@ -213,7 +213,7 @@ int solve(int n)
                         see[i] = 1;
             }
       }
-      FOR(i, 0, n)
+      FOR(i, 0, n);
       ans += see[i] == 1 ? 1 : 0;
       return ans;
 }

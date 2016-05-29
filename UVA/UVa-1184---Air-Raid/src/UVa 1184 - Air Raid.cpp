@@ -5,7 +5,7 @@ using namespace std;
 
 typedef vector<int> vi;
 
-vi match, vis; // global variables
+vi match, vis; 
 vector<vi> AdjList;
 
 int Aug(int l) { // return 1 if there exists an augmenting path

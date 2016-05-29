@@ -28,7 +28,7 @@ int cmp( int *r, int a, int b, int l )
 {
       return r[a] == r[b] && r[a + l] == r[b + l];
 }
-void da( int *r, int n, int m )   //    参数:*r---str转化为int型后的数组  n----数组长度  m---元素的范围
+void da( int *r, int n, int m )   //  参数:*r---str转化为int型后的数组  n----数组长度  m---元素的范围
 {
       int i, j, p, *x = wa, *y = wb, *t;
       for( i = 0; i < m; i ++ ) wd[i] = 0;
