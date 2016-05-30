@@ -1,0 +1,72 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class CoinWeight
+{
+public:
+    int possibleValues(int weight, vector<string> coins)
+    {
+        this->record_set=coins.size();
+        this->weight=weight;
+        us.clear();
+        vector<vector<int> > records(coins.size());
+        change(coins,records);
+        recursive(0);
+    }
+
+    void change_string_to_number(vector<string> &coin,vector<vector<int> > &record)
+    {
+        int len=coin.size();
+        for(int cnt=0; cnt<3; ++cnt)
+        {
+            int val=0;
+            for(int i=0; i<len; ++i)
+            {
+                if(coin[i]>='0' && coin[i]<='9')
+                    val=val*10+(coin[i]-'0');
+                else break;
+            }
+            record.push_back(val);
+        }
+    }
+
+    void change(vector<string>& coins,vector<vector<int> >&records)
+    {
+        for(int i=0; i<coins.size(); ++i)
+        {
+            change_string_to_number(coins[i],records[i]);
+        }
+        puts("===============================Program Run Here !=============================");
+        for(int i=0;i<coins.size();++i)
+        {
+            for(auto p:coins[i])
+                cout<<p<<" ";
+            cout<<endl;
+        }
+        puts("===============================Program Run Here !=============================");
+    }
+
+
+    void recursive(int cur_idx)
+    {
+        int max_num=weight/coins[cur_idx];
+    }
+
+private:
+    int record_set=0;
+    int weight=0;
+    unordered_set<int> us;
+};
+
+int int main(int argc, char const *argv[])
+{
+    int weight;
+    while(cin>>weight)
+    {
+        int n;
+        cin>>n;
+        vector<string> coins(n);
+
+    }
+    return 0;
+}

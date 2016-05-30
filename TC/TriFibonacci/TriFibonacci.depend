@@ -1,0 +1,22 @@
+# depslib dependency file v1.0
+1463840534 source:h:\code_fantasy\acdaily\crazyacking\tc\trifibonacci\main.cpp
+	<vector>
+	<list>
+	<map>
+	<set>
+	<deque>
+	<stack>
+	<bitset>
+	<algorithm>
+	<functional>
+	<numeric>
+	<utility>
+	<sstream>
+	<iostream>
+	<iomanip>
+	<cstdio>
+	<cmath>
+	<cstdlib>
+	<ctime>
+	<queue>
+

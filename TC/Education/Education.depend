@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1463920798 source:h:\code_fantasy\acdaily\crazyacking\tc\education\main.cpp
+	<vector>
+	<string>
+	<algorithm>
+	<utility>
+	<cmath>
+	<cstdlib>
+	<sstream>
+	<iostream>
+	<iterator>
+	<functional>
+

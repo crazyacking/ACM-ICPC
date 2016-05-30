@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1463814175 source:h:\code_fantasy\acdaily\crazyacking\tc\  2005 tco online round 1 - fibonaccisum\main.cpp
+	<cstdio>
+	<iostream>
+	<algorithm>
+	<set>
+	<map>
+	<stack>
+	<list>
+	<queue>
+	<deque>
+	<cctype>
+	<string>
+	<vector>
+	<sstream>
+	<iterator>
+

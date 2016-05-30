@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1463821867 source:h:\code_fantasy\acdaily\crazyacking\tc\companyname\main.cpp
+	<string>
+	<vector>
+	<bits/stdc++.h>
+
