@@ -1,8 +1,0 @@
-# depslib dependency file v1.0
-1445437562 source:d:\code_fantasy\acm-icpc\other\test-4\main.cpp
-	<cstdio>
-	<cstring>
-	<cstdlib>
-	<cmath>
-	<bits/stdc++.h>
-
