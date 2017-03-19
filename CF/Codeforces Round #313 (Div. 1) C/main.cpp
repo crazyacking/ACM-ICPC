@@ -47,8 +47,7 @@ long long quick_pow( long long x, long long y )
       return ans;
 }
 
-int main()
-{
+int main() {
       cin >> h >> w >> n;
       for( int i = 1; i <= n; i++ )
             cin >> a[i].x >> a[i].y;
