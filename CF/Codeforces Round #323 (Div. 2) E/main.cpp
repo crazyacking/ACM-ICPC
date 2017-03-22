@@ -76,8 +76,7 @@ public:
     }
 };
 
-int main()
-{
+int main() {
     int num;
     while(cin>>num)
     {
