@@ -81,8 +81,7 @@ int main() {
     while(cin>>num) {
         int from,to;
         vector<pair<int,int>> tve;
-        for(int i=0;i<num;++i)
-        {
+        for(int i=0;i<num;++i) {
             cin>>from>>to;
             tve.push_back(make_pair(from,to));
         }
