@@ -78,8 +78,7 @@ public:
 
 int main() {
     int num;
-    while(cin>>num)
-    {
+    while(cin>>num) {
         int from,to;
         vector<pair<int,int>> tve;
         for(int i=0;i<num;++i)
