@@ -53,10 +53,8 @@ int work(int x)
             if(get(n-1,i)) return INT_MAX;
       return num;
 }
-int main()
-{
-      while(~scanf("%d %d",&n,&m))
-      {
+int main() {
+      while(~scanf("%d %d",&n,&m)) {
             for(int i=0; i<n; ++i)
                   for(int j=0; j<m; ++j)
                         scanf("%d",&Mp[i][j]);
