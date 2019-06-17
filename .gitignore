@@ -16,6 +16,7 @@ $RECYCLE.BIN/
 *.pdb
 *.obj
 *.ilk
+*.out
 *.o
 
 # Windows shortcuts
