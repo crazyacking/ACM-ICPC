@@ -15,6 +15,7 @@ $RECYCLE.BIN/
 *.msp
 *.pdb
 *.obj
+*.ilk
 *.o
 
 # Windows shortcuts
