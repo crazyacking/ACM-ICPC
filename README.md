@@ -3,7 +3,7 @@
 
 ### What is this?
 
-A repository along with a [wiki](https://github.com/BrockCSC/acm-icpc/wiki) for the Brock ICPC team or students with interest in the ICPC.
+A repository along with a [wiki](https://github.com/crazyacking/ACM-ICPC/wiki) for the Brock ICPC team or students with interest in the ICPC.
 
 Post your solutions, libraries, guides, tutorials, or anything you think is helpful.
 
@@ -12,10 +12,10 @@ Post your solutions, libraries, guides, tutorials, or anything you think is help
 ### Getting Started
 
 1. Subscribe to the [Brock ACM-ICPC mailing list](https://groups.google.com/d/forum/brock-acm-icpc).
-2. Read the **[wiki](https://github.com/BrockCSC/acm-icpc/wiki)**. Anyone can edit the wiki.
+2. Read the **[wiki](https://github.com/crazyacking/ACM-ICPC/wiki)**. Anyone can edit the wiki.
 
 #### Contributing
-- Members of the *BrockCSC* organization have push and pull access and just need to clone this repo.
+- Members of the *crazyacking* organization have push and pull access and just need to clone this repo.
 - Non-members will have to fork it and send a pull request.
 - If you have no idea what any of that means, read through the tutorials at http://help.github.com.
 - Bonus points if you explain how you solved the problem
@@ -42,7 +42,7 @@ Post your solutions, libraries, guides, tutorials, or anything you think is help
 ### General Tips
 
 - Practice! It's the most effective way to improve.
-  - Find problems [here](https://github.com/BrockCSC/acm-icpc/wiki/Online-Resources#wiki-practice).
+  - Find problems [here](https://github.com/crazyacking/ACM-ICPC/wiki/Online-Resources#wiki-practice).
   - You get the most out of practice if you imitate contest conditions.
 - Identify the easier problems and solve those first.
   - Look at the live scoreboard to see which problems are quickly and often solved.
@@ -55,7 +55,7 @@ Post your solutions, libraries, guides, tutorials, or anything you think is help
   at it or attempt another problem if there is enough remaining time.
 - Practice writing actual, compilable code on paper. Avoid pseudocode.
   It will save you a lot of time.
-- Choose your [printed notes](https://github.com/BrockCSC/acm-icpc/wiki/Online-Resources#wiki-books) wisely and know how/when to reference them.
+- Choose your [printed notes](https://github.com/crazyacking/ACM-ICPC/wiki/Online-Resources#wiki-books) wisely and know how/when to reference them.
 - Don't debug at the computer. Print your code and switch spots with a teammate.
 - You can break coding guidelines & styleguides for contest settings, so it's okay to use
   - GOTOs
