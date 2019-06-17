@@ -7,7 +7,7 @@ A repository along with a [wiki](https://github.com/BrockCSC/acm-icpc/wiki) for 
 
 Post your solutions, libraries, guides, tutorials, or anything you think is helpful.
 
-**IMPORTANT**: I'm looking for someone (preferably at Brock) to adopt this project and maintain it. Please [contact me](http://dennisideler.com) if interested. This repo could use some cleaning and a lot more solved problems.
+**IMPORTANT**: I'm looking for someone (preferably at Brock) to adopt this project and maintain it. Please [contact me](https://www.cnblogs.com/crazyacking/) if interested. This repo could use some cleaning and a lot more solved problems.
 
 ### Getting Started
 
