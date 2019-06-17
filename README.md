@@ -3,7 +3,7 @@
 
 ### What is this?
 
-A repository along with a [wiki](https://github.com/crazyacking/ACM-ICPC/wiki) for the Brock ICPC team or students with interest in the ICPC.
+A repository along with a **[wiki](https://github.com/crazyacking/ACM-ICPC/wiki)** for the Brock ICPC team or students with interest in the ICPC.
 
 Post your solutions, libraries, guides, tutorials, or anything you think is helpful.
 
