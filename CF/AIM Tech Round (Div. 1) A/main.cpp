@@ -18,95 +18,74 @@
 #include <vector>
 #include <algorithm>
 #include <cstring>
+
 using namespace std;
 typedef long long(LL);
 typedef unsigned long long(ULL);
 const double eps(1e-8);
 
-void dfs(int v, vector <vector <int> > &g, vector <int> &color)
-{
-    for (int to: g[v])
-    {
-        if (color[to] == 0)
-        {
+void dfs(int v, vector<vector<int> > &g, vector<int> &color) {
+    for (int to: g[v]) {
+        if (color[to] == 0) {
             color[to] = 4 - color[v];
             dfs(to, g, color);
         }
     }
 }
 
-int main()
-{
+int main() {
     int n, m;
     scanf("%d %d\n", &n, &m);
-    vector <vector <int> > G(n, vector <int> (n, 0));
-    for (int i = 0; i < m; ++i)
-    {
+    vector<vector<int> > G(n, vector<int>(n, 0));
+    for (int i = 0; i < m; ++i) {
         int x, y;
         scanf("%d %d\n", &x, &y);
         --x, --y;
         G[x][y] = G[y][x] = 1;
     }
-    vector <vector <int> > g(n);
-    for (int i = 0; i < n; ++i)
-    {
-        for (int j = 0; j < i; ++j)
-        {
-            if (G[i][j] == 0)
-            {
+    vector<vector<int> > g(n);
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < i; ++j) {
+            if (G[i][j] == 0) {
                 g[i].push_back(j);
                 g[j].push_back(i);
             }
         }
     }
-    vector <int> color(n);
-    for (int i = 0; i < n; ++i)
-    {
-        if (color[i] != 0)
-        {
+    vector<int> color(n);
+    for (int i = 0; i < n; ++i) {
+        if (color[i] != 0) {
             continue;
         }
-        if (g[i].empty())
-        {
+        if (g[i].empty()) {
             color[i] = 2;
             continue;
         }
         color[i] = 1;
         dfs(i, g, color);
     }
-    for (int i = 0; i < n; ++i)
-    {
-        for (int j = 0; j < i; ++j)
-        {
-            if (G[i][j] && min(color[i], color[j]) == 1 && max(color[j], color[i]) == 3)
-            {
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < i; ++j) {
+            if (G[i][j] && min(color[i], color[j]) == 1 && max(color[j], color[i]) == 3) {
                 printf("No\n");
                 return 0;
             }
-            if (G[i][j])
-            {
+            if (G[i][j]) {
                 continue;
             }
-            if (min(color[i], color[j]) != 1 || max(color[i], color[j]) != 3)
-            {
+            if (min(color[i], color[j]) != 1 || max(color[i], color[j]) != 3) {
                 printf("No\n");
                 return 0;
             }
         }
     }
     printf("Yes\n");
-    for (int i = 0; i < n; ++i)
-    {
-        if (color[i] == 1)
-        {
+    for (int i = 0; i < n; ++i) {
+        if (color[i] == 1) {
             printf("a");
-        }
-        else if (color[i] == 2)
-        {
+        } else if (color[i] == 2) {
             printf("b");
-        }
-        else
-        {
+        } else {
             printf("c");
         }
     }
