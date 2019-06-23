@@ -67,3 +67,5 @@ obj/
 .o
 .project
 .idea/
+*a.out.*
+.vscode/
