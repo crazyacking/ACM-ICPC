@@ -69,3 +69,4 @@ obj/
 .idea/
 *a.out.*
 .vscode/
+cmake-build-debug/
